@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_LayoutBeon.cshtml";
+}
+
+<div class="d-flex ">
+<div class="col-sm-7">
+    <div class="row p-2">
+        <div class="col-sm-4 p-0 justify-content-between ">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-history"></i>Dernier contact</h5>
+                    <p class="card-text">@DateTime.Now</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-exclamation-triangle"></i> Nombre de chocs</h5>
+                    <p class="card-text">2 chocs reçus au total</p>
+                    <p class="card-text">2 chocs reçus depuis 72hl</p>
+                    <p class="card-text">0 chocs depuis dernier contact</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-map-marked"></i> Localisation</h5>
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+  <div class="col-sm-5">
+        <div class="col-sm-12 p-2">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-temperature-high"></i> Température</h5>
+                    <div class="chart-container" style="position: relative; height:100%; width:100%">
+                        <canvas id="tempsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    </div>
+
+
