@@ -7,14 +7,19 @@ var myLineChart = new Chart(line, {
             {
                 label: "# temp max",
                 data: [11, 12, 15, 20, 25, 20, 10, 10, 12, 15, 20, 25],
-                radius: 0,
-                borderColor: "red"
+                radius: 5,
+                borderColor: "red",
+                backgroundColor:"red",
+                showLine: false,
+                
             },
             {
                 label: "# temp min",
                 data: [-25, -20, -15, -12, -10, -10, -20,- 25, -20, -15, -12, -11],
-                radius: 0,
-                borderColor: "blue"
+                radius: 5,
+                borderColor: "blue",
+                backgroundColor: "blue",
+                showLine: false
             },
             {
                 label: "# temp mean",
@@ -25,15 +30,30 @@ var myLineChart = new Chart(line, {
         ]
     },
     options: {
-        label: "diagramme",
+        legend: {
+            labels: { fontSize: 20},
+        },
+        label: "diagramme", 
         scales: {
+            xAxes: [
+                {
+                    ticks: {
+                        beginAtZero: false,
+                        fontSize: 20
+
+                    }
+                }
+            ],
             yAxes: [
                 {
                     ticks: {
-                        beginAtZero: false
+                        beginAtZero: false,
+                        fontSize: 20
+                           
                     }
                 }
             ]
+            
         }
     }
 });
