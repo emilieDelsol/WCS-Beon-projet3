@@ -1,1 +1,55 @@
-﻿
+﻿body{
+    max-width: 3000px;
+    margin:auto;
+}
+.font-size1-5 {
+    font-size: 1.5vh;
+}
+.font-size2 {
+    font-size: 2vh;
+}
+.font-size3{
+    font-size:3vh;
+}
+.font-size4 {
+    font-size: 4vh;
+}
+.font-size5{
+    font-size:5vh;
+}
+.dropdown-menu{
+    width:max-content;
+}
+.batteryContainer {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.batteryOuter {
+    border-radius: 3px;
+    border: 1px solid #444;
+    padding: 1px;
+    width: 20vh;
+    height: 9vh;
+}
+
+.batteryBump {
+    border-radius: 2px;
+    background-color: #444;
+    margin: 2px;
+    width: 1vh;
+    height: 3vh;
+}
+
+#batteryLevel {
+    border-radius: 2px;
+    background-color: #73AD21;
+    width: 100%;
+    height: 100%;
+}
+

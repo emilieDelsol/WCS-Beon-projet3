@@ -1,11 +1,12 @@
 ﻿// On initialise la latitude et la longitude de Paris (centre de la carte)
-var lat = 48.852969;
-var lon = 2.349903;
+var lat = 43.6043 ;
+var lon = 1.4437;
 var macarte = null;
+
 // Fonction d'initialisation de la carte
 function initMap() {
     // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
-    macarte = L.map('map').setView([lat, lon], 11);
+    macarte = L.map('map').setView([lat, lon], 9); //Changer le nombre ici pour dézoomer la carte 
     // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
     L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         // Il est toujours bien de laisser le lien vers la source des données
@@ -13,8 +14,22 @@ function initMap() {
         minZoom: 1,
         maxZoom: 20
     }).addTo(macarte);
+    var icone = L.icon({
+        iconUrl: "https://img2.freepng.fr/20180702/qu/kisspng-temperature-computer-icons-celsius-thermometer-cli-5b39e62a1b47e8.1921838915305211301118.jpg",
+        iconSize: [50, 50],
+        inconAnchor: [25, 50],
+        popupAnchor: [0,-50]
+    })
+    // Nous ajoutons un marqueur + popup
+    var marker = L.marker([43.6043, 1.4437]/*, { icon: icone }*/).addTo(macarte);
+    marker.bindPopup("<p>Toulouse</p>");
 }
 window.onload = function () {
     // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
     initMap();
 };
+
+
+
+//https://nouvelle-techno.fr/actualites/pas-a-pas-inserer-une-carte-openstreetmap-sur-votre-site
+//https://www.youtube.com/watch?v=MtY9J2frbsM&feature=youtu.be&t=1080

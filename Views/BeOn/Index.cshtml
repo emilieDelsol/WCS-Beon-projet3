@@ -4,29 +4,31 @@
     Layout = "~/Views/Shared/_LayoutBeon.cshtml";
 }
 
-<div class="d-flex ">
-<div class="col-sm-7">
-    <div class="row p-2">
-        <div class="col-sm-4 p-0 justify-content-between ">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-history"></i>Dernier contact</h5>
-                    <p class="card-text">@DateTime.Now</p>
+<div class="d-flex flex-column flex-lg-row">
+    
+    <div class="col-10 col-lg-6 m-auto">
+        <div class="d-flex flex-column flex-lg-row p-0 pt-2">
+            <div class="col-12 col-lg-4 p-0 justify-content-between ">
+                <div class="card ">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-history"></i>Dernier contact</h5>
+                        <p class="card-text">@DateTime.Now</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 p-0 pt-2">
+                <div class="card ">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-exclamation-triangle"></i> Nombre de chocs</h5>
+                        <p class="card-text">2 chocs reçus au total</p>
+                        <p class="card-text">2 chocs reçus depuis 72h</p>
+                        <p class="card-text">0 chocs depuis dernier contact</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-8">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-exclamation-triangle"></i> Nombre de chocs</h5>
-                    <p class="card-text">2 chocs reçus au total</p>
-                    <p class="card-text">2 chocs reçus depuis 72hl</p>
-                    <p class="card-text">0 chocs depuis dernier contact</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12">
-            <div class="card h-100">
+        <div class="col-12 p-0 pt-2">
+            <div class="card ">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-map-marked"></i> Localisation</h5>
                     <div id="map"></div>
@@ -34,10 +36,10 @@
             </div>
         </div>
     </div>
- </div>
-  <div class="col-sm-5">
-        <div class="col-sm-12 p-2">
-            <div class="card h-100">
+
+    <div class="col-10  col-lg-6 m-auto">
+        <div class="col-12 p-0 pt-2">
+            <div class="card ">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-temperature-high"></i> Température</h5>
                     <div class="chart-container" style="position: relative; height:100%; width:100%">
@@ -46,7 +48,26 @@
                 </div>
             </div>
         </div>
-    </div> 
+        <div class="row p-0 pt-2">
+            <div class="col-sm-4 p-0 justify-content-between ">
+                <div class="card ">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-exclamation-triangle"></i> CHOC MAX</h5>
+                        <p class="card-text">1 g</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Niveau de batterie: 100%</h5>
+                        <div class="batteryContainer">
+                            <div class="batteryOuter"><div id="batteryLevel"></div></div>
+                            <div class="batteryBump"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div >
     </div>
-
-
+</div>

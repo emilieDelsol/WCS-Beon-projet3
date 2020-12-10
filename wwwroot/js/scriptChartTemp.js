@@ -12,13 +12,13 @@ var myLineChart = new Chart(line, {
             },
             {
                 label: "# temp min",
-                data: [1, 2, 5, 10, 15, 10, 1, 1, 2, 5, 10, 15],
+                data: [-25, -20, -15, -12, -10, -10, -20,- 25, -20, -15, -12, -11],
                 radius: 0,
                 borderColor: "blue"
             },
             {
                 label: "# temp mean",
-                data: [6, 7, 10, 15, 20, 15, 6, 6, 7, 10, 15, 20],
+                data: [-7, -4, 0, 8, 15, 0, 0, -15, -8, 0, 4, 7],
                 radius: 0,
                 borderColor: "green"
             }
@@ -30,10 +30,11 @@ var myLineChart = new Chart(line, {
             yAxes: [
                 {
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: false
                     }
                 }
             ]
         }
     }
 });
+
