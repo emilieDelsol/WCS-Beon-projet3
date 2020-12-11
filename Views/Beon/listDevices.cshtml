@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "listDevices";
+    Layout = "~/Views/Shared/_LayoutBeon.cshtml";
+}
+
+<h1>Tracker list</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Device</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td> <a asp-controller="Beon" asp-action="Index">Tracker 001</a></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td> <a asp-controller="Beon" asp-action="Index">Tracker 002</a></td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td> <a asp-controller="Beon" asp-action="Index">Tracker 003</a></td>
+        </tr>
+    </tbody>
+</table>
