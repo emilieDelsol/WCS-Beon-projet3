@@ -17,6 +17,10 @@ namespace BeOn.Controllers
 		{
 			return View();
 		}
+		public IActionResult testDashboard()
+		{
+			return View();
+		}
 
 	}
 }
