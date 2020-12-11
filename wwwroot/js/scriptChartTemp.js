@@ -49,7 +49,6 @@ var myLineChart = new Chart(line, {
                     ticks: {
                         beginAtZero: false,
                         fontSize: 20
-                           
                     }
                 }
             ]

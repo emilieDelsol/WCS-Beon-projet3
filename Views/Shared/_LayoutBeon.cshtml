@@ -16,43 +16,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
 </head>
 <body>
-    <header>
-
-        <h1 class="text-center "><img src="~/beonWhite.jpg"  alt="logo beon"/></h1>
-        <div class="border pl-3">
-            <h2 class="text-left  ">Tracker 001</h2>
-            <p class="text-left  ">@DateTime.Now</p>
-        </div>
-
-    </header>
+   
 
 
-        <main role="main" class="border container-fluid">
-            <aside>
-                <nav class="d-none d-lg-block">
-                    <div class=" d-flex flex-column  float-left border">
-                        <ul class="list-group">
+        <main role="main" class="container-fluid d-flex p-0">
+            <aside class="col-lg-2 left_col bg-aside" style="background-color: #2e6096;">
+                <nav class="left_col scroll-view" >
+                    <div class=" navbar nav_title border-0  text-center">
+                       <h1 class="m-auto"><a asp-controller="Home" asp-action="Index" >Be<i class="fas fa-power-off" style="color:aqua"></i>n</a></h1>
+                     </div>
+                    <div id="sidebar-menu" >
+                        
+                        <ul class="side-menu m-auto p-0">
                             <li class="list-group-item"> <a asp-controller="Home" asp-action="Index"><i class="fas fa-home "></i> Home</a></li>
                             <li class="list-group-item"><a asp-controller="Home" asp-action="Index"><i class="fas fa-eye "></i> Traker list</a></li>
                             <li class="list-group-item"> <a asp-controller="Home" asp-action="Index"><i class="fas fa-globe-europe "></i> Overview</a></li>
                             <li class="list-group-item"><a asp-controller="Home" asp-action="Index"><i class="fas fa-power-off"></i></a></li>
                         </ul>
                     </div>
-                       
-                    <div class="btn-group dropleft  h-100 border float-right">
-                        <button type="button" class="btn btn-outline-dark " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell "></i>
-                        </button>
-                        <div class="dropdown-menu text-center p-3">
-                            <p><i class="fas fa-hammer "></i>Choc!</p>
-                            <p><i class="fas fa-temperature-high"></i>100°C</p>
-                            <p><i class="fas fa-temperature-low "></i>-10°C</p>
-                        </div>
+                    <div class="sidebar-footer">
+                        <a data-toggle="tooltip" data-placement="top" title="" href="login.html" data-original-title="Logout">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
                     </div>
-
                 </nav>
             </aside>
-            @RenderBody()
+            <section class="container-fluid p-3 bg-light" >
+                @RenderBody()
+             </section>
         </main>
 
 
