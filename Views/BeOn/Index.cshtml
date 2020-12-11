@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_LayoutBeon.cshtml";
+}
+<div class="border pl-3">
+    <h2 class="text-left  ">Tracker 001</h2>
+    <p class="text-left  ">@DateTime.Now</p>
+</div>
+<div class="d-flex flex-column flex-lg-row">
+
+    <div class="col-12 col-lg-6 m-auto">
+        <div class="d-flex flex-column flex-lg-row p-0 pt-2">
+            <div class="col-12 col-lg-4 p-0 justify-content-between ">
+                <div class="card ">
+                    <div class="card-body">
+                        <h5 class="card-title "><i class="fas fa-history"></i> Last contact</h5>
+                        <p class="card-text">@DateTime.Now</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8 p-0 pl-2">
+                <div class="card ">
+                    <div class="card-body">
+                        <h5 class="card-title "><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
+                        <p class="card-text ">- total shocks: 2  </p>
+                        <p class="card-text ">- shocks since last 72h: 2 </p>
+                        <p class="card-text ">- shocks since last contact: 0 </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 p-0 pt-2">
+            <div class="card ">
+                <div class="card-body">
+                    <h5 class="card-title "><i class="fas fa-map-marked"></i> Location</h5>
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12  col-lg-6 ml-auto mr-auto">
+        <div class="col-12 p-0 pt-2">
+            <div class="card ">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-temperature-high"></i> Temperature</h5>
+                    <div class="chart-container" style="position: relative; height:100%; width:100%">
+                        <canvas id="tempsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex p-0 pt-2">
+            <div class="col-sm-4 p-0 justify-content-between ">
+                <div class="card ">
+                    <div class="card-body">
+                        <h5 class="card-title "><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
+                        <p class="card-text ">1 g</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="card h-100">
+                    <div class="card-body m-auto">
+                        <h5 class="card-title ">Battery level: 100%</h5>
+                        <div class="batteryContainer">
+                            <div class="batteryOuter"><div id="batteryLevel"></div></div>
+                            <div class="batteryBump"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

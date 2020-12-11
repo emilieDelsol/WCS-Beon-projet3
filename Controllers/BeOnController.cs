@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +12,11 @@ namespace BeOn.Controllers
 		{
 			return View();
 		}
+
 		public IActionResult ListDevices()
 		{
 			return View();
 		}
+
 	}
 }
