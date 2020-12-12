@@ -2,11 +2,11 @@
 var myLineChart = new Chart(line, {
     type: 'line',
     data: {
-        labels: ['date1', 'date2', 'date3', 'date4', 'date5', 'date6', 'date7', 'date8', 'date9', 'date10', 'date11', 'date12'],
+        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 23, 24],
         datasets: [
             {
                 label: "# temp max",
-                data: [11, 12, 15, 20, 25, 20, 10, 10, 12, 15, 20, 25],
+                data: [11, 12, 15, 20, 25, 20, 10, 10, 12, 15, 20, 25, 11, 12, 15, 20, 25, 20, 10, 10, 12, 15, 20, 25,],
                 radius: 5,
                 borderColor: "red",
                 backgroundColor:"red",
@@ -15,7 +15,7 @@ var myLineChart = new Chart(line, {
             },
             {
                 label: "# temp min",
-                data: [-25, -20, -15, -12, -10, -10, -20,- 25, -20, -15, -12, -11],
+                data: [-25, -20, -15, -12, -10, -10, -20, - 25, -20, -15, -12, -11, - 25, -20, -15, -12, -10, -10, -20, - 25, -20, -15, -12, -11],
                 radius: 5,
                 borderColor: "blue",
                 backgroundColor: "blue",
@@ -23,7 +23,7 @@ var myLineChart = new Chart(line, {
             },
             {
                 label: "# temp mean",
-                data: [-7, -4, 0, 8, 15, 0, 0, -15, -8, 0, 4, 7],
+                data: [-7, -4, 0, 8, 15, 0, 0, -15, -8, 0, 4, 7, -7, -4, 0, 8, 15, 0, 0, -15, -8, 0, 4, 7],
                 radius: 0,
                 borderColor: "green"
             }
