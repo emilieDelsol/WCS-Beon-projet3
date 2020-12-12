@@ -12,16 +12,16 @@
 
         <div class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
             <div class="card m-1">
-                <div class="card-header">
-                    <h5><i class="fas fa-history"></i> Last contact</h5>
+                <div class="card-header" style="background-color: #201063; color: #00e9ff; ">
+                    <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history" ></i> Last contact</h5>
                 </div>
                 <div class="card-body ">
                     <p class="card-text">@DateTime.Now</p>
                 </div>
             </div>
             <div class="card m-1">
-                <div class="card-header">
-                    <h5 class="card-title "><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
+                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                    <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
                 </div>
                 <div class="card-body ">
                     <p class="card-text ">- total shocks: 2  </p>
@@ -30,16 +30,16 @@
                 </div>
             </div>
             <div class="card m-1">
-                <div class="card-header">
-                    <h5 class="card-title "><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
+                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                    <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title ">1 g</h5>
                 </div>
             </div>
             <div class="card m-1">
-                <div class="card-header">
-                    <h5 class="card-title "><i class="fas fa-battery-full"></i> Battery level</h5>
+                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                    <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title">100%</h5>
@@ -50,24 +50,23 @@
                 </div>
             </div>
     </div>
-        <div class="container-fluid p-3 d-flex flex-column flex-lg-row">
+        <div class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
             <div class="card m-1 col-12 col-lg-5 p-0 ">
-                <div class="card-header">
-                    <h5 class="card-title "><i class="fas fa-map-marked"></i> Location</h5>
+                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                    <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Location</h5>
                 </div>
                 <div class="card-body">
                     <div id="map"></div>
                 </div>
             </div>
             <div class="card  m-1 col-12 col-lg-7 p-0 " >
-                <div class="card-header">
-                    <h5 class="card-title"><i class="fas fa-temperature-high"></i> Temperature</h5>
+                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                    <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
                 </div>
                 <div class="card-body">
                     <div>
-                        <button type="button" class="btn btn-outline-secondary btn-outline-success">24h</button><button type="button" class="btn btn-success">24h</button>
-
-                        <button type="button" class="btn btn-outline-secondary btn-outline-success">72h</button><button type="button" class="btn btn-success">72h</button>
+                        <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
+                        <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
 
 
                     </div>
