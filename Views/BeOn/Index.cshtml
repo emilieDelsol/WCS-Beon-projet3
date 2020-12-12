@@ -3,7 +3,7 @@
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_LayoutBeon.cshtml";
 }
-<section class="container-fluid p-0">
+<section class="container-fluid p-0 " style="background-color:azure">
 
     <div class="border p-2">
         <h3 class="text-left  "><i class="fas fa-crosshairs"></i> Tracker 001</h3>
@@ -64,6 +64,13 @@
                     <h5 class="card-title"><i class="fas fa-temperature-high"></i> Temperature</h5>
                 </div>
                 <div class="card-body">
+                    <div>
+                        <button type="button" class="btn btn-outline-secondary btn-outline-success">24h</button><button type="button" class="btn btn-success">24h</button>
+
+                        <button type="button" class="btn btn-outline-secondary btn-outline-success">72h</button><button type="button" class="btn btn-success">72h</button>
+
+
+                    </div>
                     <div class="" style="height:400px">
                     <canvas id="tempsChart" class=" col-12"></canvas>
                         </div>

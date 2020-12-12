@@ -16,39 +16,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
 </head>
 <body class="bg-light" style="font-family:Rockwell">
-    <header class="bg-dark  d-flex ">
+    <header class="d-flex "   style="background-color: #201063">
         
                 <h1><a class="nav-link" asp-controller="Home" asp-action="Index">Be<i class="fas fa-power-off" style="color:aqua"></i>n</a></h1>
             
     </header>
     <div class="container-fluid">
         <div class="row min-vh-100 flex-column flex-lg-row">
-            <aside class=" p-0 bg-dark flex-shrink-1">
-                <nav class="navbar navbar-expand navbar-dark bg-dark flex-lg-column flex-row align-items-start p-3">
+            <aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
+                <nav class="navbar navbar-expand navbar-dark flex-lg-column flex-row align-items-start p-3"  >
                     <div class="collapse navbar-collapse row m-auto">
 
                         <ul class="flex-lg-column flex-row navbar-nav w-100 justify-content-between">
                             <li class="nav-item">
-                                <a class="nav-link pl-0 text-nowrap" asp-controller="Home" asp-action="Index"><i class="fas fa-home "></i><span class="d-none d-lg-inline"> Home</span></a>
+                                <a class="nav-link pl-0 text-nowrap" style="color: #33d9ed;" asp-controller="Home" asp-action="Index"><i class="fas fa-home "></i><span class="d-none d-lg-inline"> Home</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link pl-0" asp-controller="Beon" asp-action="listDevices"><i class="fas fa-eye "></i> <span class="d-none d-lg-inline">Tracker list</span></a>
+                                <a class="nav-link pl-0" style="color: #33d9ed;" asp-controller="Beon" asp-action="listDevices"><i class="fas fa-eye "></i> <span class="d-none d-lg-inline">Tracker list</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link pl-0" asp-controller="Home" asp-action="Index"><i class="fas fa-globe-europe "></i><span class="d-none d-lg-inline"> Overview</span></a>
+                                <a class="nav-link pl-0" style="color: #33d9ed;" asp-controller="Home" asp-action="Index"><i class="fas fa-globe-europe "></i><span class="d-none d-lg-inline"> Overview</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link pl-0" href="#"><i class="fa fa-star fa-fw"></i> <span class="d-none d-lg-inline">Link</span></a>
+                                <a class="nav-link pl-0" style="color: #33d9ed;" href="#"><i class="fa fa-star fa-fw"></i> <span class="d-none d-lg-inline">Link</span></a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Beon" asp-action="testDashboard">Test dashboard</a>
-                                    <a class="dropdown-item" asp-controller="Home" asp-action="Index"><i class="fas fa-power-off"></i></a>
-                                    <a class="dropdown-item">Something else here</a>
+                                <a class="nav-link dropdown-toggle" style="color: #33d9ed;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                <div class="dropdown-menu" style="        background-color: #201063
+">
+                                    <a class=" btn btn-outline-info"  asp-controller="Beon" asp-action="testDashboard">Test dashboard</a>
+                                    <a class="dropdown-item" style="color: #33d9ed;" asp-controller="Home" asp-action="Index"><i class="fas fa-power-off"></i></a>
+                                    <a class="dropdown-item" style="color: #33d9ed;">Something else here</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item">Separated link</a>
-                                    <a class="dropdown-item">One more separated link</a>
+                                    <a class="dropdown-item" style="color: #33d9ed;">Separated link</a>
+                                    <a class="dropdown-item" style="color: #33d9ed;">One more separated link</a>
                                 </div>
                             </li>
                         </ul>
