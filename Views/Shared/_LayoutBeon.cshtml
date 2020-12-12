@@ -18,10 +18,24 @@
     
 </head>
 <body class="bg-light">
-    <header class="d-flex " style="background-color: #201063">
+    <header class="d-flex  justify-content-between" style="background-color: #201063">
 
         <h1><a class="nav-link" asp-controller="Home" asp-action="Index">Be<i class="fas fa-power-off" style="color:aqua"></i>n</a></h1>
-
+        <div class='btn-toolbar pull-right' >
+            <div class="btn-group">
+                <button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" style="color: #00e9ff;">
+                    <i class="far fa-bell" ></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right " role="menu">
+                    <li class="text-center"><h3>5 alerts!!</h3></li>
+                    <li class="border p-2"><a href=""><i class="fas fa-temperature-low"></i> Temp: -10°C</a></li>
+                    <li  class="border p-2"><a href=""><i class="fas fa-temperature-high"></i> Temp: 55°C</a></li>
+                    <li class="border p-2"><a href=""><i class="fas fa-hammer"></i> Shock: 2G</a></li>
+                    <li class="border p-2"><a href=""><i class="fas fa-battery-quarter"></i> Low battery</a></li>
+                    <li class="border p-2"><a href="">Alert 5</a></li>
+                </ul>
+            </div>
+        </div>
     </header>
     <div class="container-fluid">
         <div class="row min-vh-100 flex-column flex-lg-row">
