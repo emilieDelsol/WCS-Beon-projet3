@@ -40,14 +40,24 @@
         </div>
 
         <div class="card m-1">
+            <!--Button to test battery-->
+           
             <div class="card-header" style="background-color: #201063; color: #00e9ff;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
             </div>
             <div class="card-body text-center">
-                <h5 class="card-title">100%</h5>
+                <h5 class="card-title " id="batteryTitle"> 50%</h5>
                 <div class="batteryContainer">
-                    <div class="batteryOuter"><div id="batteryLevel"></div></div>
+                    <div class="batteryOuter "><div class="batteryLevel50" id="batteryLevel"></div></div>
                     <div class="batteryBump"></div>
+                </div>
+                <br/>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger" onclick="UpdateBattery5()">5%</button>
+                    <button type="button" class="btn btn-warning" onclick="UpdateBattery25()">25%</button>
+                    <button type="button" class="btn btn-dark" onclick="UpdateBattery50()">50%</button>
+                    <button type="button" class="btn btn-info" onclick="UpdateBattery75()">75%</button>
+                    <button type="button" class="btn btn-success" onclick="UpdateBattery100()">100%</button>
                 </div>
             </div>
         </div>
