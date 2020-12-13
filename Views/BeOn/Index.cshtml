@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "View";
-    Layout = "~/Views/Shared/_LayoutBeon.cshtml";
+    Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
 }
 
 <section class="container-fluid p-0 ">
@@ -10,23 +10,8 @@
             <h3 class="text-left  "><i class="fas fa-crosshairs"></i> Tracker 001</h3>
             <p class="text-left  m-0">@DateTime.Now</p>
         </div>
-        <div class='btn-toolbar pull-right'>
-            <div class="btn-group" >
-                <button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" style="color: #201063;">
-                    <i class="far fa-bell"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right  " role="menu">
-                    <li class="text-center list-group-item"><h3>5 alerts!!</h3></li>
-                    <li class="list-group-item"><a href=""><i class="fas fa-temperature-low"></i> Temp: -10°C</a></li>
-                    <li class="list-group-item"><a href=""><i class="fas fa-temperature-high"></i> Temp: 55°C</a></li>
-                    <li class="list-group-item"><a href=""><i class="fas fa-hammer"></i> Shock: 2G</a></li>
-                    <li class="list-group-item"><a href=""><i class="fas fa-battery-quarter"></i> Low battery</a></li>
-                    <li class="list-group-item"><a href="">Alert 5</a></li>
-                </ul>
-            </div>
-        </div>
     </header>
-    <div class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
+    <article class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
         <div class="card m-1">
             <div class="card-header" style="background-color: #201063; color: #00e9ff; ">
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history"></i> Last contact</h5>
@@ -53,6 +38,7 @@
                 <h5 class="card-title ">1 g</h5>
             </div>
         </div>
+
         <div class="card m-1">
             <div class="card-header" style="background-color: #201063; color: #00e9ff;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
@@ -65,8 +51,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
+    </article>
+
+    <article class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
         <div class="card m-1 col-12 col-lg-5 p-0 ">
             <div class="card-header" style="background-color: #201063; color: #00e9ff;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Location</h5>
@@ -75,23 +62,57 @@
                 <div id="map"></div>
             </div>
         </div>
-        <div class="card  m-1 col-12 col-lg-7 p-0 ">
-            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
-                <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
-            </div>
-            <div class="card-body">
-                <div>
-                    <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
-                    <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
-
-
+        <div class="col">
+            <div id="accordion">
+                <div class="card m-1">
+                    <div class="card-header " style="background-color: #201063; color: #00e9ff;" id="headingAlert">
+                        <h5 class="mb-0">
+                            <button class="btn  collapsed" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="background-color:red; color: #00e9ff; font-weight:bold">
+                                <i class="far fa-bell"></i><span> Alert!</span>
+                            </button>
+                            <button class="btn  collapsed d-none" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="color: #00e9ff; font-weight:bold">
+                                <i class="far fa-bell"></i><span class="">No alert</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseAlert" class="collapse" aria-labelledby="headingAlert" data-parent="#accordion">
+                        <div class="card-body">
+                            <div>
+                                <h5>Tracker 001</h5>
+                                <p><i class="fas fa-temperature-low"></i> Temp: -10°C</p>
+                            </div>
+                            <div>
+                                <h5>Tracker 010</h5>
+                                <p><i class="fas fa-temperature-high"></i> Temp: 55°C</p>
+                            </div>
+                            <div>
+                                <h5>Tracker 004</h5>
+                                <p><i class="fas fa-hammer"></i> Shock: 2G</p>
+                            </div>
+                            <div>
+                                <h5>Tracker 001</h5>
+                                <p><i class="fas fa-battery-quarter"></i> Low battery</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="" style="height:400px">
-                    <canvas id="tempsChart" class=" col-12"></canvas>
+            </div>
+            <div class="card  m-1 mt-3 col-12 p-0 ">
+                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                    <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
+                        <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
+                    </div>
+                    <div class="" style="height:400px">
+                        <canvas id="tempsChart" class=" col-12"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </article>
 
 
 </section>
