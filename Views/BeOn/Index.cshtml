@@ -3,79 +3,95 @@
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_LayoutBeon.cshtml";
 }
-<section class="container-fluid p-0 " style="background-color:azure">
 
-    <div class="border p-2">
-        <h3 class="text-left  "><i class="fas fa-crosshairs"></i> Tracker 001</h3>
-        <p class="text-left  m-0">@DateTime.Now</p>
-    </div>
-
-        <div class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
-            <div class="card m-1">
-                <div class="card-header" style="background-color: #201063; color: #00e9ff; ">
-                    <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history" ></i> Last contact</h5>
-                </div>
-                <div class="card-body ">
-                    <p class="card-text">@DateTime.Now</p>
-                </div>
+<section class="container-fluid p-0 ">
+    <header class="border p-2 d-flex justify-content-between">
+        <div>
+            <h3 class="text-left  "><i class="fas fa-crosshairs"></i> Tracker 001</h3>
+            <p class="text-left  m-0">@DateTime.Now</p>
+        </div>
+        <div class='btn-toolbar pull-right'>
+            <div class="btn-group" >
+                <button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" style="color: #201063;">
+                    <i class="far fa-bell"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right  " role="menu">
+                    <li class="text-center list-group-item"><h3>5 alerts!!</h3></li>
+                    <li class="list-group-item"><a href=""><i class="fas fa-temperature-low"></i> Temp: -10°C</a></li>
+                    <li class="list-group-item"><a href=""><i class="fas fa-temperature-high"></i> Temp: 55°C</a></li>
+                    <li class="list-group-item"><a href=""><i class="fas fa-hammer"></i> Shock: 2G</a></li>
+                    <li class="list-group-item"><a href=""><i class="fas fa-battery-quarter"></i> Low battery</a></li>
+                    <li class="list-group-item"><a href="">Alert 5</a></li>
+                </ul>
             </div>
-            <div class="card m-1">
-                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
-                    <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
-                </div>
-                <div class="card-body ">
-                    <p class="card-text ">- total shocks: 2  </p>
-                    <p class="card-text ">- since last 72h: 2 </p>
-                    <p class="card-text ">- since last contact: 0 </p>
-                </div>
+        </div>
+    </header>
+    <div class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
+        <div class="card m-1">
+            <div class="card-header" style="background-color: #201063; color: #00e9ff; ">
+                <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history"></i> Last contact</h5>
             </div>
-            <div class="card m-1">
-                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
-                    <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
-                </div>
-                <div class="card-body text-center">
-                    <h5 class="card-title ">1 g</h5>
-                </div>
+            <div class="card-body ">
+                <p class="card-text">@DateTime.Now</p>
             </div>
-            <div class="card m-1">
-                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
-                    <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
-                </div>
-                <div class="card-body text-center">
-                    <h5 class="card-title">100%</h5>
-                    <div class="batteryContainer">
-                        <div class="batteryOuter"><div id="batteryLevel"></div></div>
-                        <div class="batteryBump"></div>
-                    </div>
-                </div>
+        </div>
+        <div class="card m-1">
+            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
             </div>
-    </div>
-        <div class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
-            <div class="card m-1 col-12 col-lg-5 p-0 ">
-                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
-                    <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Location</h5>
-                </div>
-                <div class="card-body">
-                    <div id="map"></div>
-                </div>
+            <div class="card-body ">
+                <p class="card-text ">- total shocks: 2  </p>
+                <p class="card-text ">- since last 72h: 2 </p>
+                <p class="card-text ">- since last contact: 0 </p>
             </div>
-            <div class="card  m-1 col-12 col-lg-7 p-0 " >
-                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
-                    <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
-                </div>
-                <div class="card-body">
-                    <div>
-                        <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
-                        <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
-
-
-                    </div>
-                    <div class="" style="height:400px">
-                    <canvas id="tempsChart" class=" col-12"></canvas>
-                        </div>
+        </div>
+        <div class="card m-1">
+            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title ">1 g</h5>
+            </div>
+        </div>
+        <div class="card m-1">
+            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">100%</h5>
+                <div class="batteryContainer">
+                    <div class="batteryOuter"><div id="batteryLevel"></div></div>
+                    <div class="batteryBump"></div>
                 </div>
             </div>
         </div>
-   
+    </div>
+    <div class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
+        <div class="card m-1 col-12 col-lg-5 p-0 ">
+            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Location</h5>
+            </div>
+            <div class="card-body">
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="card  m-1 col-12 col-lg-7 p-0 ">
+            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+                <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
+            </div>
+            <div class="card-body">
+                <div>
+                    <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
+                    <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
+
+
+                </div>
+                <div class="" style="height:400px">
+                    <canvas id="tempsChart" class=" col-12"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </section>
