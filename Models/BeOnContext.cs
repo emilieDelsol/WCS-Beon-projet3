@@ -8,7 +8,7 @@ namespace BeOn.Models
 {
     public class BeOnContext : DbContext
     {
-        public DbSet<Device> devices { get; set; }
+       /* public DbSet<Device> devices { get; set; }*/
         public DbSet<EnvironmentPayload> environmentPayloads { get; set; }
         public DbSet<PositionningPayload> positionningPayloads { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
