@@ -7,21 +7,23 @@
 <section class="container-fluid p-0 ">
     <header class="border p-2 d-flex justify-content-between">
         <div>
-            <h3 class="text-left  "><i class="fas fa-crosshairs"></i> Tracker 001</h3>
+            <h3 class="text-left  ">Dashboard</h3>
             <p class="text-left  m-0">@DateTime.Now</p>
         </div>
+        <h2><i class="fas fa-crosshairs"></i>Tracker 001 </h2>
+        <p>&ensp;</p>
     </header>
-    <article class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
-        <div class="card m-1">
-            <div class="card-header" style="background-color: #201063; color: #00e9ff; ">
+    <article class="card-deck p-0  m-0 d-flex flex-column flex-lg-row justify-content-between">
+        <div class="card m-3">
+            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8; ">
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history"></i> Last contact</h5>
             </div>
             <div class="card-body ">
                 <p class="card-text">@DateTime.Now</p>
             </div>
         </div>
-        <div class="card m-1">
-            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+        <div class="card m-3">
+            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
             </div>
             <div class="card-body ">
@@ -30,8 +32,8 @@
                 <p class="card-text ">- since last contact: 0 </p>
             </div>
         </div>
-        <div class="card m-1">
-            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+        <div class="card m-3">
+            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
             </div>
             <div class="card-body text-center">
@@ -39,10 +41,10 @@
             </div>
         </div>
 
-        <div class="card m-1">
+        <div class="card m-3">
             <!--Button to test battery-->
            
-            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+            <div class="card-header pb-0 mb-0" style="background-color: #212429; color: #48cbd8;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
             </div>
             <div class="card-body text-center">
@@ -52,7 +54,7 @@
                     <div class="batteryBump"></div>
                 </div>
                 <br/>
-                <div class="btn-group">
+                <div >
                     <button type="button" class="btn btn-danger" onclick="UpdateBattery5()">5%</button>
                     <button type="button" class="btn btn-warning" onclick="UpdateBattery25()">25%</button>
                     <button type="button" class="btn btn-dark" onclick="UpdateBattery50()">50%</button>
@@ -63,24 +65,24 @@
         </div>
     </article>
 
-    <article class="container-fluid p-3 d-flex flex-column flex-lg-row justify-content-around">
-        <div class="card m-1 col-12 col-lg-5 p-0 ">
-            <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+    <article class="container-fluid p-3 p-lg-0 m-auto d-flex flex-column flex-lg-row justify-content-around">
+        <div class="card m-auto m-lg-3 col-12 col-lg-5 p-0 ">
+            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Location</h5>
             </div>
             <div class="card-body">
                 <div id="map"></div>
             </div>
         </div>
-        <div class="col">
+        <div class="col ml-lg-3 mr-lg-3 p-0">
             <div id="accordion">
-                <div class="card m-1">
-                    <div class="card-header " style="background-color: #201063; color: #00e9ff;" id="headingAlert">
+                <div class="card col-12 mr-auto ml-auto mt-3 mb-3 p-0">
+                    <div class="card-header " style="background-color: #212429; color: #48cbd8;" id="headingAlert">
                         <h5 class="mb-0">
-                            <button class="btn  collapsed" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="background-color:red; color: #00e9ff; font-weight:bold">
+                            <button class="btn  collapsed" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="background-color:red; color: #48cbd8; font-weight:bold">
                                 <i class="far fa-bell"></i><span> Alert!</span>
                             </button>
-                            <button class="btn  collapsed d-none" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="color: #00e9ff; font-weight:bold">
+                            <button class="btn  collapsed d-none" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="color: #48cbd8; font-weight:bold">
                                 <i class="far fa-bell"></i><span class="">No alert</span>
                             </button>
                         </h5>
@@ -107,8 +109,8 @@
                     </div>
                 </div>
             </div>
-            <div class="card  m-1 mt-3 col-12 p-0 ">
-                <div class="card-header" style="background-color: #201063; color: #00e9ff;">
+            <div class="card  mt-3 mb-3 col-12 p-0 ">
+                <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
                     <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
                 </div>
                 <div class="card-body">
@@ -116,7 +118,7 @@
                         <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
                         <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
                     </div>
-                    <div class="" style="height:400px">
+                    <div class="" style="height:auto">
                         <canvas id="tempsChart" class=" col-12"></canvas>
                     </div>
                 </div>
