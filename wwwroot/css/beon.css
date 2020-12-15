@@ -1,6 +1,7 @@
-﻿body{
+﻿body {
     max-width: 3000px;
-    margin:auto;
+    margin: auto;
+    font-family: 'Ubuntu', sans-serif;
 }
 .font-size1-5 {
     font-size: 1.5vh;
@@ -17,9 +18,7 @@
 .font-size5{
     font-size:5vh;
 }
-.dropdown-menu{
-    width:max-content;
-}
+
 .batteryContainer {
     display: -webkit-box;
     display: -moz-box;
@@ -46,16 +45,39 @@
     height: 3vh;
 }
 
-#batteryLevel {
+.batteryLevel100 {
     border-radius: 2px;
     background-color: #73AD21;
     width: 100%;
     height: 100%;
 }
-
-.bg-aside {
-    background-color:#2e6096;
+.batteryLevel75 {
+    border-radius: 2px;
+    background-color: #b6ff00;
+    width: 75%;
+    height: 100%;
 }
-.bg-aside a{
-    color:white;
+.batteryLevel50 {
+    border-radius: 2px;
+    background-color: #ffd800;
+    width: 50%;
+    height: 100%;
+}
+.batteryLevel25 {
+    border-radius: 2px;
+    background-color: #ff6a00;
+    width: 25%;
+    height: 100%;
+}
+.batteryLevel5 {
+    border-radius: 2px;
+    background-color: #ff0000;
+    width: 5%;
+    height: 100%;
+}
+
+
+.card {
+    box-shadow: 0px 0px 10px 0px #201063;
+    border: solid 1px #201063;
 }

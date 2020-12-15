@@ -22,7 +22,7 @@ function initMap() {
     })
     // Nous ajoutons un marqueur + popup
     var marker = L.marker([43.6043, 1.4437]/*, { icon: icone }*/).addTo(macarte);
-    marker.bindPopup("<p>Toulouse</p>");
+    marker.bindPopup("<h2>Tracker 001</h2><p>description</p>");
 }
 window.onload = function () {
     // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
