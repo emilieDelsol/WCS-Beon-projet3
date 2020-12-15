@@ -10,12 +10,14 @@ namespace BeOn.Models
 		public static List<EnvironmentPayload> SelectEnvironmentPayloads()
 		{
 			List<EnvironmentPayload> environmentPayloads = new List<EnvironmentPayload>();
+
 			BeOnContext beOnContext = new BeOnContext();
 			foreach(EnvironmentPayload environment in beOnContext.environmentPayloads)
 			{
 				environmentPayloads.Add(environment);
 			}
-			return environmentPayloads;
+			List<EnvironmentPayload>  environmentPayloadsTest =  environmentPayloads.OrderByDescending(environmentPayloads => environmentPayloads.TimestampEvent).ToList();
+			return environmentPayloadsTest;
 		}
 	}
 }

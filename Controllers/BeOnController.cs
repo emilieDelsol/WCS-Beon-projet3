@@ -1,3 +1,4 @@
+using BeOn.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,16 @@ namespace BeOn.Controllers
 
 		public IActionResult ListDevices()
 		{
-			return View();
+			DateTime mydate = DateTime.Now.AddDays(-30);
+			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e=>e.TimestampEvent<mydate).ToList();
+			
+			return View(environmentPayloads);
 		}
-		public IActionResult testDashboard()
+		public IActionResult testDashboard(int SeqNumber)
 		{
-			return View();
+			
+			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e=>e.SeqNumber==SeqNumber).ToList();
+			return View(environmentPayloads);
 		}
 
 	}
