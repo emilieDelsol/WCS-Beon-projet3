@@ -19,26 +19,21 @@ namespace BeOn.Controllers
 		}
 		public IActionResult ListDevices()
 		{
-			DateTime mydate = DateTime.Now.AddDays(-200);
-			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e => e.TimestampEvent > mydate).OrderBy(e=>e.DeviceId).ToList();
-		
-			List<EnvironmentPayload> deviceList = new List<EnvironmentPayload>();
-			String flag = "";
-			foreach(EnvironmentPayload environment in environmentPayloads)
-			{
-				if (environment.DeviceId!=flag)
-				{
-					deviceList.Add(environment);
-				}
-				flag = environment.DeviceId;
-			}
-			return View(deviceList);
+				IEnumerable<Device> devices = new List<Device>();
+				BeOnContext beOnContext = new BeOnContext();
+				devices = SelectData.SelectAllDevice();
+				return View(devices);
 		}
 		public IActionResult testDashboard(string IdDevice)
 		{
-			
-			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e=>e.DeviceId==IdDevice).ToList();
-			return View(environmentPayloads);
+			IEnumerable<Device> devices = new List<Device>();
+			BeOnContext beOnContext = new BeOnContext();
+			devices = SelectData.SelectAllDevice().Where(a => a.DeviceId == IdDevice);
+			Device devic = devices.First();
+			devic.PositionningPayloads = devic.PositionningPayloads.OrderByDescending(p => p.TimestampEvent).ToList();
+			devic.EnvironmentPayloads = devic.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent).ToList();
+
+			return View(devic);
 		}
 
 	}
