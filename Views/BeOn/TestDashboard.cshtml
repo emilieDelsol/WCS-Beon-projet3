@@ -3,10 +3,14 @@
     ViewData["Title"] = "Test Dashboard";
     Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
 }
-@{ EnvironmentPayload ok = Model.EnvironmentPayloads.First();}
+@{List<EnvironmentPayload> environmentList = new List<EnvironmentPayload>();
+    environmentList = Model.EnvironmentPayloads;
+    EnvironmentPayload environment = environmentList.First();
+    }
+
 
         <div>
-            <h1>@ok.Tmax @ok.TimestampEvent</h1>
+            <h1> @environment.TimestampEvent</h1>
         </div>
 
 
@@ -17,7 +21,7 @@
             <p class="text-left  m-0">@DateTime.Now</p>
         </div>
         <h2>
-            <i class="fas fa-crosshairs"></i>Tracker  
+            <i class="fas fa-crosshairs"></i>Tracker  @Model.Name
         </h2>
         <p>&ensp;</p>
     </header>
