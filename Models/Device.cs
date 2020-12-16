@@ -23,7 +23,7 @@ namespace BeOn.Models
         [Column("endproductcertificate")]
         public string EndProductCertificate { get; set; }
 
-        public ICollection<EnvironmentPayload> EnvironmentPayloads { get; set; }
-        public ICollection<PositionningPayload> PositionningPayloads { get; set; }
+        public List<EnvironmentPayload> EnvironmentPayloads { get; set; }
+        public List<PositionningPayload> PositionningPayloads { get; set; }
     }
 }
