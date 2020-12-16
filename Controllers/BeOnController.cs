@@ -20,24 +20,24 @@ namespace BeOn.Controllers
 		public IActionResult ListDevices()
 		{
 			DateTime mydate = DateTime.Now.AddDays(-200);
-			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e => e.TimestampEvent > mydate).OrderBy(e=>e.IdDevice).ToList();
+			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e => e.TimestampEvent > mydate).OrderBy(e=>e.DeviceId).ToList();
 		
 			List<EnvironmentPayload> deviceList = new List<EnvironmentPayload>();
 			String flag = "";
 			foreach(EnvironmentPayload environment in environmentPayloads)
 			{
-				if (environment.IdDevice!=flag)
+				if (environment.DeviceId!=flag)
 				{
 					deviceList.Add(environment);
 				}
-				flag = environment.IdDevice;
+				flag = environment.DeviceId;
 			}
 			return View(deviceList);
 		}
 		public IActionResult testDashboard(string IdDevice)
 		{
 			
-			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e=>e.IdDevice==IdDevice).ToList();
+			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e=>e.DeviceId==IdDevice).ToList();
 			return View(environmentPayloads);
 		}
 

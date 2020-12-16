@@ -20,8 +20,8 @@
         @foreach (EnvironmentPayload environment in Model)
         {
         <tr>
-            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@environment.IdDevice"> @environment.IdDevice</a></th>
-            <td scope="row"><a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@environment.IdDevice"> @environment.TimestampEvent</a> </td>
+            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@environment.DeviceId"> @environment.DeviceId</a></th>
+            <td scope="row"><a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@environment.DeviceId"> @environment.TimestampEvent</a> </td>
         </tr>
         }
     </tbody>
