@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -7,54 +8,56 @@ using System.Threading.Tasks;
 namespace BeOn.Models
 {
     [Table("positionning_payload")]
+    [Keyless]
+
     public class PositionningPayload
     {
-          /*  [Column("id_device")]
-            public string device_Id { get; set; }*/
+          [Column("id_device")]
+            public String IdDevice { get; set; }
 
             [Column("timestampevent")]
-            public DateTime dateEvent { get; set; }
+            public DateTime TimestampEvent { get; set; }
 
             [Column("seq_number")]
-            public int Id { get; set; }
+            public int SeqNumber { get; set; }
 
             [Column("computed_latitude")]
-            public double latitude { get; set; }
+            public double ComputedLatitude { get; set; }
 
             [Column("computed_longitude")]
-            public double longitude { get; set; }
+            public double ComputedLongitude { get; set; }
 
             [Column("radius")]
-            public int radius { get; set; }
+            public int Radius { get; set; }
 
             [Column("source")]
-            public int source { get; set; }
+            public int Source { get; set; }
 
             [Column("status")]
-            public int status { get; set; }
+            public int Status { get; set; }
 
             [Column("frametype")]
-            public string frametype { get; set; }
+            public string Frametype { get; set; }
 
             [Column("batterylvl")]
-            public double batterylvl { get; set; }
+            public double Batterylvl { get; set; }
 
             [Column("timestamppayload")]
-            public DateTime datePayload { get; set; }
+            public DateTime TimestampPayload{ get; set; }
 
             [Column("long")]
-            public double longs { get; set; }
+            public double Long { get; set; }
 
             [Column("lat")]
-            public int lat { get; set; }
+            public int Lat { get; set; }
 
             [Column("alt")]
-            public int tmax { get; set; }
+            public int Alt { get; set; }
 
             [Column("hdop")]
-            public int tmin { get; set; }
+            public int Hdop { get; set; }
 
-            [Column("nb_sattelites")]
-            public int tmean { get; set; }
+            [Column("nb_satellites")]
+            public int NbSatellites { get; set; }
     }
 }

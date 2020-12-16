@@ -1,4 +1,5 @@
-﻿
+﻿@model List<EnvironmentPayload>
+
 @{
     ViewData["Title"] = "listDevices";
     Layout = "~/Views/Shared/_LayoutBeonPrincipal.cshtml";
@@ -9,22 +10,19 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Device</th>
+            <th scope="col">Last contact</th>
         </tr>
     </thead>
     <tbody>
+       
+      
+        @foreach (EnvironmentPayload environment in Model)
+        {
         <tr>
-            <th scope="row">1</th>
-            <td> <a asp-controller="Beon" asp-action="Index">Tracker 001</a></td>
+            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@environment.IdDevice"> @environment.IdDevice</a></th>
+            <td scope="row"><a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@environment.IdDevice"> @environment.TimestampEvent</a> </td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td> <a asp-controller="Beon" asp-action="Index">Tracker 002</a></td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td> <a asp-controller="Beon" asp-action="Index">Tracker 003</a></td>
-        </tr>
+        }
     </tbody>
 </table>

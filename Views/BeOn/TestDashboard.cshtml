@@ -1,0 +1,137 @@
+﻿@model List<EnvironmentPayload>
+@{
+    ViewData["Title"] = "Test Dashboard";
+    Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
+}
+
+
+    <div>
+        <h1>Tracker @Model[0].IdDevice </h1>
+    </div>
+
+<section class="container-fluid p-0 ">
+    <header class="border p-2 d-flex justify-content-between">
+        <div>
+            <h3 class="text-left  ">DashboardTEST</h3>
+            <p class="text-left  m-0">@DateTime.Now</p>
+        </div>
+        <h2>
+            <i class="fas fa-crosshairs"></i>Tracker  
+        </h2>
+        <p>&ensp;</p>
+    </header>
+    <article class="card-deck p-0  m-0 d-flex flex-column flex-lg-row justify-content-between">
+        <div class="card m-3">
+            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8; ">
+                <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history"></i> Last contact</h5>
+            </div>
+            <div class="card-body ">
+                <p class="card-text">@DateTime.Now</p>
+            </div>
+        </div>
+        <div class="card m-3">
+            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+                <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
+            </div>
+            <div class="card-body ">
+                <p class="card-text ">- total shocks: 2  </p>
+                <p class="card-text ">- since last 72h: 2 </p>
+                <p class="card-text ">- since last contact: 0 </p>
+            </div>
+        </div>
+        <div class="card m-3">
+            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title ">1 g</h5>
+            </div>
+        </div>
+
+        <div class="card m-3">
+            <!--Button to test battery-->
+
+            <div class="card-header pb-0 mb-0" style="background-color: #212429; color: #48cbd8;">
+                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title " id="batteryTitle"> 50%</h5>
+                <div class="batteryContainer justify-content-center">
+                    <div class="batteryOuter "><div class="batteryLevel50" id="batteryLevel"></div></div>
+                    <div class="batteryBump"></div>
+                </div>
+                <br />
+                <div>
+                    <button type="button" class="btn btn-danger" onclick="UpdateBattery5()">5%</button>
+                    <button type="button" class="btn btn-warning" onclick="UpdateBattery25()">25%</button>
+                    <button type="button" class="btn btn-dark" onclick="UpdateBattery50()">50%</button>
+                    <button type="button" class="btn btn-info" onclick="UpdateBattery75()">75%</button>
+                    <button type="button" class="btn btn-success" onclick="UpdateBattery100()">100%</button>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article class="container-fluid p-3 p-lg-0 m-auto d-flex flex-column flex-lg-row justify-content-around">
+        <div class="card m-auto m-lg-3 col-12 col-lg-5 p-0 ">
+            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Location</h5>
+            </div>
+            <div class="card-body">
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="col ml-lg-3 mr-lg-3 p-0">
+            <div id="accordion">
+                <div class="card col-12 mr-auto ml-auto mt-3 mb-3 p-0">
+                    <div class="card-header " style="background-color: #212429; color: #48cbd8;" id="headingAlert">
+                        <h5 class="mb-0">
+                            <button class="btn  collapsed" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="background-color:red; color: #48cbd8; font-weight:bold">
+                                <i class="far fa-bell"></i><span> Alert!</span>
+                            </button>
+                            <button class="btn  collapsed d-none" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="color: #48cbd8; font-weight:bold">
+                                <i class="far fa-bell"></i><span class="">No alert</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseAlert" class="collapse" aria-labelledby="headingAlert" data-parent="#accordion">
+                        <div class="card-body">
+                            <div>
+                                <h5>Tracker 001</h5>
+                                <p><i class="fas fa-temperature-low"></i> Temp: -10°C</p>
+                            </div>
+                            <div>
+                                <h5>Tracker 010</h5>
+                                <p><i class="fas fa-temperature-high"></i> Temp: 55°C</p>
+                            </div>
+                            <div>
+                                <h5>Tracker 004</h5>
+                                <p><i class="fas fa-hammer"></i> Shock: 2G</p>
+                            </div>
+                            <div>
+                                <h5>Tracker 001</h5>
+                                <p><i class="fas fa-battery-quarter"></i> Low battery</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card  mt-3 mb-3 col-12 p-0 ">
+                <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+                    <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
+                        <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
+                    </div>
+                    <div class="" style="height:auto">
+                        <canvas id="tempsChart" class=" col-12"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+</section>

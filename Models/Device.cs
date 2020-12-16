@@ -10,7 +10,7 @@ namespace BeOn.Models
     public class Device
     {
         [Column("id_device")]
-        public string Id { get; set; }
+        public Guid IdDevice { get; set; }
 
         [Column("name")]
         public string Name { get; set; }
