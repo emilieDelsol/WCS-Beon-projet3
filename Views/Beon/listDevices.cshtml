@@ -11,18 +11,18 @@
     <thead>
         <tr>
             <th scope="col">Device</th>
-            <th scope="col">TimestampEvent</th>
+            <th scope="col">Last contact</th>
         </tr>
     </thead>
     <tbody>
+       
+      
         @foreach (EnvironmentPayload environment in Model)
         {
         <tr>
-            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-SeqNumber="@environment.SeqNumber"> @environment.SeqNumber</a></th>
-            <td> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-SeqNumber="@environment.SeqNumber"> @environment.TimestampEvent</a></td>
-
+            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-SeqNumber="@environment.IdDevice"> @environment.IdDevice</a></th>
+            <td scope=" row"><a asp-controller="Beon" asp-action="TestDashboard" asp-route-SeqNumber="@environment.TimestampEvent"> @environment.TimestampEvent</a> </td>
         </tr>
-
         }
     </tbody>
 </table>
