@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace BeOn.Models
 {
     [Table("environment_payload")]
-    [Keyless]
     public class EnvironmentPayload
     {
         [Column("id_device")]
-        public String IdDevice { get; set; }
+        public String DeviceId { get; set; }
+        public Device Device { get; set; }
 
         [Column("timestampevent")]
         public DateTime TimestampEvent { get; set; }

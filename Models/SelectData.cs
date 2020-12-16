@@ -10,9 +10,10 @@ namespace BeOn.Models
 		public static List<EnvironmentPayload> SelectEnvironmentPayloads()
 		{
 			List<EnvironmentPayload> environmentPayloads = new List<EnvironmentPayload>();
+			List<Device> devices = new List<Device>();
 
 			BeOnContext beOnContext = new BeOnContext();
-			foreach(EnvironmentPayload environment in beOnContext.environmentPayloads)
+			foreach(EnvironmentPayload environment in beOnContext.EnvironmentPayloads)
 			{
 				environmentPayloads.Add(environment);
 			}
