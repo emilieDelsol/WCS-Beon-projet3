@@ -4,12 +4,11 @@
     Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
 }
 
-@foreach(EnvironmentPayload environment in @Model)
-{
+
     <div>
-        <h1>Tracker  @environment.SeqNumber </h1>
+        <h1>Tracker @Model[0].IdDevice </h1>
     </div>
-}
+
 <section class="container-fluid p-0 ">
     <header class="border p-2 d-flex justify-content-between">
         <div>

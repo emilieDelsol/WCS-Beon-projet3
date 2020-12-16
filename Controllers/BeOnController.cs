@@ -13,11 +13,14 @@ namespace BeOn.Controllers
 		{
 			return View();
 		}
-
+		public IActionResult Overview()
+		{
+			return View();
+		}
 		public IActionResult ListDevices()
 		{
-			DateTime mydate = DateTime.Now.AddDays(-30);
-			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e => e.TimestampEvent < mydate).OrderBy(e=>e.IdDevice).ToList();
+			DateTime mydate = DateTime.Now.AddDays(-200);
+			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e => e.TimestampEvent > mydate).OrderBy(e=>e.IdDevice).ToList();
 		
 			List<EnvironmentPayload> deviceList = new List<EnvironmentPayload>();
 			String flag = "";
@@ -31,10 +34,10 @@ namespace BeOn.Controllers
 			}
 			return View(deviceList);
 		}
-		public IActionResult testDashboard(string deviceName)
+		public IActionResult testDashboard(string IdDevice)
 		{
 			
-			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e=>e.IdDevice==deviceName).ToList();
+			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e=>e.IdDevice==IdDevice).ToList();
 			return View(environmentPayloads);
 		}
 
