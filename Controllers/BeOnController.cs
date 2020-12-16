@@ -20,8 +20,11 @@ namespace BeOn.Controllers
 		public IActionResult ListDevices()
 		{
 				IEnumerable<Device> devices = new List<Device>();
-				devices = SelectData.SelectDeviceWithoutList();
-				return View(devices);
+			IEnumerable<Device> devicesSorted = new List<Device>();
+			DateTime myDate = DateTime.Now;
+			devices = SelectData.SelectAllDevice(myDate);
+			devicesSorted = devices.Where(d => d.EnvironmentPayloads.Count() != 0).ToList();
+			return View(devicesSorted);
 		}
 		public IActionResult testDashboard(string IdDevice)
 		{
