@@ -21,6 +21,10 @@ namespace BeOn.Controllers
 		{
 			return View();
 		}
+		public IActionResult Location1Device()
+		{
+			return View();
+		}
 
 	}
 }

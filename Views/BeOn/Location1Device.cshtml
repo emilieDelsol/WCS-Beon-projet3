@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "listDevices";
+    Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
+}
+<article class="container-fluid p-3 d-flex">
+    <div class="card col m-auto m-3  ">
+        <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+            <h5 class="card-title " style="font-weight: bold;"><a asp-controller="BeOn" asp-action="Location1Device" style="color: #48cbd8; "> <i class="fas fa-map-marked"></i> Location</a></h5>
+        </div>
+        <div class="card-body">
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class=" m-auto ">
+        <div class="btn-group dropleft ml-3 mr-0">
+            <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="far fa-bell"></i>
+            </button>
+            <div class="dropdown-menu " >
+                    <a class="dropdown-item"><i class="fas fa-temperature-low"></i> Temp: -10°C</a>
+                    <a class="dropdown-item"><i class="fas fa-temperature-high"></i> Temp: 55°C</a>
+                    <a class="dropdown-item"><i class="fas fa-hammer"></i> Shock: 2G</a>
+                    <a class="dropdown-item"><i class="fas fa-battery-quarter"></i> Low battery</a>
+            </div>
+        </div>
+    </div>
+</article>
