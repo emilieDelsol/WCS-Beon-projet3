@@ -19,22 +19,18 @@ namespace BeOn.Controllers
 		}
 		public IActionResult ListDevices()
 		{
-				IEnumerable<Device> devices = new List<Device>();
-			IEnumerable<Device> devicesSorted = new List<Device>();
-			DateTime myDate = DateTime.Now;
-			devices = SelectData.SelectAllDevice(myDate);
-			devicesSorted = devices.Where(d => d.EnvironmentPayloads.Count() != 0).ToList();
-			return View(devicesSorted);
+				IEnumerable<String> devices = new List<String>();
+			DateTime myDate = DateTime.Now.AddDays(-90);
+			devices = SelectData.SelectDeviceId();
+			return View(devices);
 		}
 		public IActionResult testDashboard(string IdDevice)
 		{
 			List<Device> devices = new List<Device>();
 			
-			DateTime myDate = DateTime.Now;
+			DateTime myDate = DateTime.Now.AddDays(-90);
 
-			devices = SelectData.SelectAllDevice(myDate).Where(a => a.DeviceId == IdDevice).ToList();
-			devices.ToList().ForEach(d => d.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent));
-			devices.ToList().ForEach(d => d.PositionningPayloads.OrderByDescending(pos => pos.TimestampEvent));
+			devices = SelectData.SelectAllById(IdDevice,myDate).ToList();
 			Device device = devices.First();
 			return View(device);
 		}
