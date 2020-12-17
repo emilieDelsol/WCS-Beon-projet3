@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Device>
+﻿@model IEnumerable<String>
 
 @{
     ViewData["Title"] = "listDevices";
@@ -11,17 +11,15 @@
     <thead>
         <tr>
             <th scope="col">Device Id</th>
-            <th scope="col">Name</th>
         </tr>
     </thead>
     <tbody>
        
       
-        @foreach (Device dev in Model)
+        @foreach (String dev in Model)
         {
         <tr>
-            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@dev.DeviceId"> @dev.DeviceId</a></th>
-            <td scope="row"><a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@dev.Name"> @dev.Name</a> </td>
+            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@dev"> @dev</a></th>
         </tr>
         }
     </tbody>

@@ -13,15 +13,23 @@ namespace BeOn.Models
 			IEnumerable<Device> devices = new List<Device>();
 
 			BeOnContext beOnContext = new BeOnContext();
-			devices = beOnContext.Devices.Include(a => a.EnvironmentPayloads.Where(e=>e.TimestampEvent<myDate)).Include(e => e.PositionningPayloads.Where(p=>p.TimestampEvent>myDate)).ToList();
+			devices = beOnContext.Devices.Include(a => a.EnvironmentPayloads.Where(e=>e.TimestampEvent<myDate).OrderByDescending(e=>e.TimestampEvent)).Include(e => e.PositionningPayloads.Where(p=>p.TimestampEvent<myDate).OrderByDescending(e=>e.TimestampEvent)).ToList();
 			return devices;
 		}
-		public static IEnumerable<Device> SelectDeviceWithoutList()
+		public static IEnumerable<String> SelectDeviceId()
+		{
+			IEnumerable<String> devicesId = new List<String>();
+			BeOnContext beOnContext = new BeOnContext();
+			devicesId=(beOnContext.Devices.Select(d=>d.DeviceId));
+			return devicesId;
+		}
+		public static IEnumerable<Device> SelectAllById(string IdDevice, DateTime myDate)
 		{
 			IEnumerable<Device> devices = new List<Device>();
 			BeOnContext beOnContext = new BeOnContext();
-			devices = beOnContext.Devices;
+			devices = beOnContext.Devices.Include(d => d.EnvironmentPayloads.Where(e => e.DeviceId == IdDevice&&e.TimestampEvent>myDate).OrderBy(e => e.TimestampEvent));
 			return devices;
+
 		}
 	}
 }

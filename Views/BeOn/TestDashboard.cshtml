@@ -5,7 +5,7 @@
 }
 @{List<EnvironmentPayload> environmentList = new List<EnvironmentPayload>();
     environmentList = Model.EnvironmentPayloads;
-    EnvironmentPayload environment = environmentList[0];
+    EnvironmentPayload environment = environmentList.FirstOrDefault();
     }
 
 
