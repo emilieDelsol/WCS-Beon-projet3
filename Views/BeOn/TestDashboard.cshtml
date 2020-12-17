@@ -5,17 +5,18 @@
 }
 
 @{
-    EnvironmentPayload ok = Model.EnvironmentPayloads.FirstOrDefault();
+    EnvironmentPayload ok = Model.EnvironmentPayloads.LastOrDefault();
+    IEnumerable<EnvironmentPayload> oke = Model.EnvironmentPayloads.OrderByDescending(a => a.TimestampEvent);
+    double Shock = 0;
+    int NumberOfShock = oke.Count(a => a.EventType == "3");
+    foreach(EnvironmentPayload env in oke)
+    {
+        if(env.Smax>Shock)
+        {
+            Shock = env.Smax;
+        }
+    }
 }
-        <div>
-            <h1> @ok.TimestampEvent</h1>
-        </div>
-
-<div>
-    <h1>@ok.Tmax @ok.TimestampEvent</h1>
-</div>
-
-
 <section class="container-fluid p-0 ">
     <header class="border p-2 d-flex justify-content-between">
         <div>
@@ -23,7 +24,7 @@
             <p class="text-left  m-0">@DateTime.Now</p>
         </div>
         <h2>
-            <i class="fas fa-crosshairs"></i>Tracker  @Model.Name
+            <i class="fas fa-crosshairs"></i>Tracker  @Model.DeviceId
         </h2>
         <p>&ensp;</p>
     </header>
@@ -33,7 +34,7 @@
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history"></i> Last contact</h5>
             </div>
             <div class="card-body ">
-                <p class="card-text">@DateTime.Now</p>
+                <p class="card-text">@ok.TimestampEvent</p>
             </div>
         </div>
         <div class="card m-3">
@@ -41,9 +42,9 @@
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
             </div>
             <div class="card-body ">
-                <p class="card-text ">- total shocks: 2  </p>
-                <p class="card-text ">- since last 72h: 2 </p>
-                <p class="card-text ">- since last contact: 0 </p>
+                <p class="card-text ">- total shocks:@NumberOfShock  </p>
+                <p class="card-text ">- since last 72h: @ok.TotalShock </p>
+                <p class="card-text ">- since last contact: @ok.Cptshockovlastperiod </p>
             </div>
         </div>
         <div class="card m-3">
@@ -51,7 +52,7 @@
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
             </div>
             <div class="card-body text-center">
-                <h5 class="card-title ">1 g</h5>
+                <h5 class="card-title ">@Shock g</h5>
             </div>
         </div>
 
@@ -62,7 +63,7 @@
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
             </div>
             <div class="card-body text-center">
-                <h5 class="card-title " id="batteryTitle"> 50%</h5>
+                <h5 class="card-title " id="batteryTitle"> @ok.Batterylvl</h5>
                 <div class="batteryContainer justify-content-center">
                     <div class="batteryOuter "><div class="batteryLevel50" id="batteryLevel"></div></div>
                     <div class="batteryBump"></div>
@@ -103,22 +104,33 @@
                     </div>
                     <div id="collapseAlert" class="collapse" aria-labelledby="headingAlert" data-parent="#accordion">
                         <div class="card-body">
-                            <div>
-                                <h5>Tracker 001</h5>
-                                <p><i class="fas fa-temperature-low"></i> Temp: -10°C</p>
-                            </div>
-                            <div>
-                                <h5>Tracker 010</h5>
-                                <p><i class="fas fa-temperature-high"></i> Temp: 55°C</p>
-                            </div>
-                            <div>
-                                <h5>Tracker 004</h5>
-                                <p><i class="fas fa-hammer"></i> Shock: 2G</p>
-                            </div>
-                            <div>
-                                <h5>Tracker 001</h5>
-                                <p><i class="fas fa-battery-quarter"></i> Low battery</p>
-                            </div>
+                            @{
+                                foreach (var oks in oke)
+                                {
+                                    if (oks.EventType == "1")
+                                    {
+                                        <div>
+                                            <h1>Alert temperature</h1>
+                                        </div>
+                                    }
+                                    else if (oks.EventType == "2")
+                                    {
+                                        <div>
+                                            <h1>Alert temperature terminé</h1>
+                                        </div>
+                                    }
+                                    else if (oks.EventType == "3")
+                                    {
+                                        <div>
+                                            <h1>Alert Shock</h1>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }                            
                         </div>
                     </div>
                 </div>
