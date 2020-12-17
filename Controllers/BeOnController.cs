@@ -9,6 +9,11 @@ namespace BeOn.Controllers
 {
 	public class BeOnController : Controller
 	{
+		private BeOnContext _context;
+		public BeOnController(BeOnContext injectedBeonContext)
+        {
+			_context = injectedBeonContext;
+        }
 		public IActionResult Index()
 		{
 			return View();
@@ -19,26 +24,21 @@ namespace BeOn.Controllers
 		}
 		public IActionResult ListDevices()
 		{
-			DateTime mydate = DateTime.Now.AddDays(-200);
-			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e => e.TimestampEvent > mydate).OrderBy(e=>e.DeviceId).ToList();
-		
-			List<EnvironmentPayload> deviceList = new List<EnvironmentPayload>();
-			String flag = "";
-			foreach(EnvironmentPayload environment in environmentPayloads)
-			{
-				if (environment.DeviceId!=flag)
-				{
-					deviceList.Add(environment);
-				}
-				flag = environment.DeviceId;
-			}
-			return View(deviceList);
+			IEnumerable<Device> devices = new List<Device>();
+			devices = from a in _context.Devices select a;  
+			return View(devices);
 		}
 		public IActionResult testDashboard(string IdDevice)
 		{
-			
-			List<EnvironmentPayload> environmentPayloads = SelectData.SelectEnvironmentPayloads().Where(e=>e.DeviceId==IdDevice).ToList();
-			return View(environmentPayloads);
+			IEnumerable<Device> devices = new List<Device>();
+			Device device = new Device();
+			devices = from a in _context.Devices where(a.DeviceId == IdDevice) select a;
+			device = devices.First();
+			if(device.EnvironmentPayloads.Count == 0)
+            {
+				return View("Default");
+            }
+			return View(device);
 		}
 
 	}

@@ -11,9 +11,9 @@ namespace BeOn.Models
     [Table("positionning_payload")]
     public class PositionningPayload
     {
-        [Column("device_id")]
+        [Column("id_device")]
         public String DeviceId { get; set; }
-        public Device Device { get; set; }
+        public virtual Device Device { get; set; }
 
         [Column("timestampevent")]
         public DateTime TimestampEvent { get; set; }
@@ -43,13 +43,14 @@ namespace BeOn.Models
         public double Batterylvl { get; set; }
 
         [Column("timestamppayload")]
-        public DateTime TimestampPayload{ get; set; }
-
+        public DateTime TimestampPayload { get; set; }
+        [Column("event_type")]
+        public string EventType { get; set; }
         [Column("long")]
         public double Long { get; set; }
 
         [Column("lat")]
-        public int Lat { get; set; }
+        public double Lat { get; set; }
 
         [Column("alt")]
         public int Alt { get; set; }

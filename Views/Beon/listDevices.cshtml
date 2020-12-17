@@ -1,4 +1,4 @@
-﻿@model List<EnvironmentPayload>
+﻿@model IEnumerable<Device>
 
 @{
     ViewData["Title"] = "listDevices";
@@ -17,11 +17,11 @@
     <tbody>
        
       
-        @foreach (EnvironmentPayload environment in Model)
+        @foreach (Device dev in Model)
         {
         <tr>
-            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@environment.DeviceId"> @environment.DeviceId</a></th>
-            <td scope="row"><a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@environment.DeviceId"> @environment.TimestampEvent</a> </td>
+            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@dev.DeviceId"> @dev.DeviceId</a></th>
+            <td scope="row"><a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@dev.Name"> @dev.Name</a> </td>
         </tr>
         }
     </tbody>
