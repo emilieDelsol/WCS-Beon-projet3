@@ -1,22 +1,18 @@
 ﻿@model Device
-@{
-    ViewData["Title"] = "Test Dashboard";
-    Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
-}
+@{ ViewData["Title"] = "Test Dashboard";
+                Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml"; }
 
-@{
-    EnvironmentPayload ok = Model.EnvironmentPayloads.LastOrDefault();
-    IEnumerable<EnvironmentPayload> oke = Model.EnvironmentPayloads.OrderByDescending(a => a.TimestampEvent);
-    double Shock = 0;
-    int NumberOfShock = oke.Count(a => a.EventType == "3");
-    foreach(EnvironmentPayload env in oke)
-    {
-        if(env.Smax>Shock)
-        {
-            Shock = env.Smax;
-        }
-    }
-}
+@{ EnvironmentPayload ok = Model.EnvironmentPayloads.LastOrDefault();
+                IEnumerable<EnvironmentPayload> oke = Model.EnvironmentPayloads.OrderByDescending(a => a.TimestampEvent);
+                double Shock = 0;
+                int NumberOfShock = oke.Count(a => a.EventType == "3");
+                foreach (EnvironmentPayload env in oke)
+                {
+                    if (env.Smax > Shock)
+                    {
+                        Shock = env.Smax;
+                    }
+                } }
 
 <section class="container-fluid p-0 ">
     <header class="border p-2 d-flex justify-content-between">
@@ -71,7 +67,7 @@
                 </div>
                 <br />
                 <div>
-                    <button type="button" class="btn btn-danger" onclick="UpdateBattery5()">5%</button> 
+                    <button type="button" class="btn btn-danger" onclick="UpdateBattery5()">5%</button>
                     <button type="button" class="btn btn-warning" onclick="UpdateBattery25()">25%</button>
                     <button type="button" class="btn btn-dark" onclick="UpdateBattery50()">50%</button>
                     <button type="button" class="btn btn-info" onclick="UpdateBattery75()">75%</button>
@@ -105,33 +101,28 @@
                     </div>
                     <div id="collapseAlert" class="collapse" aria-labelledby="headingAlert" data-parent="#accordion">
                         <div class="card-body">
-                            @{
-                                foreach (var oks in oke)
-                                {
-                                    if (oks.EventType == "1")
-                                    {
-                                        <div>
-                                            <h1>Alert temperature</h1>
-                                        </div>
-                                    }
-                                    else if (oks.EventType == "2")
-                                    {
-                                        <div>
-                                            <h1>Alert temperature terminé</h1>
-                                        </div>
-                                    }
-                                    else if (oks.EventType == "3")
-                                    {
-                                        <div>
-                                            <h1>Alert Shock</h1>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        continue;
-                                    }
-                                }
-                            }                            
+                            @{ foreach (var oks in oke)
+                                            {
+                                                if (oks.EventType == "1")
+                                                {
+                                <div>
+                                    <h1>Alert temperature</h1>
+                                </div> }
+                                                else if (oks.EventType == "2")
+                                                {
+                                <div>
+                                    <h1>Alert temperature terminé</h1>
+                                </div> }
+                                                else if (oks.EventType == "3")
+                                                {
+                                <div>
+                                    <h1>Alert Shock</h1>
+                                </div> }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            } }
                         </div>
                     </div>
                 </div>
@@ -155,3 +146,46 @@
 
 
 </section>
+
+<script type="text/javascript">
+        let max72 = new Array();
+        let min72 = new Array();
+        let mean72 = new Array();
+        let myLabel72 = new Array();
+        let max24 = new Array();
+        let min24 = new Array();
+        let mean24 = new Array();
+        let myLabel24 = new Array();
+        let i = 1;
+        let j = 1;
+        @{
+            DateTime sort = oke.First().TimestampEvent;
+            DateTime sort72 = sort.AddHours(-72);
+            DateTime sort24 = sort.AddHours(-24);
+            List<EnvironmentPayload> env72 = new List<EnvironmentPayload>();
+            List<EnvironmentPayload> env24 = new List<EnvironmentPayload>();
+            foreach(EnvironmentPayload env in oke)
+            {
+                if(env.TimestampEvent>sort72)
+                {
+                      <text>
+                max72.push(@env.Tmax);
+                min72.push(@env.Tmin);
+                mean72.push(@env.Tmean);
+                myLabel72.push(i);
+                i = i + 1;
+                </text>
+                }
+                if(env.TimestampEvent>sort24)
+                {
+                      <text>
+                max24.push(@env.Tmax);
+                min24.push(@env.Tmin);
+                mean24.push(@env.Tmean);
+                myLabel24.push(i);
+                j = j + 1;
+                </text>
+                }
+            }
+        }
+</script>
