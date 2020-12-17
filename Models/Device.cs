@@ -22,7 +22,6 @@ namespace BeOn.Models
 
         [Column("endproductcertificate")]
         public virtual string EndProductCertificate { get; set; }
-
         public virtual ICollection<EnvironmentPayload> EnvironmentPayloads { get; set; }
         public virtual ICollection<PositionningPayload> PositionningPayloads { get; set; }
     }

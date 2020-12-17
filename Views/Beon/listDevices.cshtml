@@ -10,8 +10,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Device</th>
-            <th scope="col">Last contact</th>
+            <th scope="col">Device Id</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +20,6 @@
         {
         <tr>
             <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@dev.DeviceId"> @dev.DeviceId</a></th>
-            <td scope="row"><a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@dev.Name"> @dev.Name</a> </td>
         </tr>
         }
     </tbody>
