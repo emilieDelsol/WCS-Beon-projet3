@@ -13,7 +13,7 @@ namespace BeOn.Models
     {
         [Column("id_device")]
         public String DeviceId { get; set; }
-        public Device Device { get; set; }
+        public virtual Device Device { get; set; }
 
         [Column("timestampevent")]
         public DateTime TimestampEvent { get; set; }
