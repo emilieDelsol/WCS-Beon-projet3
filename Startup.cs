@@ -24,7 +24,7 @@ namespace BeOn
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BeOnContext>(b => b.UseLazyLoadingProxies().UseNpgsql(@"Server = localhost; Port = 5432; Database = postgres; User Id = postgres; Password = postgres;"));
+            services.AddDbContext<BeOnContext>(b => b.UseLazyLoadingProxies().UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
         }
