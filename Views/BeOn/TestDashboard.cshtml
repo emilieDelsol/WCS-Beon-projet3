@@ -7,14 +7,6 @@
 @{
     EnvironmentPayload ok = Model.EnvironmentPayloads.FirstOrDefault();
 }
-        <div>
-            <h1> @ok.TimestampEvent</h1>
-        </div>
-
-<div>
-    <h1>@ok.Tmax @ok.TimestampEvent</h1>
-</div>
-
 
 <section class="container-fluid p-0 ">
     <header class="border p-2 d-flex justify-content-between">
@@ -29,7 +21,7 @@
     </header>
     <article class="card-deck p-0  m-0 d-flex flex-column flex-lg-row justify-content-between">
         <div class="card m-3">
-            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8; ">
+            <div class="card-header pb-0" style="color: #201063; ">
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history"></i> Last contact</h5>
             </div>
             <div class="card-body ">
@@ -37,7 +29,7 @@
             </div>
         </div>
         <div class="card m-3">
-            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+            <div class="card-header pb-0" style=" color: #201063;">
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
             </div>
             <div class="card-body ">
@@ -47,7 +39,7 @@
             </div>
         </div>
         <div class="card m-3">
-            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+            <div class="card-header pb-0" style=" color: #201063;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
             </div>
             <div class="card-body text-center">
@@ -58,7 +50,7 @@
         <div class="card m-3">
             <!--Button to test battery-->
 
-            <div class="card-header pb-0 mb-0" style="background-color: #212429; color: #48cbd8;">
+            <div class="card-header pb-0 mb-0" style=" color: #201063;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
             </div>
             <div class="card-body text-center">
@@ -69,7 +61,7 @@
                 </div>
                 <br />
                 <div>
-                    <button type="button" class="btn btn-danger" onclick="UpdateBattery5()">5%</button>
+                    <button type="button" class="btn btn-danger" onclick="UpdateBattery5()">5%</button> 
                     <button type="button" class="btn btn-warning" onclick="UpdateBattery25()">25%</button>
                     <button type="button" class="btn btn-dark" onclick="UpdateBattery50()">50%</button>
                     <button type="button" class="btn btn-info" onclick="UpdateBattery75()">75%</button>
@@ -81,7 +73,7 @@
 
     <article class="container-fluid p-3 p-lg-0 m-auto d-flex flex-column flex-lg-row justify-content-around">
         <div class="card m-auto m-lg-3 col-12 col-lg-5 p-0 ">
-            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+            <div class="card-header pb-0" style=" color: #201063;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Location</h5>
             </div>
             <div class="card-body">
@@ -91,12 +83,12 @@
         <div class="col ml-lg-3 mr-lg-3 p-0">
             <div id="accordion">
                 <div class="card col-12 mr-auto ml-auto mt-3 mb-3 p-0">
-                    <div class="card-header " style="background-color: #212429; color: #48cbd8;" id="headingAlert">
+                    <div class="card-header " style=" color: #201063;" id="headingAlert">
                         <h5 class="mb-0">
-                            <button class="btn  collapsed" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="background-color:red; color: #48cbd8; font-weight:bold">
+                            <button class="btn  collapsed" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="background-color:red; color: #201063; font-weight:bold">
                                 <i class="far fa-bell"></i><span> Alert!</span>
                             </button>
-                            <button class="btn  collapsed d-none" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="color: #48cbd8; font-weight:bold">
+                            <button class="btn  collapsed d-none" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="color: #201063; font-weight:bold">
                                 <i class="far fa-bell"></i><span class="">No alert</span>
                             </button>
                         </h5>
@@ -124,7 +116,7 @@
                 </div>
             </div>
             <div class="card  mt-3 mb-3 col-12 p-0 ">
-                <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+                <div class="card-header pb-0" style=" color: #201063;">
                     <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
                 </div>
                 <div class="card-body">
