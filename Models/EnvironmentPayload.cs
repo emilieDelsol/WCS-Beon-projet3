@@ -46,7 +46,7 @@ namespace BeOn.Models
         public DateTime DatePayload { get; set; }
 
         [Column("event_type")]
-        public string EventType { get; set; }
+        public string EventType{ get; set; }
 
         [Column("tmax")]
         public int Tmax { get; set; }
