@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,61 +11,62 @@ namespace BeOn.Models
     [Table("environment_payload")]
     public class EnvironmentPayload
     {
-        /*[Column("id_device")]
-        public string device_Id { get; set; }*/
+        [Column("id_device")]
+        public String DeviceId { get; set; }
+        public virtual Device Device { get; set; }
 
         [Column("timestampevent")]
-        public DateTime dateEvent { get; set; }
+        public DateTime TimestampEvent { get; set; }
 
         [Column("seq_number")]
-        public int Id { get; set; }
+        public int SeqNumber { get; set; }
 
         [Column("computed_latitude")]
-        public double latitude { get; set; }
+        public double ComputedLatitude { get; set; }
 
         [Column("computed_longitude")]
-        public double longitude { get; set; }
+        public double ComputedLongitude { get; set; }
 
         [Column("radius")]
-        public int radius { get; set; }
+        public int Radius { get; set; }
        
         [Column("source")]
-        public int source { get; set; }
+        public int Source { get; set; }
         
         [Column("status")]
-        public int status { get; set; }
+        public int Status { get; set; }
 
         [Column("frametype")]
-        public string frametype { get; set; }
+        public string Frametype { get; set; }
 
         [Column("batterylvl")]
-        public double batterylvl {get; set; }
+        public double Batterylvl {get; set; }
 
         [Column("timestamppayload")]
-        public DateTime datePayload { get; set; }
+        public DateTime DatePayload { get; set; }
 
         [Column("event_type")]
-        public string eventType { get; set; }
+        public string EventType{ get; set; }
 
         [Column("tmax")]
-        public int tmax { get; set; }
+        public int Tmax { get; set; }
 
         [Column("tmin")]
-        public int tmin { get; set; }
+        public int Tmin { get; set; }
 
         [Column("tmean")]
-        public int tmean { get; set; }
+        public int Tmean { get; set; }
 
         [Column("total_alert_duration")]
-        public int alert_duration { get; set; }
+        public int TotalAlertDuration { get; set; }
       
         [Column("smax")]
-        public double smax { get; set; }
+        public double Smax { get; set; }
 
         [Column("total_shock")]
-        public double totalshock { get; set; }
+        public double TotalShock { get; set; }
 
         [Column("cptshockovlastperiod")]
-        public int cptshockovlastperiod { get; set; }
+        public int Cptshockovlastperiod { get; set; }
     }
 }

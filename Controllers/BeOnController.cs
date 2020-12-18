@@ -1,3 +1,4 @@
+using BeOn.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,18 +9,44 @@ namespace BeOn.Controllers
 {
 	public class BeOnController : Controller
 	{
-		public IActionResult Index()
+		private BeOnContext _context;
+		public BeOnController(BeOnContext injectedBeonContext)
+        {
+			_context = injectedBeonContext;
+        }
+		public IActionResult Index(string IdDevice)
+		{
+			IEnumerable<Device> devices = new List<Device>();
+			Device device = new Device();
+			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
+			device = devices.First();
+			if (device.EnvironmentPayloads.Count == 0)
+			{
+				return View("Default");
+			}
+			return View(device);
+		}
+		public IActionResult Overview()
 		{
 			return View();
 		}
-
 		public IActionResult ListDevices()
 		{
-			return View();
+			IEnumerable<Device> devices = new List<Device>();
+			devices = from a in _context.Devices select a;  
+			return View(devices);
 		}
-		public IActionResult testDashboard()
+		public IActionResult testDashboard(string IdDevice)
 		{
-			return View();
+			IEnumerable<Device> devices = new List<Device>();
+			Device device = new Device();
+			devices = from a in _context.Devices where(a.DeviceId == IdDevice) select a;
+			device = devices.First();
+			if(device.EnvironmentPayloads.Count == 0)
+            {
+				return View("Default");
+            }
+			return View(device);
 		}
 		public IActionResult Location1Device()
 		{
