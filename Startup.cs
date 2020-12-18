@@ -39,7 +39,14 @@ namespace BeOn
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+
+            // To predeploy on CapRover, no https redirection must be done.
+            // This is because an Nginx server already does this with a valid SSL certificate
+            if (env.EnvironmentName != "Staging")
+            {
+                app.UseHttpsRedirection();
+            }
+
             app.UseStaticFiles();
 
             app.UseRouting();
