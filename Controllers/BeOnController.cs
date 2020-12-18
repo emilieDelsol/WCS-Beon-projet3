@@ -48,6 +48,10 @@ namespace BeOn.Controllers
             }
 			return View(device);
 		}
+		public IActionResult Location1Device()
+		{
+			return View();
+		}
 
 	}
 }
