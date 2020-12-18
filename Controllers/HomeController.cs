@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BeOn.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BeOn.Controllers
 {
