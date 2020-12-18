@@ -2,17 +2,17 @@
 @{ ViewData["Title"] = "Test Dashboard";
                 Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml"; }
 
-@{ EnvironmentPayload ok = Model.EnvironmentPayloads.LastOrDefault();
-                IEnumerable<EnvironmentPayload> oke = Model.EnvironmentPayloads.OrderByDescending(a => a.TimestampEvent);
-                double Shock = 0;
-                int NumberOfShock = oke.Count(a => a.EventType == "3");
-                foreach (EnvironmentPayload env in oke)
-                {
-                    if (env.Smax > Shock)
-                    {
-                        Shock = env.Smax;
-                    }
-                } }
+@{ EnvironmentPayload envirt = Model.EnvironmentPayloads.LastOrDefault();
+    IEnumerable<EnvironmentPayload> environmentOrderByDesc = Model.EnvironmentPayloads.OrderByDescending(a => a.TimestampEvent);
+    double Shock = 0;
+    int NumberOfShock = environmentOrderByDesc.Count(a => a.EventType == "3");
+    foreach (EnvironmentPayload env in environmentOrderByDesc)
+    {
+        if (env.Smax > Shock)
+        {
+            Shock = env.Smax;
+        }
+    } }
 
 <section class="container-fluid p-0 ">
     <header class="border p-2 d-flex justify-content-between">
@@ -31,7 +31,7 @@
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history"></i> Last contact</h5>
             </div>
             <div class="card-body ">
-                <p class="card-text">@ok.TimestampEvent</p>
+                <p class="card-text">@envirt.TimestampEvent</p>
             </div>
         </div>
         <div class="card m-3">
@@ -40,8 +40,8 @@
             </div>
             <div class="card-body ">
                 <p class="card-text ">- total shocks:@NumberOfShock  </p>
-                <p class="card-text ">- since last 72h: @ok.TotalShock </p>
-                <p class="card-text ">- since last contact: @ok.Cptshockovlastperiod </p>
+                <p class="card-text ">- since last 72h: @envirt.TotalShock </p>
+                <p class="card-text ">- since last contact: @envirt.Cptshockovlastperiod </p>
             </div>
         </div>
         <div class="card m-3">
@@ -60,7 +60,7 @@
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
             </div>
             <div class="card-body text-center">
-                <h5 class="card-title " id="batteryTitle"> @ok.Batterylvl</h5>
+                <h5 class="card-title " id="batteryTitle"> @envirt.Batterylvl</h5>
                 <div class="batteryContainer justify-content-center">
                     <div class="batteryOuter "><div class="batteryLevel50" id="batteryLevel"></div></div>
                     <div class="batteryBump"></div>
@@ -101,20 +101,20 @@
                     </div>
                     <div id="collapseAlert" class="collapse" aria-labelledby="headingAlert" data-parent="#accordion">
                         <div class="card-body">
-                            @{ foreach (var oks in oke)
-                                            {
-                                                if (oks.EventType == "1")
-                                                {
+                            @{ foreach (var environment in environmentOrderByDesc)
+                                {
+                                    if (environment.EventType == "1")
+                                    {
                                 <div>
                                     <h1>Alert temperature</h1>
                                 </div> }
-                                                else if (oks.EventType == "2")
-                                                {
+                                    else if (environment.EventType == "2")
+                                    {
                                 <div>
                                     <h1>Alert temperature terminé</h1>
                                 </div> }
-                                                else if (oks.EventType == "3")
-                                                {
+                                    else if (environment.EventType == "3")
+                                    {
                                 <div>
                                     <h1>Alert Shock</h1>
                                 </div> }
@@ -158,17 +158,20 @@
         let myLabel24 = new Array();
         let i = 1;
         let j = 1;
+        let flagMax72 = 0;
+        let flagMin72 = 1000;
         @{
-            DateTime sort = oke.First().TimestampEvent;
+            DateTime sort = environmentOrderByDesc.First().TimestampEvent;
             DateTime sort72 = sort.AddHours(-72);
             DateTime sort24 = sort.AddHours(-24);
             List<EnvironmentPayload> env72 = new List<EnvironmentPayload>();
             List<EnvironmentPayload> env24 = new List<EnvironmentPayload>();
-            foreach(EnvironmentPayload env in oke)
+            foreach(EnvironmentPayload env in environmentOrderByDesc)
             {
                 if(env.TimestampEvent>sort72)
                 {
-                      <text>
+                 <text>
+               
                 max72.push(@env.Tmax);
                 min72.push(@env.Tmin);
                 mean72.push(@env.Tmean);

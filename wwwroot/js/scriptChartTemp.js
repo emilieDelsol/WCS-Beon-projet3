@@ -39,7 +39,7 @@ let myLineChart = new Chart(line, {
             xAxes: [
                 {
                     ticks: {
-                        beginAtZero: true,
+                        beginAtZero: false,
 
 
                     }
@@ -48,7 +48,7 @@ let myLineChart = new Chart(line, {
             yAxes: [
                 {
                     ticks: {
-                        beginAtZero: false,
+                        beginAtZero: true,
 
                     }
                 }
