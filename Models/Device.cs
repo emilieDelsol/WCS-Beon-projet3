@@ -8,22 +8,21 @@ using System.Threading.Tasks;
 namespace BeOn.Models
 {
     [Table("device")]
-    public class Device
+    public  class Device
     {
         [Column("id_device")]
         [Key]
-        public String DeviceId { get; set; }
+        public virtual String DeviceId { get; set; }
 
         [Column("name")]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [Column("pac")]
-        public string Pac { get; set; }
+        public virtual string Pac { get; set; }
 
         [Column("endproductcertificate")]
-        public string EndProductCertificate { get; set; }
-
-        public List<EnvironmentPayload> EnvironmentPayloads { get; set; }
-        public List<PositionningPayload> PositionningPayloads { get; set; }
+        public virtual string EndProductCertificate { get; set; }
+        public virtual ICollection<EnvironmentPayload> EnvironmentPayloads { get; set; }
+        public virtual ICollection<PositionningPayload> PositionningPayloads { get; set; }
     }
 }

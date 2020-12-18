@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BeOn
 {
@@ -12,12 +13,8 @@ namespace BeOn
         public DbSet<Device> Devices { get; set; }
         public DbSet<EnvironmentPayload> EnvironmentPayloads { get; set; }
         public DbSet<PositionningPayload> PositionningPayloads { get; set; }
-        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(@"Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=postgres;");
-        }
-
+        public BeOnContext(DbContextOptions<BeOnContext> options)
+            : base(options) { }        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EnvironmentPayload>()
@@ -32,6 +29,5 @@ namespace BeOn
                         .HasForeignKey(e => e.DeviceId);
             //base.OnModelCreating(modelBuilder);
         }
-
     }
 }

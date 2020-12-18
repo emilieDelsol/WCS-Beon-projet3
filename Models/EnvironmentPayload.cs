@@ -13,7 +13,7 @@ namespace BeOn.Models
     {
         [Column("id_device")]
         public String DeviceId { get; set; }
-        public Device Device { get; set; }
+        public virtual Device Device { get; set; }
 
         [Column("timestampevent")]
         public DateTime TimestampEvent { get; set; }
@@ -46,7 +46,7 @@ namespace BeOn.Models
         public DateTime DatePayload { get; set; }
 
         [Column("event_type")]
-        public string EventType { get; set; }
+        public string EventType{ get; set; }
 
         [Column("tmax")]
         public int Tmax { get; set; }

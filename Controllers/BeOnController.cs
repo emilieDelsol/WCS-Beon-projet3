@@ -9,6 +9,11 @@ namespace BeOn.Controllers
 {
 	public class BeOnController : Controller
 	{
+		private BeOnContext _context;
+		public BeOnController(BeOnContext injectedBeonContext)
+        {
+			_context = injectedBeonContext;
+        }
 		public IActionResult Index()
 		{
 			return View();
@@ -19,20 +24,20 @@ namespace BeOn.Controllers
 		}
 		public IActionResult ListDevices()
 		{
-				IEnumerable<Device> devices = new List<Device>();
-				devices = SelectData.SelectDeviceWithoutList();
-				return View(devices);
+			IEnumerable<Device> devices = new List<Device>();
+			devices = from a in _context.Devices select a;  
+			return View(devices);
 		}
 		public IActionResult testDashboard(string IdDevice)
 		{
-			List<Device> devices = new List<Device>();
-			
-			DateTime myDate = DateTime.Now;
-
-			devices = SelectData.SelectAllDevice(myDate).Where(a => a.DeviceId == IdDevice).ToList();
-			devices.ToList().ForEach(d => d.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent));
-			devices.ToList().ForEach(d => d.PositionningPayloads.OrderByDescending(pos => pos.TimestampEvent));
-			Device device = devices.First();
+			IEnumerable<Device> devices = new List<Device>();
+			Device device = new Device();
+			devices = from a in _context.Devices where(a.DeviceId == IdDevice) select a;
+			device = devices.First();
+			if(device.EnvironmentPayloads.Count == 0)
+            {
+				return View("Default");
+            }
 			return View(device);
 		}
 
