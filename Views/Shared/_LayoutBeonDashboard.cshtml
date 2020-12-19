@@ -1,7 +1,4 @@
-﻿@model Device
-@{IEnumerable< EnvironmentPayload> environments = Model.EnvironmentPayloads;
-    }
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,7 +22,8 @@
         <h1 class="m-0 p-0"><a class="" asp-controller="Home" asp-action="Index"><img src="~/logoBeOnWhite.png" alt="" width="200"></a></h1>
          <!-- Button trigger modal -->
         <button type="button" class="btn btn-lg " style="color: white;" data-toggle="modal" data-target="#exampleModal">
-            <i class="fas fa-power-off"></i> Logout
+             <span class="d-none d-lg-inline">Logout</span>
+            <i class="fas fa-sign-out-alt"></i>
         </button>
 
         <!-- Modal -->
