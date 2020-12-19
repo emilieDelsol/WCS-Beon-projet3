@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,6 +18,7 @@ namespace BeOn.Models
 
         [Column("timestampevent")]
         public DateTime TimestampEvent { get; set; }
+        public String TimestampEventToString { get { return TimestampEvent.ToString(@"MM/dd/yyyy HH\:mm\:ss.fff"); } }
 
         [Column("seq_number")]
         public int SeqNumber { get; set; }
