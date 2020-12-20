@@ -47,7 +47,7 @@
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
             </div>
             <div class="card-body ">
-                <p class="card-text ">- total shocks:@NumberOfShock  </p>
+                <p class="card-text ">- total shocks: @NumberOfShock  </p>
                 <p class="card-text ">- since last 72h: @environment.TotalShock </p>
                 <p class="card-text ">- since last contact: @environment.Cptshockovlastperiod </p>
                 <p class="card-text">- Max shock: @Shock g</p>
@@ -59,9 +59,11 @@
             </div>
             <div class="card-body text-center">
                 <h5 class="card-title ">Since last 72h: </h5>
-                <p class="card-text">-Max:</p>
-                <p class="card-text">-Min:</p>
-                <p class="card-text">-Mean:</p>
+                <p class="card-text">-Max:  @env72.OrderByDescending(a => a.Tmax).First().Tmax °C</p>
+                <p class="card-text">-Min:  @env72.OrderByDescending(a => a.Tmax).First().Tmin °C</p>
+                <p class="card-text">-Mean:  @env72.OrderByDescending(a => a.Tmax).First().Tmean °C</p>
+                <p class="card-text">-Total alert duration:  @env72.OrderByDescending(a=>a.TotalAlertDuration).First().TotalAlertDuration</p>
+                <p class="card-text">-Total alert duration all BDD:  @environmentOrderByAsc.OrderByDescending(a=>a.TotalAlertDuration).First().TotalAlertDuration</p>
             </div>
         </div>
 

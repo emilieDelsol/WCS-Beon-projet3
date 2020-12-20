@@ -47,7 +47,6 @@ namespace BeOn.Controllers
             {
 				return View("Default");
             }
-			foreach(EnvironmentPayload env in device.EnvironmentPayloads) { Console.WriteLine(env.TimestampEventToString); }
 			return View(device);
 		}
 		public IActionResult Location1Device()
