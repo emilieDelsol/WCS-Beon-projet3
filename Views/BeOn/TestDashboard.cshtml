@@ -1,12 +1,16 @@
 ﻿@model Device
 @{ ViewData["Title"] = "Test Dashboard";
-                Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml"; }
+    Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml"; }
 
-@{ EnvironmentPayload envirt = Model.EnvironmentPayloads.LastOrDefault();
-    IEnumerable<EnvironmentPayload> environmentOrderByDesc = Model.EnvironmentPayloads.OrderByDescending(a => a.TimestampEvent);
+@{
+    IEnumerable<EnvironmentPayload> environmentOrderByAsc = Model.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
+    EnvironmentPayload environment = environmentOrderByAsc.Last();
+    IEnumerable<EnvironmentPayload> env72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
+    IEnumerable<EnvironmentPayload> env24= environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
+
     double Shock = 0;
-    int NumberOfShock = environmentOrderByDesc.Count(a => a.EventType == "3");
-    foreach (EnvironmentPayload env in environmentOrderByDesc)
+    int NumberOfShock = environmentOrderByAsc.Count(a => a.EventType == "3");
+    foreach (EnvironmentPayload env in environmentOrderByAsc)
     {
         if (env.Smax > Shock)
         {
@@ -14,16 +18,20 @@
         }
     } }
 
+  
+
+}
+
 <section class="container-fluid p-0 ">
     <header class="border p-2 d-flex justify-content-between">
-        <div>
-            <h3 class="text-left  ">DashboardTEST</h3>
+        <div class="d-none d-lg-block">
+            <h3 class="text-left  ">Dashboard</h3>
             <p class="text-left  m-0">@DateTime.Now</p>
         </div>
-        <h2>
+        <h2 class="text-center m-auto">
             <i class="fas fa-crosshairs"></i>Tracker  @Model.DeviceId
         </h2>
-        <p>&ensp;</p>
+        <p class="d-none d-lg-block">&ensp; </p>
     </header>
     <article class="card-deck p-0  m-0 d-flex flex-column flex-lg-row justify-content-between">
         <div class="card m-3">
@@ -31,7 +39,7 @@
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history"></i> Last contact</h5>
             </div>
             <div class="card-body ">
-                <p class="card-text">@envirt.TimestampEvent</p>
+                <p class="card-text">@environment.TimestampEvent</p>
             </div>
         </div>
         <div class="card m-3">
@@ -39,17 +47,23 @@
                 <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
             </div>
             <div class="card-body ">
-                <p class="card-text ">- total shocks:@NumberOfShock  </p>
-                <p class="card-text ">- since last 72h: @envirt.TotalShock </p>
-                <p class="card-text ">- since last contact: @envirt.Cptshockovlastperiod </p>
+                <p class="card-text ">- total shocks: @NumberOfShock  </p>
+                <p class="card-text ">- since last 72h: @environment.TotalShock </p>
+                <p class="card-text ">- since last contact: @environment.Cptshockovlastperiod </p>
+                <p class="card-text">- Max shock: @Shock g</p>
             </div>
         </div>
         <div class="card m-3">
             <div class="card-header pb-0" style=" color: #201063;">
-                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> MAX SHOCK</h5>
+                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
             </div>
             <div class="card-body text-center">
-                <h5 class="card-title ">@Shock g</h5>
+                <h5 class="card-title ">Since last 72h: </h5>
+                <p class="card-text">-Max:  @env72.OrderByDescending(a => a.Tmax).First().Tmax °C</p>
+                <p class="card-text">-Min:  @env72.OrderByDescending(a => a.Tmax).First().Tmin °C</p>
+                <p class="card-text">-Mean:  @env72.OrderByDescending(a => a.Tmax).First().Tmean °C</p>
+                <p class="card-text">-Total alert duration:  @env72.OrderByDescending(a=>a.TotalAlertDuration).First().TotalAlertDuration</p>
+                <p class="card-text">-Total alert duration all BDD:  @environmentOrderByAsc.OrderByDescending(a=>a.TotalAlertDuration).First().TotalAlertDuration</p>
             </div>
         </div>
 
@@ -60,7 +74,7 @@
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
             </div>
             <div class="card-body text-center">
-                <h5 class="card-title " id="batteryTitle"> @envirt.Batterylvl</h5>
+                <h5 class="card-title " id="batteryTitle"> @environment.Batterylvl</h5>
                 <div class="batteryContainer justify-content-center">
                     <div class="batteryOuter "><div class="batteryLevel50" id="batteryLevel"></div></div>
                     <div class="batteryBump"></div>
@@ -101,28 +115,28 @@
                     </div>
                     <div id="collapseAlert" class="collapse" aria-labelledby="headingAlert" data-parent="#accordion">
                         <div class="card-body">
-                            @{ foreach (var environment in environmentOrderByDesc)
+                            @{ foreach (var env in environmentOrderByAsc)
                                 {
-                                    if (environment.EventType == "1")
+                                    if (env.EventType == "1")
                                     {
-                                <div>
-                                    <h1>Alert temperature</h1>
-                                </div> }
-                                    else if (environment.EventType == "2")
+                                        <div>
+                                            <h1>Alert temperature</h1>
+                                        </div> }
+                                    else if (env.EventType == "2")
                                     {
-                                <div>
-                                    <h1>Alert temperature terminé</h1>
-                                </div> }
-                                    else if (environment.EventType == "3")
+                                        <div>
+                                            <h1>Alert temperature terminé</h1>
+                                        </div> }
+                                    else if (env.EventType == "3")
                                     {
-                                <div>
-                                    <h1>Alert Shock</h1>
-                                </div> }
-                                                else
-                                                {
-                                                    continue;
-                                                }
-                                            } }
+                                        <div>
+                                            <h1>Alert Shock</h1>
+                                        </div> }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                } }
                         </div>
                     </div>
                 </div>
@@ -148,47 +162,55 @@
 </section>
 
 <script type="text/javascript">
-        let max72 = new Array();
         let min72 = new Array();
+        let max72 = new Array();
         let mean72 = new Array();
         let myLabel72 = new Array();
-        let max24 = new Array();
         let min24 = new Array();
+        let max24 = new Array();
         let mean24 = new Array();
         let myLabel24 = new Array();
         let i = 1;
         let j = 1;
-        let flagMax72 = 0;
-        let flagMin72 = 1000;
+        let maxx24;
+        let minx24;
+        let meanx24;
+        let maxx72;
+        let minx72;
+        let meanx72;
+
         @{
-            DateTime sort = environmentOrderByDesc.First().TimestampEvent;
-            DateTime sort72 = sort.AddHours(-72);
-            DateTime sort24 = sort.AddHours(-24);
-            List<EnvironmentPayload> env72 = new List<EnvironmentPayload>();
-            List<EnvironmentPayload> env24 = new List<EnvironmentPayload>();
-            foreach(EnvironmentPayload env in environmentOrderByDesc)
+
+
+        <text>
+            maxx24 = @env24.OrderByDescending(a => a.Tmax).First().Tmax;
+            minx24 = @env24.OrderByDescending(a => a.Tmin).First().Tmin;
+            meanx24 = @env24.OrderByDescending(a => a.Tmean).First().Tmean;
+            maxx72 = @env72.OrderByDescending(a => a.Tmax).First().Tmax;
+            minx72 = @env72.OrderByDescending(a => a.Tmin).First().Tmin;
+            meanx72 = @env72.OrderByDescending(a => a.Tmean).First().Tmean;
+        </text>
+            foreach (EnvironmentPayload env in env72)
             {
-                if(env.TimestampEvent>sort72)
-                {
+
                  <text>
-               
-                max72.push(@env.Tmax);
-                min72.push(@env.Tmin);
-                mean72.push(@env.Tmean);
-                myLabel72.push(i);
+                min72.push(@env.Tmin)
+                max72.push(@env.Tmax)
+    mean72.push(@env.Tmean);
+    myLabel72.push("@env.TimestampEvent.Day/@env.TimestampEvent.Month/@env.TimestampEvent.Year @env.TimestampEvent.Hour:@env.TimestampEvent.Minute ");
                 i = i + 1;
                 </text>
-                }
-                if(env.TimestampEvent>sort24)
-                {
-                      <text>
-                max24.push(@env.Tmax);
-                min24.push(@env.Tmin);
+            }
+            foreach (EnvironmentPayload env in env24.OrderBy(e=>e.TimestampEvent))
+            {
+                <text>
+                min24.push(@env.Tmin)
+                max24.push(@env.Tmax)
                 mean24.push(@env.Tmean);
-                myLabel24.push(i);
+                myLabel24.push("@env.TimestampEvent.Day/@env.TimestampEvent.Month/@env.TimestampEvent.Year @env.TimestampEvent.Hour:@env.TimestampEvent.Minute ");
                 j = j + 1;
                 </text>
-                }
-            }
+             }
         }
+
 </script>

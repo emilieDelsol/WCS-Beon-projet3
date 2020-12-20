@@ -19,10 +19,11 @@
 </head>
 <body >
     <header class="d-flex  justify-content-between" style="background-color: #201063">
-        <h1><a class="nav-link" asp-controller="Home" asp-action="Index">Be<i class="fas fa-power-off" style="color:aqua"></i>n</a></h1>
+        <h1 class="m-0 p-0"><a class="" asp-controller="Home" asp-action="Index"><img src="~/logoBeOnWhite.png" alt="" width="200"></a></h1>
          <!-- Button trigger modal -->
         <button type="button" class="btn btn-lg " style="color: white;" data-toggle="modal" data-target="#exampleModal">
-            <i class="fas fa-power-off"></i> Logout
+             <span class="d-none d-lg-inline">Logout</span>
+            <i class="fas fa-sign-out-alt"></i>
         </button>
 
         <!-- Modal -->
@@ -64,8 +65,8 @@
                             <li class="list-group-item" style="  background-color: #201063">
                                 <a class="nav-link pl-0" style="color: white; font-weight:bold; " asp-controller="Home" asp-action="Index"><i class="fas fa-globe-europe "></i><span class="d-none d-lg-inline"> Overview</span></a>
                             </li>
-                            <li class="list-group-item dropdown dropright  d-none d-lg-block" style="  background-color: #201063">
-                                <a class="nav-link dropdown-toggle" style="color: white; font-weight:bold;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell"></i> Alert</a>
+                            <li class="list-group-item dropdown dropright d-none d-lg-block" style="  background-color: #201063">
+                                <a class="nav-link dropdown-toggle" style="color: white; font-weight:bold;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell"></i> <span class="d-none d-lg-inline"> Alert</span></a>
                                 <div class="dropdown-menu" style="background-color: #201063; border:solid  white;">
                                     <a class="dropdown-item" style="color: white; font-weight:bold;" asp-controller="Beon" asp-action="TestDashboard">Tracker 001 <br /><i class="fas fa-temperature-low"></i> Temp: -10°C</a>
                                     <div class="dropdown-divider"></div>
