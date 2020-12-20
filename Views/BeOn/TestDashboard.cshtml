@@ -3,14 +3,14 @@
     Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml"; }
 
 @{
-    IEnumerable<EnvironmentPayload> environmentOrderByDesc = Model.EnvironmentPayloads.OrderByDescending(a => a.TimestampEvent);
-    EnvironmentPayload environment = environmentOrderByDesc.First();
-    IEnumerable<EnvironmentPayload> env72 = environmentOrderByDesc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
-    IEnumerable<EnvironmentPayload> env24= environmentOrderByDesc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
+    IEnumerable<EnvironmentPayload> environmentOrderByAsc = Model.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
+    EnvironmentPayload environment = environmentOrderByAsc.Last();
+    IEnumerable<EnvironmentPayload> env72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
+    IEnumerable<EnvironmentPayload> env24= environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
 
     double Shock = 0;
-    int NumberOfShock = environmentOrderByDesc.Count(a => a.EventType == "3");
-    foreach (EnvironmentPayload env in environmentOrderByDesc)
+    int NumberOfShock = environmentOrderByAsc.Count(a => a.EventType == "3");
+    foreach (EnvironmentPayload env in environmentOrderByAsc)
     {
         if (env.Smax > Shock)
         {
@@ -113,7 +113,7 @@
                     </div>
                     <div id="collapseAlert" class="collapse" aria-labelledby="headingAlert" data-parent="#accordion">
                         <div class="card-body">
-                            @{ foreach (var env in environmentOrderByDesc)
+                            @{ foreach (var env in environmentOrderByAsc)
                                 {
                                     if (env.EventType == "1")
                                     {
@@ -194,8 +194,8 @@
                  <text>
                 min72.push(@env.Tmin)
                 max72.push(@env.Tmax)
-                mean72.push(@env.Tmean);
-                myLabel72.push(@env.TimestampEvent.Hour);
+    mean72.push(@env.Tmean);
+    myLabel72.push("@env.TimestampEvent.Day/@env.TimestampEvent.Month/@env.TimestampEvent.Year @env.TimestampEvent.Hour:@env.TimestampEvent.Minute ");
                 i = i + 1;
                 </text>
             }
@@ -205,10 +205,10 @@
                 min24.push(@env.Tmin)
                 max24.push(@env.Tmax)
                 mean24.push(@env.Tmean);
-                myLabel24.push(@env.TimestampEvent.Hour);
+                myLabel24.push("@env.TimestampEvent.Day/@env.TimestampEvent.Month/@env.TimestampEvent.Year @env.TimestampEvent.Hour:@env.TimestampEvent.Minute ");
                 j = j + 1;
                 </text>
              }
         }
-        
+
 </script>
