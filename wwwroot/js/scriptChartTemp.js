@@ -86,3 +86,13 @@ function UpdateChart24() {
     myLineChart.data.labels = myLabel24;
     myLineChart.update();
 };
+
+function UpdateChartBetweenDate() {
+    myLineChart.data.datasets[0].data = maxSortBetween;
+    myLineChart.data.datasets[1].data = minSortBetween;
+    myLineChart.data.datasets[2].data = meanSortBetween;
+    myLineChart.data.labels = myLabelBetween;
+    myLineChart.update();
+   
+    alert("You ask :  begin date:" + beginDate +" end date:  "+ endDate);
+        }

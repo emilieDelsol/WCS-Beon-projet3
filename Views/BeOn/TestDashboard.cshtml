@@ -6,7 +6,7 @@
     IEnumerable<EnvironmentPayload> environmentOrderByAsc = Model.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
     EnvironmentPayload environment = environmentOrderByAsc.Last();
     IEnumerable<EnvironmentPayload> env72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
-    IEnumerable<EnvironmentPayload> env24= environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
+    IEnumerable<EnvironmentPayload> env24 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
 
     double Shock = 0;
     int NumberOfShock = environmentOrderByAsc.Count(a => a.EventType == "3");
@@ -58,8 +58,8 @@
                 <p class="card-text">-Max:  @env72.OrderByDescending(a => a.Tmax).First().Tmax °C</p>
                 <p class="card-text">-Min:  @env72.OrderByDescending(a => a.Tmax).First().Tmin °C</p>
                 <p class="card-text">-Mean:  @env72.OrderByDescending(a => a.Tmax).First().Tmean °C</p>
-                <p class="card-text">-Total alert duration:  @env72.OrderByDescending(a=>a.TotalAlertDuration).First().TotalAlertDuration</p>
-                <p class="card-text">-Total alert duration all BDD:  @environmentOrderByAsc.OrderByDescending(a=>a.TotalAlertDuration).First().TotalAlertDuration</p>
+                <p class="card-text">-Total alert duration:  @env72.OrderByDescending(a => a.TotalAlertDuration).First().TotalAlertDuration</p>
+                <p class="card-text">-Total alert duration all BDD:  @environmentOrderByAsc.OrderByDescending(a => a.TotalAlertDuration).First().TotalAlertDuration</p>
             </div>
         </div>
 
@@ -135,7 +135,12 @@
                     <div>
                         <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
                         <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
+                        <label class="bmd-label-floating">start date : </label>
+                        <input type="datetime" name="beginDate" id="beginDate"  value="" placeholder="MM/DD/YYYY hh:mm">
+                        <input type="datetime" name="endDate" id="endDate"  value="" >
+                        <button type="button"  id="bouton" onclick="UpdateChartBetweenDate()">send</button>
                     </div>
+
                     <div class="" style="height:auto">
                         <canvas id="tempsChart" class=" col-12"></canvas>
                     </div>
@@ -144,14 +149,36 @@
         </div>
     </article>
 
-
+   
 </section>
 
 <script type="text/javascript">
     let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
+    var beginDate =new Date(document.getElementById("beginDate").value);
+    var endDate = new Date(document.getElementById("endDate").value);
+    let maxSortBetween = new Array();
+    let minSortBetween = new Array();
+    let meanSortBetween = new Array();
+    let myLabelBetween = new Array();
 
 
-        let min72 = new Array();
+    var compareDateTest = new Date('@environment.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")');
+    @foreach(EnvironmentPayload envi in environmentOrderByAsc)
+    {
+         <Text>
+    if (new Date('@envi.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")') >= beginDate && endDate >= new Date('@envi.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")'))
+    {
+        maxSortBetween.push(@envi.Tmax);
+        minSortBetween.push(@envi.Tmin);
+        meanSortBetween.push(@envi.Tmean);
+         myLabelBetween.push("@envi.TimestampEvent.Day/@envi.TimestampEvent.Month/@envi.TimestampEvent.Year @envi.TimestampEvent.Hour:@envi.TimestampEvent.Minute ");
+    }
+       </Text>
+    }
+    var date = new Date('@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")');
+
+
+    let min72 = new Array();
         let max72 = new Array();
         let mean72 = new Array();
         let myLabel72 = new Array();
@@ -166,9 +193,12 @@
         let meanx24;
         let maxx72;
         let minx72;
-        let meanx72;
+    let meanx72;
 
-        @{
+
+    @{
+
+            IEnumerable<EnvironmentPayload> environmentSortBetweenDate = environmentOrderByAsc;
 
         <text>
             maxx24 = @env24.OrderByDescending(a => a.Tmax).First().Tmax;
