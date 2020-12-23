@@ -132,13 +132,21 @@
                     <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
                 </div>
                 <div class="card-body">
-                    <div>
-                        <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
-                        <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
-                        <label class="bmd-label-floating">start date : </label>
-                        <input type="datetime" name="beginDate" id="beginDate"  value="" placeholder="MM/DD/YYYY hh:mm">
-                        <input type="datetime" name="endDate" id="endDate"  value="" >
-                        <button type="button"  id="bouton" onclick="UpdateChartBetweenDate()">send</button>
+                    <div  class="d-flex flex-row justify-content-between ">
+                        <div class="text-center m-1">
+                            <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
+                            <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
+                        </div>
+                        <div class="text-center">
+                                <label class="endDate">
+                                    sort between date :
+                                    <input type="datetime" name="beginDate" id="beginDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
+                                    <input type="datetime" name="endDate" id="endDate"  value="" placeholder="yyyy-MM-ddTHH:mm:ss">
+                                    <button type="button"  id="bouton" onclick="UpdateChartBetweenDate()">send</button>
+                                </label>
+                        </div>
+
+                     
                     </div>
 
                     <div class="" style="height:auto">
@@ -154,31 +162,39 @@
 
 <script type="text/javascript">
     let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
-    var beginDate =new Date(document.getElementById("beginDate").value);
-    var endDate = new Date(document.getElementById("endDate").value);
-    let maxSortBetween = new Array();
-    let minSortBetween = new Array();
-    let meanSortBetween = new Array();
-    let myLabelBetween = new Array();
 
+    function UpdateChartBetweenDate() {
+        var beginDate = new Date(document.getElementById("beginDate").value);
+        var endDate = new Date(document.getElementById("endDate").value);
+        let maxSortBetween = new Array();
+        let minSortBetween = new Array();
+        let meanSortBetween = new Array();
+        let myLabelBetween = new Array();
 
-    var compareDateTest = new Date('@environment.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")');
-    @foreach(EnvironmentPayload envi in environmentOrderByAsc)
-    {
-         <Text>
-    if (new Date('@envi.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")') >= beginDate && endDate >= new Date('@envi.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")'))
-    {
-        maxSortBetween.push(@envi.Tmax);
-        minSortBetween.push(@envi.Tmin);
-        meanSortBetween.push(@envi.Tmean);
-         myLabelBetween.push("@envi.TimestampEvent.Day/@envi.TimestampEvent.Month/@envi.TimestampEvent.Year @envi.TimestampEvent.Hour:@envi.TimestampEvent.Minute ");
+        @foreach(EnvironmentPayload envi in environmentOrderByAsc)
+        {
+             <Text>
+        var dateToCompare = new Date('@envi.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")');
+        if (dateToCompare >= beginDate && endDate>=dateToCompare)
+        {
+            maxSortBetween.push(@envi.Tmax);
+            minSortBetween.push(@envi.Tmin);
+            meanSortBetween.push(@envi.Tmean);
+             myLabelBetween.push("@envi.TimestampEvent.Day/@envi.TimestampEvent.Month/@envi.TimestampEvent.Year @envi.TimestampEvent.Hour:@envi.TimestampEvent.Minute ");
+        }
+           </Text>
+        }
+        myLineChart.data.datasets[0].data = maxSortBetween;
+        myLineChart.data.datasets[1].data = minSortBetween;
+        myLineChart.data.datasets[2].data = meanSortBetween;
+        myLineChart.data.labels = myLabelBetween;
+        myLineChart.update();
+
+        alert("You ask :  begin date:" + beginDate + " end date:  " + endDate);
     }
-       </Text>
-    }
-    var date = new Date('@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")');
 
 
-    let min72 = new Array();
+        let min72 = new Array();
         let max72 = new Array();
         let mean72 = new Array();
         let myLabel72 = new Array();

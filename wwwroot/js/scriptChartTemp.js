@@ -26,7 +26,7 @@ let myLineChart = new Chart(line, {
                 data: mean24,
                 radius: 0,
                 borderColor: "green",
-                backgroundColor: "#d8fed7"
+                backgroundColor: "rgba(255, 255, 255, .4)"
             }
         ]
     },
@@ -87,12 +87,4 @@ function UpdateChart24() {
     myLineChart.update();
 };
 
-function UpdateChartBetweenDate() {
-    myLineChart.data.datasets[0].data = maxSortBetween;
-    myLineChart.data.datasets[1].data = minSortBetween;
-    myLineChart.data.datasets[2].data = meanSortBetween;
-    myLineChart.data.labels = myLabelBetween;
-    myLineChart.update();
-   
-    alert("You ask :  begin date:" + beginDate +" end date:  "+ endDate);
-        }
+
