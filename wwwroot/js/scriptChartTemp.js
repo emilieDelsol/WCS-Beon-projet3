@@ -26,7 +26,7 @@ let myLineChart = new Chart(line, {
                 data: mean24,
                 radius: 0,
                 borderColor: "green",
-                backgroundColor: "#d8fed7"
+                backgroundColor: "rgba(255, 255, 255, .4)"
             }
         ]
     },
@@ -86,3 +86,5 @@ function UpdateChart24() {
     myLineChart.data.labels = myLabel24;
     myLineChart.update();
 };
+
+
