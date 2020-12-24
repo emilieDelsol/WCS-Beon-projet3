@@ -1,11 +1,8 @@
-﻿// On initialise la latitude et la longitude de Paris (centre de la carte)
-var lat = 48.852969;
+﻿var lat = 48.852969;
 var lon = 2.349903;
 var overview = null;
-var markerClusters; // Servira à stocker les groupes de marqueurs
-// Nous initialisons une liste de marqueurs
+var markerClusters;
 var cities = {
-	 
 	"Toulouse": { "lat": 43.6043, "lon": 1.4437},
 	"New York": { "lat": 40.712784, "lon": -74.005941},
 	"Hong Kong": { "lat": 22.396428, "lon": 114.109497},

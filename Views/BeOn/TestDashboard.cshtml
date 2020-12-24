@@ -189,8 +189,12 @@
         myLineChart.data.datasets[2].data = meanSortBetween;
         myLineChart.data.labels = myLabelBetween;
         myLineChart.update();
-
-        alert("You ask :  begin date:" + beginDate + " end date:  " + endDate);
+        if (endDate < beginDate) {
+            alert("Error! End date must be after start date . No values..");
+        }
+        else {
+            alert("You ask :  begin date:" + beginDate + " end date:  " + endDate + ". THERE IS  " + maxSortBetween.length + " VALUES");
+        }
     }
 
 

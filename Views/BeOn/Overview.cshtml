@@ -1,17 +1,39 @@
-﻿
+﻿@model IEnumerable<Device>
 @{
     ViewData["Title"] = "Overview";
     Layout = "~/Views/Shared/_layoutBeonPrincipal.cshtml";
 }
+@{
+    IEnumerable<Device> devices = Model.Where(m=>m.EnvironmentPayloads.Count!=0).ToList();
+    }
+    <article>
+        <div class="card m-auto m-lg-3 ">
+            <div class="card-header pb-0" style=" color: #201063;">
+                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Overview</h5>
+            </div>
+            <div class="card-body">
+                <div id="overview"></div>
+            </div>
+        </div>
 
-<article>
-<div class="card m-auto m-lg-3 ">
-    <div class="card-header pb-0" style=" color: #201063;">
-        <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Overview</h5>
-    </div>
-    <div class="card-body">
-        <div id="overview"></div>
-    </div>
-</div>
+    </article>
 
-</article>
+    <script type="text/javascript">
+    var arrayDeviceLatLon = new Array();
+    var lat = new Array();
+    var lon = new Array();
+
+        @{ 
+            
+            foreach (Device device in devices)
+            {
+            <Text>
+        lat.push(@device.EnvironmentPayloads.First().ComputedLatitude);
+        lon.push(@device.EnvironmentPayloads.First().ComputedLongitude);
+            </Text>
+                }
+
+            }
+
+
+    </script>

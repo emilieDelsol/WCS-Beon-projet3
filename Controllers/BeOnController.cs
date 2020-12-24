@@ -29,12 +29,13 @@ namespace BeOn.Controllers
 		}
 		public IActionResult Overview()
 		{
-			return View();
+			IEnumerable<Device> devices =  (from a in _context.Devices select a).ToList() ;  
+			return View(devices);
 		}
 		public IActionResult ListDevices()
 		{
-			IEnumerable<Device> devices = new List<Device>();
-			devices = from a in _context.Devices select a;  
+			IEnumerable<Device> devices = (from a in _context.Devices select a).ToList();
+
 			return View(devices);
 		}
 		public IActionResult testDashboard(string IdDevice)
