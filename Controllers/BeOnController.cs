@@ -29,7 +29,7 @@ namespace BeOn.Controllers
 		}
 		public IActionResult Overview()
 		{
-			IEnumerable<Device> devices =  (from a in _context.Devices select a).ToList() ;  
+			IEnumerable<Device> devices =  (from a in _context.Devices where a.EnvironmentPayloads.Count !=0 select a ).ToList() ;  
 			return View(devices);
 		}
 		public IActionResult ListDevices()
