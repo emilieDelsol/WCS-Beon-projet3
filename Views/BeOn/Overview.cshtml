@@ -23,26 +23,27 @@
 <script type="text/javascript">
     let arrayLatLon = new Array();
 
-
-
       @{ foreach (Device device in devices)
           {
-              double latitudeDouble =Math.Round(device.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent).First().ComputedLatitude,4);
-              double longitudeDouble = Math.Round(device.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent).First().ComputedLongitude,4);
+              IEnumerable<EnvironmentPayload> environmentPayloads = device.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent);
+              double latitudeDouble =Math.Round(environmentPayloads.First().ComputedLatitude,4);
+              double longitudeDouble = Math.Round(environmentPayloads.First().ComputedLongitude,4);
               string latitude = latitudeDouble.ToString().Replace(',', '.');
               string longitude = longitudeDouble.ToString().Replace(',', '.');
-
-
+              String lastContact = environmentPayloads.First().TimestampEventToString;
+              double sMax = environmentPayloads.First().Smax;
+              double totalShock = environmentPayloads.First().TotalShock;
+              Int32 tMean = environmentPayloads.First().Tmean;
+              Int32 batteryLvl = Convert.ToInt32(environmentPayloads.First().Batterylvl);
             <Text>
-             var deviceLatLon = JSON.parse('{"lat":' +  @latitude + ',"lon":' + @longitude  + ',"deviceId": "@device.DeviceId"}')
+            var deviceLatLon = ('"@device.DeviceId": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
             arrayLatLon.push(deviceLatLon);
-            console.log(deviceLatLon);
              </Text>
             }
           }
 
 
-    var obj = arrayLatLon;
+    var obj = JSON.parse('{'+arrayLatLon+'}');
 
 
 
@@ -85,7 +86,7 @@
         }).addTo(overview);
         for (device in obj) {
             var marker = L.marker([obj[device].lat, obj[device].lon]);
-            marker.bindPopup(device);
+            marker.bindPopup('<h5>device id:  ' + device + '</h5> <p> Last contact: ' + obj[device].lastContact + ' </p><p>Temp mean: ' + obj[device].tMean + ' °C</p><p>Total shock: ' + obj[device].totalShock + ' </p><p> Smax: ' + obj[device].sMax + ' </p><p> BatteryLvl: ' + obj[device].batteryLvl + '% </p>');
             markerClusters.addLayer(marker);
             markers.push(marker);
         }

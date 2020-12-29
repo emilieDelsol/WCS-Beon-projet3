@@ -18,7 +18,7 @@ namespace BeOn.Models
 
         [Column("timestampevent")]
         public DateTime TimestampEvent { get; set; }
-        public virtual String TimestampEventToString { get { return $"{TimestampEvent.Day} {TimestampEvent.Month} {TimestampEvent.Year} T {TimestampEvent.Hour} : {TimestampEvent.Minute}" ; }  }
+        public virtual String TimestampEventToString { get { return $"{TimestampEvent.Day}/{TimestampEvent.Month}/{TimestampEvent.Year}  {TimestampEvent.Hour}:{TimestampEvent.Minute}" ; }  }
 
         [Column("seq_number")]
         public int SeqNumber { get; set; }
