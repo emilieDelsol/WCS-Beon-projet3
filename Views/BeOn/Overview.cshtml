@@ -30,6 +30,7 @@
               double totalShock = environmentPayloads.First().TotalShock;
               Int32 tMean = environmentPayloads.First().Tmean;
               Int32 batteryLvl = Convert.ToInt32(environmentPayloads.First().Batterylvl);
+
             <Text>
             var deviceInfos = ('"@device.DeviceId": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
             devicesEnvironmentInfos.push(deviceInfos);
