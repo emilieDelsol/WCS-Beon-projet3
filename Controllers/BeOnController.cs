@@ -37,7 +37,7 @@ namespace BeOn.Controllers
 			devices = from a in _context.Devices select a;  
 			return View(devices);
 		}
-		public IActionResult testDashboard(string IdDevice)
+		public IActionResult Dashboard(string IdDevice)
 		{
 			IEnumerable<Device> devices = new List<Device>();
 			Device device = new Device();
@@ -49,9 +49,20 @@ namespace BeOn.Controllers
             }
 			return View(device);
 		}
-		public IActionResult Location1Device()
+		public IActionResult Location1Device(string IdDevice)
 		{
-			return View();
+			IEnumerable<Device> devices = new List<Device>();
+			Device device = new Device();
+			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
+			device = devices.First();
+			return View(device);
+		}	public IActionResult Temp(string IdDevice)
+		{
+			IEnumerable<Device> devices = new List<Device>();
+			Device device = new Device();
+			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
+			device = devices.First();
+			return View(device);
 		}
 
 	}
