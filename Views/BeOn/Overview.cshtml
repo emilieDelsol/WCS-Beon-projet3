@@ -1,17 +1,41 @@
-﻿
+﻿@model IEnumerable<Device>
 @{
     ViewData["Title"] = "Overview";
     Layout = "~/Views/Shared/_layoutBeonPrincipal.cshtml";
+    IEnumerable<Device> devices = Model;
 }
 
 <article>
-<div class="card m-auto m-lg-3 ">
-    <div class="card-header pb-0" style=" color: #201063;">
-        <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Overview</h5>
+    <div class="card m-auto m-lg-3 ">
+        <div class="card-header pb-0" style=" color: #201063;">
+            <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Overview</h5>
+        </div>
+        <div class="card-body">
+            <div id="overview"></div>
+        </div>
     </div>
-    <div class="card-body">
-        <div id="overview"></div>
-    </div>
-</div>
-
 </article>
+<script type="text/javascript">
+
+        let devicesEnvironmentInfos = new Array();
+      @{ foreach (Device device in devices)
+          {
+              IEnumerable<EnvironmentPayload> environmentPayloads = device.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent);
+              double latitudeDouble =Math.Round(environmentPayloads.First().ComputedLatitude,4);
+              double longitudeDouble = Math.Round(environmentPayloads.First().ComputedLongitude,4);
+              string latitude = latitudeDouble.ToString().Replace(',', '.');
+              string longitude = longitudeDouble.ToString().Replace(',', '.');
+              String lastContact = environmentPayloads.First().TimestampEventToString;
+              double sMax = environmentPayloads.First().Smax;
+              double totalShock = environmentPayloads.First().TotalShock;
+              Int32 tMean = environmentPayloads.First().Tmean;
+              Int32 batteryLvl = Convert.ToInt32(environmentPayloads.First().Batterylvl);
+
+            <Text>
+            var deviceInfos = ('"@device.DeviceId": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
+            devicesEnvironmentInfos.push(deviceInfos);
+             </Text>
+            }
+          }
+</script>
+<script src="~/js/scriptOverview.js"></script>
