@@ -19,7 +19,7 @@
         @foreach (Device dev in Model)
         {
         <tr>
-            <th scope="row"> <a asp-controller="Beon" asp-action="TestDashboard" asp-route-IdDevice="@dev.DeviceId"> @dev.DeviceId</a></th>
+            <th scope="row"> <a asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@dev.DeviceId"> @dev.DeviceId</a></th>
         </tr>
         }
     </tbody>

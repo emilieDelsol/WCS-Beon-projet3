@@ -1,5 +1,5 @@
 ﻿@model Device
-@{ ViewData["Title"] = "Test Dashboard";
+@{ ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml"; }
 
 @{
@@ -17,6 +17,33 @@
             Shock = env.Smax;
         }
     } }
+<aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
+    <nav class="navbar navbar-expand navbar-dark flex-lg-column flex-row align-items-start p-0">
+        <div class="collapse navbar-collapse row m-auto">
+
+            <ul class="flex-lg-column flex-row navbar-nav justify-content-between ">
+                <li class="list-group-item  rounded-0" style="  background-color: #201063;">
+                    <a class="nav-link pl-0 text-nowrap" style="color: white; font-weight:bold;" asp-controller="Home" asp-action="Index"><i class="fas fa-home "></i><span class="d-none d-lg-inline"> Home</span></a>
+                </li>
+                <li class="list-group-item" style="  background-color: #201063">
+                    <a class="nav-link pl-0" style="color: white; font-weight:bold;" asp-controller="Beon" asp-action="listDevices"><i class="fas fa-eye "></i> <span class="d-none d-lg-inline">Tracker list</span></a>
+                </li>
+                <li class="list-group-item" style="  background-color: #201063">
+                    <a class="nav-link pl-0" style="color: white; font-weight:bold; " asp-controller="Beon" asp-action="Overview"><i class="fas fa-globe-europe "></i><span class="d-none d-lg-inline"> Overview</span></a>
+                </li>
+                <li class="list-group-item pr-0 pl-0 d-none d-lg-block" style="  background-color: #201063">
+                    <a class="nav-link pl-0 dropdown-toggle  ml-3 " style="color: white; font-weight:bold;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample"><i class="fa fa-star fa-fw"></i> <span class="d-none d-lg-inline"> Dashboard</span></a>
+                    <div class="collapse  " id="collapseExample">
+                        <a class="nav-link pl-3" style="color: white; font-weight:bold; background-color:#150b42" asp-controller="Beon" asp-action="Location1Device"  asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-map-marked"></i> <span class="d-none d-lg-inline"> Location</span></a>
+                        <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-temperature-high"></i><span class="d-none d-lg-inline"> Temperature</span></a>
+                        <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-globe-europe "></i><span class="d-none d-lg-inline"> Overview</span></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</aside>
+<main role="main" class="col p-0">
 
 <section class="container-fluid p-0 ">
     <header class="border p-2 d-flex justify-content-between">
@@ -80,7 +107,7 @@
     <article class="container-fluid p-3 p-lg-0 m-auto d-flex flex-column flex-lg-row justify-content-around">
         <div class="card m-auto m-lg-3 col-12 col-lg-5 p-0 ">
             <div class="card-header pb-0" style=" color: #201063;">
-                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Location</h5>
+                <h5 class="card-title " style="font-weight: bold;"><a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><i class="fas fa-map-marked"></i> Location</a></h5>
             </div>
             <div class="card-body">
                 <div id="map"></div>
@@ -129,24 +156,24 @@
             </div>
             <div class="card  mt-3 mb-3 col-12 p-0 ">
                 <div class="card-header pb-0" style=" color: #201063;">
-                    <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
+                    <h5 class="card-title" style="font-weight: bold; "><a  asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><i class="fas fa-temperature-high"></i> Temperature</a></h5>
                 </div>
                 <div class="card-body">
-                    <div  class="d-flex flex-row justify-content-between ">
+                    <div class="d-flex flex-row justify-content-between ">
                         <div class="text-center m-1">
                             <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
                             <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
                         </div>
                         <div class="text-center">
-                                <label class="endDate">
-                                    sort between date :
-                                    <input type="datetime" name="beginDate" id="beginDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
-                                    <input type="datetime" name="endDate" id="endDate"  value="" placeholder="yyyy-MM-ddTHH:mm:ss">
-                                    <button type="button"  id="bouton" onclick="UpdateChartBetweenDate()">send</button>
-                                </label>
+                            <label class="endDate">
+                                sort between date :
+                                <input type="datetime" name="beginDate" id="beginDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
+                                <input type="datetime" name="endDate" id="endDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
+                                <button type="button" id="bouton" onclick="UpdateChartBetweenDate()">send</button>
+                            </label>
                         </div>
 
-                     
+
                     </div>
 
                     <div class="" style="height:auto">
@@ -156,9 +183,8 @@
             </div>
         </div>
     </article>
-
-   
 </section>
+</main>
 
 <script type="text/javascript">
     let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
@@ -196,7 +222,6 @@
             alert("You ask :  begin date:" + beginDate + " end date:  " + endDate + ". THERE IS  " + maxSortBetween.length + " VALUES");
         }
     }
-
 
         let min72 = new Array();
         let max72 = new Array();
