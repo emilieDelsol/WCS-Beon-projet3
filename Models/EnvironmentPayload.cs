@@ -25,9 +25,11 @@ namespace BeOn.Models
 
         [Column("computed_latitude")]
         public double ComputedLatitude { get; set; }
+        public string ComputedLatitudeFormatted { get { return Convert.ToString(Math.Round(ComputedLatitude, 6)).Replace(",","."); } }
 
         [Column("computed_longitude")]
         public double ComputedLongitude { get; set; }
+        public string ComputedLongitudeFormatted { get { return Convert.ToString(Math.Round(ComputedLongitude, 6)).Replace(",", "."); } } 
 
         [Column("radius")]
         public int Radius { get; set; }

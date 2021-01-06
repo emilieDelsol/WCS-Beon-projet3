@@ -133,7 +133,7 @@
                                     if (env.EventType == "1")
                                     {
                                         <div>
-                                            <input type="button" class ="btn btn-primary"value="alert temperture" onclick="updateMapCarte('@Math.Round(env.ComputedLatitude,4)', '@Math.Round((decimal)env.ComputedLongitude,4)', '@env.DeviceId', 'Alert Temperature')">
+                                            <input type="button" class ="btn btn-primary"value="alert temperture" onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Alert Temperature')">
                                         </div> }
                                     else if (env.EventType == "2")
                                     {
