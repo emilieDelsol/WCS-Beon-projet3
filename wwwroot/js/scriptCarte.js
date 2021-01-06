@@ -29,10 +29,13 @@ window.onload = function () {
     initMap();
 };
 
-function updateMapCarte(lat, lon) {
+function updateMapCarte(lat, lon, deviceName, AlertType) {
+    lat = parseFloat(lat.replace(",", "."));
+    lon = parseFloat(lon.replace(",", "."));
     overview.setView([lat, lon], 9);
-
-}
+    marker = L.marker([lat, lon]).addTo(overview);
+    marker.bindPopup(String(deviceName) + " : " + AlertType);
+};
 
 
 
