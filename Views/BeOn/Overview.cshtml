@@ -17,25 +17,63 @@
 </article>
 <script type="text/javascript">
 
-        let devicesEnvironmentInfos = new Array();
+    let devicesEnvironmentInfos = new Array();
+    @{string latitude = "43.7384";
+        string longitude = "7.4246";
+        double sMax = 0;
+        double totalShock = 0;
+        String lastContact = "no info";
+        Int32 tMean = 0;
+        Int32 batteryLvl = 0;
+        }
       @{ foreach (Device device in devices)
           {
-              IEnumerable<EnvironmentPayload> environmentPayloads = device.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent);
-              double latitudeDouble =Math.Round(environmentPayloads.First().ComputedLatitude,4);
-              double longitudeDouble = Math.Round(environmentPayloads.First().ComputedLongitude,4);
-              string latitude = latitudeDouble.ToString().Replace(',', '.');
-              string longitude = longitudeDouble.ToString().Replace(',', '.');
-              String lastContact = environmentPayloads.First().TimestampEventToString;
-              double sMax = environmentPayloads.First().Smax;
-              double totalShock = environmentPayloads.First().TotalShock;
-              Int32 tMean = environmentPayloads.First().Tmean;
-              Int32 batteryLvl = Convert.ToInt32(environmentPayloads.First().Batterylvl);
+              if (device.EnvironmentPayloads.Count != 0)
+              {
+
+                  IEnumerable<EnvironmentPayload> environmentPayloads = device.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent);
+                  double latitudeDouble = Math.Round(environmentPayloads.First().ComputedLatitude, 6);
+                  double longitudeDouble = Math.Round(environmentPayloads.First().ComputedLongitude, 6);
+                  latitude = latitudeDouble.ToString().Replace(',', '.');
+                  longitude = longitudeDouble.ToString().Replace(',', '.');
+                  lastContact = environmentPayloads.First().TimestampEventToString;
+                  sMax = environmentPayloads.First().Smax;
+                  totalShock = environmentPayloads.First().TotalShock;
+                  tMean = environmentPayloads.First().Tmean;
+                  batteryLvl = Convert.ToInt32(environmentPayloads.First().Batterylvl);
+              }
+              else
+              {
+                    latitude = " 43.5333";
+                    longitude = " 1.35366";
+                    sMax = 0;
+                    totalShock = 0;
+                    lastContact = "no info";
+                    tMean = 0;
+                    batteryLvl = 0;
+              }
 
             <Text>
             var deviceInfos = ('"@device.DeviceId": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
             devicesEnvironmentInfos.push(deviceInfos);
              </Text>
-            }
+
+            @*  if(device.PositionningPayloads.Count!=0)
+              {
+                  IEnumerable<PositionningPayload> positionningPayloads = device.PositionningPayloads.OrderByDescending(e => e.TimestampEvent);
+                  double latitudeDouble = Math.Round(positionningPayloads.First().ComputedLatitude, 4);
+                  double longitudeDouble = Math.Round(positionningPayloads.First().ComputedLongitude, 4);
+                  latitude = latitudeDouble.ToString().Replace(',', '.');
+                  longitude = longitudeDouble.ToString().Replace(',', '.');
+              }
+
+            <Text>
+            var deviceInfos = ('"@device.DeviceId": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
+            devicesEnvironmentInfos.push(deviceInfos);
+             </Text>*@
+          }
+
+
           }
 </script>
 <script src="~/js/scriptOverview.js"></script>

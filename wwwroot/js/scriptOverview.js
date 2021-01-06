@@ -15,7 +15,7 @@ function initMap() {
     }).addTo(overview);
     for (device in jsonDevicesEnvironment) {
         let marker = L.marker([jsonDevicesEnvironment[device].lat, jsonDevicesEnvironment[device].lon]);
-        marker.bindPopup('<h5>device id:  ' + device + '</h5> <p> Last contact: ' + jsonDevicesEnvironment[device].lastContact + ' </p><p>Temp mean: ' + jsonDevicesEnvironment[device].tMean + ' °C</p><p>Total shock: ' + jsonDevicesEnvironment[device].totalShock + ' </p><p> Smax: ' + jsonDevicesEnvironment[device].sMax + ' </p><p> BatteryLvl: ' + jsonDevicesEnvironment[device].batteryLvl + '% </p><p><a href="/Beon/TestDashboard?IdDevice='+device+'">link to dashboard </a></p>');
+        marker.bindPopup('<h5>device id:  ' + device + '</h5> <p> Last contact: ' + jsonDevicesEnvironment[device].lastContact + ' </p><p>Temp mean: ' + jsonDevicesEnvironment[device].tMean + ' °C</p><p>Total shock: ' + jsonDevicesEnvironment[device].totalShock + ' </p><p> Smax: ' + jsonDevicesEnvironment[device].sMax + ' </p><p> BatteryLvl: ' + jsonDevicesEnvironment[device].batteryLvl + '% </p><p><a href="/Beon/Dashboard?IdDevice='+device+'">link to dashboard </a></p>');
         markerClusters.addLayer(marker);
         markers.push(marker);
     }
