@@ -57,7 +57,8 @@ namespace BeOn.Controllers
 			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
 			device = devices.First();
 			return View(device);
-		}	public IActionResult Temp(string IdDevice)
+		}	
+		public IActionResult Temp(string IdDevice)
 		{
 			IEnumerable<Device> devices = new List<Device>();
 			Device device = new Device();

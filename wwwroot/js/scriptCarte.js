@@ -29,6 +29,11 @@ window.onload = function () {
     initMap();
 };
 
+function updateMapCarte(lat, lon) {
+    overview.setView([lat, lon], 9);
+
+}
+
 
 
 //https://nouvelle-techno.fr/actualites/pas-a-pas-inserer-une-carte-openstreetmap-sur-votre-site
