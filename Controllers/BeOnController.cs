@@ -21,7 +21,7 @@ namespace BeOn.Controllers
 		}
 		public IActionResult Overview()
 		{
-			IEnumerable<Device> devices =  (from a in _context.Devices where a.EnvironmentPayloads.Count !=0 select a ).ToList(); //need add toList() -> conflict with List Devices --->NpgsqlOperationInProgressException: A command is already in progress
+			IEnumerable<Device> devices =  (from a in _context.Devices select a ).ToList(); //need add toList() -> conflict with List Devices --->NpgsqlOperationInProgressException: A command is already in progress
 			return View(devices);
 		}
 		public IActionResult ListDevices()
