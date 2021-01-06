@@ -21,10 +21,8 @@
       @{ foreach (Device device in devices)
           {
               IEnumerable<EnvironmentPayload> environmentPayloads = device.EnvironmentPayloads.OrderByDescending(e => e.TimestampEvent);
-              double latitudeDouble =Math.Round(environmentPayloads.First().ComputedLatitude,4);
-              double longitudeDouble = Math.Round(environmentPayloads.First().ComputedLongitude,4);
-              string latitude = latitudeDouble.ToString().Replace(',', '.');
-              string longitude = longitudeDouble.ToString().Replace(',', '.');
+              string latitude = environmentPayloads.First().ComputedLatitudeFormatted;
+              string longitude = environmentPayloads.First().ComputedLongitudeFormatted;
               String lastContact = environmentPayloads.First().TimestampEventToString;
               double sMax = environmentPayloads.First().Smax;
               double totalShock = environmentPayloads.First().TotalShock;

@@ -3,6 +3,7 @@ var lat = 43.6043 ;
 var lon = 1.4437;
 var overview = null;
 
+
 // Fonction d'initialisation de la carte
 function initMap() {
     // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
@@ -30,6 +31,10 @@ window.onload = function () {
 };
 
 function updateMapCarte(lat, lon, deviceName, AlertType) {
+    //Chercher et supprime les markers existants
+    var markers = document.getElementsByClassName("leaflet-marker-icon");
+    markers[0].remove();
+
     overview.setView([lat, lon], 9);
     marker = L.marker([lat, lon]).addTo(overview);
     marker.bindPopup(String(deviceName) + " : " + AlertType);
