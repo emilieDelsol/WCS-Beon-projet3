@@ -48,7 +48,7 @@ let myLineChart = new Chart(line, {
             yAxes: [
                 {
                     ticks: {
-                        beginAtZero: true,
+                        beginAtZero: false,
 
                     }
                 }

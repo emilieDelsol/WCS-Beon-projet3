@@ -15,17 +15,9 @@ namespace BeOn.Controllers
         {
 			_context = injectedBeonContext;
         }
-		public IActionResult Index(string IdDevice)
+		public IActionResult Index()
 		{
-			IEnumerable<Device> devices = new List<Device>();
-			Device device = new Device();
-			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
-			device = devices.First();
-			if (device.EnvironmentPayloads.Count == 0)
-			{
-				return View("Default");
-			}
-			return View(device);
+			return View();
 		}
 		public IActionResult Overview()
 		{
@@ -57,7 +49,9 @@ namespace BeOn.Controllers
 			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
 			device = devices.First();
 			return View(device);
-		}	public IActionResult Temp(string IdDevice)
+		}	
+		
+		public IActionResult Temp(string IdDevice)
 		{
 			IEnumerable<Device> devices = new List<Device>();
 			Device device = new Device();
