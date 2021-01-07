@@ -1,7 +1,15 @@
-﻿// On initialise la latitude et la longitude de Paris (centre de la carte)
+﻿// On initialise la latitude et la longitude de Toulouse (centre de la carte)
 var lat = 43.6043 ;
 var lon = 1.4437;
+
+// Check des valeurs Longitude et Latitude récupérées dans Dashboard.cshtml
+if (Math.abs(LastLatitude) < 90)
+    lat = LastLatitude;
+if (Math.abs(LastLongitude) < 180 )
+    lon = LastLongitude;
+
 var overview = null;
+
 
 // Fonction d'initialisation de la carte
 function initMap() {
@@ -20,16 +28,28 @@ function initMap() {
         inconAnchor: [25, 50],
         popupAnchor: [0,-50]
     })
-    // Nous ajoutons un marqueur + popup
-    var marker = L.marker([43.6043, 1.4437]/*, { icon: icone }*/).addTo(overview);
-    marker.bindPopup("<h2>Tracker 001</h2><p>description</p>");
+    // Nous ajoutons un marqueur
+    var marker = L.marker([lat, lon]/*, { icon: icone }*/).addTo(overview);
 }
+
 window.onload = function () {
     // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
     initMap();
 };
 
+function updateMapCarte(lat, lon, deviceName, AlertType, AlertTime, AlertValue, Unit) {
+    //Chercher et supprime les markers + popups existants
+    var markers = document.getElementsByClassName("leaflet-marker-icon");
+    markers[0].remove();
+    var popups = document.getElementsByClassName("leaflet-popup");
+    if (popups.length > 0)
+        popups[0].remove();
+
+    overview.setView([lat, lon], 9);
+    marker = L.marker([lat, lon]).addTo(overview);
+    marker.bindPopup(deviceName + " : " + AlertType + "<br>" + AlertTime + "<br> Value : " + AlertValue + Unit);
+    marker.openPopup();
+};
 
 
-//https://nouvelle-techno.fr/actualites/pas-a-pas-inserer-une-carte-openstreetmap-sur-votre-site
-//https://www.youtube.com/watch?v=MtY9J2frbsM&feature=youtu.be&t=1080
+
