@@ -7,6 +7,8 @@
     EnvironmentPayload environment = environmentOrderByAsc.Last();
     IEnumerable<EnvironmentPayload> env72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
     IEnumerable<EnvironmentPayload> env24 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
+    string LastLatitude = "environment.ComputedLatitudeFormatted";
+    string LastLongitude = "environment.ComputedLongitudeFormatted";
 
     double Shock = 0;
     int NumberOfShock = environmentOrderByAsc.Count(a => a.EventType == "3");
@@ -133,7 +135,7 @@
                                     if (env.EventType == "1")
                                     {
                                         <div>
-                                            <input type="button" class ="btn btn-primary"value="alert temperture" onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Alert Temperature')">
+                                            <input type="button" class ="btn btn-primary"value="alert temperture" onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Alert Temperature', '@env.TimestampEventToString', '@env.Tmax', ' °')">
                                         </div> }
                                     else if (env.EventType == "2")
                                     {
@@ -187,6 +189,8 @@
 </main>
 
 <script type="text/javascript">
+    var LastLatitude = '@environment.ComputedLatitudeFormatted';
+    var LastLongitude = '@environment.ComputedLongitudeFormatted';
     let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
 
     function UpdateChartBetweenDate() {
