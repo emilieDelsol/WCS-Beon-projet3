@@ -79,7 +79,7 @@
     </article>
 </main>
 <script type="text/javascript">
-    let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
+  let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
 
     function UpdateChartBetweenDate() {
         var beginDate = new Date(document.getElementById("beginDate").value);
@@ -107,8 +107,12 @@
         myLineChart.data.datasets[2].data = meanSortBetween;
         myLineChart.data.labels = myLabelBetween;
         myLineChart.update();
-
-        alert("You ask :  begin date:" + beginDate + " end date:  " + endDate);
+        if (endDate < beginDate) {
+            alert("Error! End date must be after start date . No values..");
+        }
+        else {
+            alert("You ask :  begin date:" + beginDate + " end date:  " + endDate + ". THERE IS  " + maxSortBetween.length + " VALUES");
+        }
     }
 
         let min72 = new Array();
@@ -126,12 +130,11 @@
         let meanx24;
         let maxx72;
         let minx72;
-    let meanx72;
+        let meanx72;
 
 
     @{
 
-            IEnumerable<EnvironmentPayload> environmentSortBetweenDate = environmentOrderByAsc;
 
         <text>
             maxx24 = @env24.OrderByDescending(a => a.Tmax).First().Tmax;
@@ -147,8 +150,8 @@
                  <text>
                 min72.push(@env.Tmin)
                 max72.push(@env.Tmax)
-    mean72.push(@env.Tmean);
-    myLabel72.push("@env.TimestampEvent.Day/@env.TimestampEvent.Month/@env.TimestampEvent.Year @env.TimestampEvent.Hour:@env.TimestampEvent.Minute ");
+                mean72.push(@env.Tmean);
+                myLabel72.push("@env.TimestampEvent.Day/@env.TimestampEvent.Month/@env.TimestampEvent.Year @env.TimestampEvent.Hour:@env.TimestampEvent.Minute ");
                 i = i + 1;
                 </text>
             }
@@ -163,5 +166,6 @@
                 </text>
              }
         }
-
 </script>
+
+

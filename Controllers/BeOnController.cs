@@ -15,21 +15,13 @@ namespace BeOn.Controllers
         {
 			_context = injectedBeonContext;
         }
-		public IActionResult Index(string IdDevice)
+		public IActionResult Index()
 		{
-			IEnumerable<Device> devices = new List<Device>();
-			Device device = new Device();
-			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
-			device = devices.First();
-			if (device.EnvironmentPayloads.Count == 0)
-			{
-				return View("Default");
-			}
-			return View(device);
+			return View();
 		}
 		public IActionResult Overview()
 		{
-			IEnumerable<Device> devices =  (from a in _context.Devices where a.EnvironmentPayloads.Count !=0 select a ).ToList(); //need add toList() -> conflict with List Devices --->NpgsqlOperationInProgressException: A command is already in progress
+			IEnumerable<Device> devices =  (from a in _context.Devices select a ).ToList(); //need add toList() -> conflict with List Devices --->NpgsqlOperationInProgressException: A command is already in progress
 			return View(devices);
 		}
 		public IActionResult ListDevices()
@@ -58,6 +50,7 @@ namespace BeOn.Controllers
 			device = devices.First();
 			return View(device);
 		}	
+		
 		public IActionResult Temp(string IdDevice)
 		{
 			IEnumerable<Device> devices = new List<Device>();

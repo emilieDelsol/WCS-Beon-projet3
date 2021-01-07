@@ -7,8 +7,7 @@
     EnvironmentPayload environment = environmentOrderByAsc.Last();
     IEnumerable<EnvironmentPayload> env72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
     IEnumerable<EnvironmentPayload> env24 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
-    string LastLatitude = "environment.ComputedLatitudeFormatted";
-    string LastLongitude = "environment.ComputedLongitudeFormatted";
+    IEnumerable<EnvironmentPayload> env72alert = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddMonths(-72));
 
     double Shock = 0;
     int NumberOfShock = environmentOrderByAsc.Count(a => a.EventType == "3");
@@ -130,28 +129,30 @@
                     </div>
                     <div id="collapseAlert" class="collapse" aria-labelledby="headingAlert" data-parent="#accordion">
                         <div class="card-body">
-                            @{ foreach (var env in environmentOrderByAsc)
+                            @{ foreach (var env in env72alert)
                                 {
+
                                     if (env.EventType == "1")
                                     {
                                         <div>
-                                            <input type="button" class ="btn btn-primary"value="alert temperture" onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Alert Temperature', '@env.TimestampEventToString', '@env.Tmax', ' °')">
+                                            <p  class=" alertcolorred fas fa-temperature-high">Alert temperature    -   @env.TimestampEvent</p>
                                         </div> }
                                     else if (env.EventType == "2")
                                     {
                                         <div>
-                                            <h1>Alert temperature terminé</h1>
+                                            <p class="alertcolorgreen fas fa-temperature-high"> Alert temperature terminée   -   @env.TimestampEvent</p>
                                         </div> }
                                     else if (env.EventType == "3")
                                     {
                                         <div>
-                                            <h1>Alert Shock</h1>
+                                            <p class="alertcolorblue fas fa-exclamation-triangle"> Alert Shock    -   @env.TimestampEvent</p>
                                         </div> }
-                                    else
-                                    {
-                                        continue;
+                                        else
+                                        {
+                                            continue;
+                                        }
                                     }
-                                } }
+                                }
                         </div>
                     </div>
                 </div>
