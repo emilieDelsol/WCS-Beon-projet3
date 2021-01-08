@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,15 +18,18 @@ namespace BeOn.Models
 
         [Column("timestampevent")]
         public DateTime TimestampEvent { get; set; }
+        public virtual String TimestampEventToString { get { return $"{TimestampEvent.Day}/{TimestampEvent.Month}/{TimestampEvent.Year}  {TimestampEvent.Hour}:{TimestampEvent.Minute}" ; }  }
 
         [Column("seq_number")]
         public int SeqNumber { get; set; }
 
         [Column("computed_latitude")]
         public double ComputedLatitude { get; set; }
+        public string ComputedLatitudeFormatted { get { return Convert.ToString(Math.Round(ComputedLatitude, 6)).Replace(",","."); } }
 
         [Column("computed_longitude")]
         public double ComputedLongitude { get; set; }
+        public string ComputedLongitudeFormatted { get { return Convert.ToString(Math.Round(ComputedLongitude, 6)).Replace(",", "."); } } 
 
         [Column("radius")]
         public int Radius { get; set; }

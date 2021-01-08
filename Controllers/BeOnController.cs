@@ -2,6 +2,7 @@ using BeOn.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,15 +21,16 @@ namespace BeOn.Controllers
 		}
 		public IActionResult Overview()
 		{
-			return View();
+			IEnumerable<Device> devices =  (from a in _context.Devices select a ).ToList(); //need add toList() -> conflict with List Devices --->NpgsqlOperationInProgressException: A command is already in progress
+			return View(devices);
 		}
 		public IActionResult ListDevices()
 		{
-			IEnumerable<Device> devices = new List<Device>();
-			devices = from a in _context.Devices select a;  
+			IEnumerable<Device> devices = (from a in _context.Devices select a).ToList(); //need add toList() -> conflict with overview --->  NpgsqlOperationInProgressException: A command is already in progress
+
 			return View(devices);
 		}
-		public IActionResult testDashboard(string IdDevice)
+		public IActionResult Dashboard(string IdDevice)
 		{
 			IEnumerable<Device> devices = new List<Device>();
 			Device device = new Device();
@@ -38,6 +40,23 @@ namespace BeOn.Controllers
             {
 				return View("Default");
             }
+			return View(device);
+		}
+		public IActionResult Location1Device(string IdDevice)
+		{
+			IEnumerable<Device> devices = new List<Device>();
+			Device device = new Device();
+			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
+			device = devices.First();
+			return View(device);
+		}	
+		
+		public IActionResult Temp(string IdDevice)
+		{
+			IEnumerable<Device> devices = new List<Device>();
+			Device device = new Device();
+			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
+			device = devices.First();
 			return View(device);
 		}
 

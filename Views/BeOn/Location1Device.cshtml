@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "listDevices";
+    Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
+}
+
+<aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
+    <nav class="navbar navbar-expand navbar-dark flex-lg-column flex-row align-items-start p-0">
+        <div class="collapse navbar-collapse row m-auto">
+
+            <ul class="flex-lg-column flex-row navbar-nav justify-content-between ">
+                <li class="list-group-item  rounded-0" style="  background-color: #201063;">
+                    <a class="nav-link pl-0 text-nowrap" style="color: white; font-weight:bold;" asp-controller="Home" asp-action="Index"><i class="fas fa-home "></i><span class="d-none d-lg-inline"> Home</span></a>
+                </li>
+                <li class="list-group-item" style="  background-color: #201063">
+                    <a class="nav-link pl-0" style="color: white; font-weight:bold;" asp-controller="Beon" asp-action="listDevices"><i class="fas fa-eye "></i> <span class="d-none d-lg-inline">Tracker list</span></a>
+                </li>
+                <li class="list-group-item" style="  background-color: #201063">
+                    <a class="nav-link pl-0" style="color: white; font-weight:bold; " asp-controller="Beon" asp-action="Overview"><i class="fas fa-globe-europe "></i><span class="d-none d-lg-inline"> Overview</span></a>
+                </li>
+                <li class="list-group-item pr-0 pl-0 d-none d-lg-block" style="  background-color: #201063">
+                    <a class="nav-link pl-0 dropdown-toggle  ml-3 " style="color: white; font-weight:bold;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample"><i class="fa fa-star fa-fw"></i> <span class="d-none d-lg-inline"> Dashboard</span></a>
+                    <div class="collapse  " id="collapseExample">
+                        <a class="nav-link pl-3" style="color: white; font-weight:bold; background-color:#150b42" asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-map-marked"></i> <span class="d-none d-lg-inline"> Location</span></a>
+                        <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-temperature-high"></i><span class="d-none d-lg-inline"> Temperature</span></a>
+                        <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-globe-europe "></i><span class="d-none d-lg-inline"> Overview</span></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</aside>
+<main role="main" class="col p-0">
+    <article class="container-fluid p-3 d-flex">
+        <div class="card col m-auto m-3  ">
+            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+                <h5 class="card-title " style="font-weight: bold;"><a asp-controller="BeOn" asp-action="Location1Device" style="color: #48cbd8; "> <i class="fas fa-map-marked"></i> Location</a></h5>
+            </div>
+            <div class="card-body">
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class=" m-auto ">
+            <div class="btn-group dropleft ml-3 mr-0">
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="far fa-bell"></i>
+                </button>
+                <div class="dropdown-menu ">
+                    <a class="dropdown-item"><i class="fas fa-temperature-low"></i> Temp: -10°C</a>
+                    <a class="dropdown-item"><i class="fas fa-temperature-high"></i> Temp: 55°C</a>
+                    <a class="dropdown-item"><i class="fas fa-hammer"></i> Shock: 2G</a>
+                    <a class="dropdown-item"><i class="fas fa-battery-quarter"></i> Low battery</a>
+                </div>
+            </div>
+        </div>
+    </article>
+    </main>
