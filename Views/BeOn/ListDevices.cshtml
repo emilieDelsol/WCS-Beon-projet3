@@ -28,7 +28,7 @@
                         }
                         else
                         {
-                        <th scope="row">  @dev.DeviceId <i class="text-muted">No data avalaible</i></th>
+                        <th scope="row">  @dev.DeviceId <i class="text-muted">No data available</i></th>
                         }
                     </tr>
                 }
@@ -78,18 +78,18 @@
                                         }
                                         if (env.EventType == "1")
                                         {
-                                            <div>
-                                                <p class=" alertcolorred fas fa-temperature-high">Alert temperature    -   @env.TimestampEvent</p>
+                                            <div class="alertedcolorred">
+                                                <p> <i class=" fas fa-temperature-high"></i>  Temperature Alert    -   @env.TimestampEvent</p>
                                             </div> }
                                         else if (env.EventType == "2")
                                         {
-                                            <div>
-                                                <p class="alertcolorgreen fas fa-temperature-high"> Alert temperature terminée   -   @env.TimestampEvent</p>
+                                            <div class="alertcolorgreen ">
+                                                <p><i class=" fas fa-temperature-high"></i> Temperature Alert Terminated   -   @env.TimestampEvent</p>
                                             </div> }
                                         else if (env.EventType == "3")
                                         {
-                                            <div>
-                                                <p class="alertcolorblue fas fa-exclamation-triangle"> Alert Shock    -   @env.TimestampEvent</p>
+                                            <div class="alertcolorblue ">
+                                                <p><i class="  fas fa-exclamation-triangle"></i>  Shock Alert    -   @env.TimestampEvent</p>
                                             </div> }
                                         else
                                         {
