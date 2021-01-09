@@ -54,7 +54,6 @@
                     <p class="card-text">-Min:  @env72.OrderByDescending(a => a.Tmax).First().Tmin °C</p>
                     <p class="card-text">-Mean:  @env72.OrderByDescending(a => a.Tmax).First().Tmean °C</p>
                     <p class="card-text">-Total alert duration:  @env72.OrderByDescending(a => a.TotalAlertDuration).First().TotalAlertDuration</p>
-                    <p class="card-text">-Total alert duration all BDD:  @environmentOrderByAsc.OrderByDescending(a => a.TotalAlertDuration).First().TotalAlertDuration</p>
                 </div>
             </div>
             <div class="card  m-3 ">
@@ -96,7 +95,7 @@
                     <div class="collapse" id="alertCollapse">
                         <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
                             <div class="card-body">
-                                @{ foreach (var env in env72)
+                                @{ foreach (var env in env72alert)
                                     {
 
                                         if (env.EventType == "1")
