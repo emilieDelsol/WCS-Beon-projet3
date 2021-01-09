@@ -40,7 +40,7 @@
             <div class="card-header pb-0" style=" color: #201063;">
                 <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
             </div>
-            <div class="card-body text-center">
+            <div class="card-body text-left">
                 <h5 class="card-title ">Since last 72h: </h5>
                 <p class="card-text">-Max:  @env72.OrderByDescending(a => a.Tmax).First().Tmax °C</p>
                 <p class="card-text">-Min:  @env72.OrderByDescending(a => a.Tmax).First().Tmin °C</p>
@@ -108,10 +108,10 @@
         myLineChart.data.labels = myLabelBetween;
         myLineChart.update();
         if (endDate < beginDate) {
-            alert("Error! End date must be after start date . No values..");
+            alert("Error! End date must be after start date . \n\nNo values..");
         }
         else {
-            alert("You ask :  begin date:" + beginDate + " end date:  " + endDate + ". THERE IS  " + maxSortBetween.length + " VALUES");
+            alert("Your request:  \n\nbegin date:" + beginDate + " \n \nend date:  " + endDate + ". \n\n  " + maxSortBetween.length + " VALUES\n");
         }
     }
 
