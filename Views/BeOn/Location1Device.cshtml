@@ -1,7 +1,14 @@
-﻿
+﻿@model Device
 @{
     ViewData["Title"] = "listDevices";
     Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
+
+    IEnumerable<EnvironmentPayload> environmentOrderByAsc = Model.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
+    EnvironmentPayload environment = environmentOrderByAsc.Last();
+    IEnumerable<EnvironmentPayload> env72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
+    IEnumerable<EnvironmentPayload> env24 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
+    IEnumerable<EnvironmentPayload> env72alert = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddMonths(-72));
+
 }
 
 <aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
@@ -30,28 +37,83 @@
         </div>
     </nav>
 </aside>
-<main role="main" class="col p-0">
-    <article class="container-fluid p-3 d-flex">
-        <div class="card col m-auto m-3  ">
-            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
-                <h5 class="card-title " style="font-weight: bold;"><a asp-controller="BeOn" asp-action="Location1Device" style="color: #48cbd8; "> <i class="fas fa-map-marked"></i> Location</a></h5>
-            </div>
-            <div class="card-body">
-                <div id="map"></div>
-            </div>
-        </div>
-        <div class=" m-auto ">
-            <div class="btn-group dropleft ml-3 mr-0">
-                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="far fa-bell"></i>
-                </button>
-                <div class="dropdown-menu ">
-                    <a class="dropdown-item"><i class="fas fa-temperature-low"></i> Temp: -10°C</a>
-                    <a class="dropdown-item"><i class="fas fa-temperature-high"></i> Temp: 55°C</a>
-                    <a class="dropdown-item"><i class="fas fa-hammer"></i> Shock: 2G</a>
-                    <a class="dropdown-item"><i class="fas fa-battery-quarter"></i> Low battery</a>
+<main role="main" class="col p-0 d-flex flex-column">
+    <header class="border p-2 d-flex justify-content-between">
+        <h2 class="text-center m-auto">
+            <a class="" style="color:inherit" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-crosshairs"></i>Tracker  @Model.DeviceId</a>
+        </h2>
+        <p class="d-none d-lg-block">&ensp; </p>
+    </header>
+    <section class="d-flex flex-row">
+        <article class="container-fluid p-3 d-flex">
+            <div class="card col m-auto m-3  ">
+                <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+                    <h5 class="card-title " style="font-weight: bold;"><a asp-controller="BeOn" asp-action="Location1Device" style="color: #48cbd8; "> <i class="fas fa-map-marked"></i> Location</a></h5>
+                </div>
+                <div class="card-body">
+                    <div id="map"></div>
                 </div>
             </div>
-        </div>
-    </article>
-    </main>
+           
+        </article>
+        <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
+            <div>
+                <div class="h-100 p-0 mr-2 text-center">
+                    <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()"><span class="position-relative d-none d-lg-flex" style="top:50%;"><i class="fas fa-arrow-left" id="arrowLeft"></i><i class="fas fa-arrow-right d-none" id="arrowRight"></i>&nbsp<i class="far fa-bell "></i></span><span class="position-relative d-flex d-lg-none " style="top:50%;"><i class="fas fa-arrow-down" id="arrowDown"></i><i class="fas fa-arrow-up d-none" id="arrowUp"></i>&nbsp<i class="far fa-bell "></i></span></a>
+                </div>
+            </div>
+            <div class="row" style="">
+                <div class="col text-center">
+                    <div class="collapse" id="alertCollapse">
+                        <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                            <div class="card-body">
+                                @{ foreach (var env in env72alert)
+                                    {
+
+                                        if (env.EventType == "1")
+                                        {
+                                            <div>
+                                                <p class="alertcolorred" style="width:max-content">
+                                                    <button class="btn border-0 alertcolorred mw-100"
+                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert', '@env.TimestampEventToString', '@env.Tmax', ' °')">
+                                                        <i class=" fas fa-temperature-high"></i>
+                                                        Temperature Alert  <br />  @env.TimestampEvent"
+                                                    </button>
+                                                </p>
+                                            </div> }
+                                        else if (env.EventType == "2")
+                                        {
+                                            <div>
+                                                <p class="alertcolorgreen" style="width:max-content">
+                                                    <button class="btn border-0 alertcolorgreen mw-100"
+                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert Terminated', '@env.TimestampEventToString', '-', ' °')">
+                                                        <i class="fas fa-temperature-high"></i>
+                                                        Temperature Alert Terminated   <br />  @env.TimestampEvent
+                                                    </button>
+                                                </p>
+                                            </div> }
+                                        else if (env.EventType == "3")
+                                        {
+                                            <div>
+                                                <p class="alertcolorblue " style="width:max-content">
+                                                    <button class="btn border-0 alertcolorblue mw-100"
+                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Shock Alert', '@env.TimestampEventToString', '@env.Smax', ' g')">
+                                                        <i class=" fas fa-exclamation-triangle"></i>
+                                                        Shock Alert    <br />   @env.TimestampEvent
+                                                    </button>
+                                                </p>
+                                            </div> }
+                                        else
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </section>
+</main>
