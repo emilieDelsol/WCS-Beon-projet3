@@ -121,19 +121,33 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex flex-row justify-content-between ">
+
                                 <div class="text-center m-1">
                                     <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
                                     <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
                                 </div>
-                                <div class="text-center">
-                                    <label class="endDate">
-                                        sort between date :
-                                        <input type="datetime" name="beginDate" id="beginDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
-                                        <input type="datetime" name="endDate" id="endDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
+                                <p>
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                        Sort between date
+                                    </button>
+                                </p>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+                                        <div class="text-center">
+                                            <label class="beginDate">
+                                                <input type="date" id="beginDate" name="beginDate" value="" />
+                                                <input type="time" id="beginTime" name="beginTime" value="" />
+                                            </label>
+                                            <label class="endDate">
+                                                <input type="date" name="endDate" id="endDate" value="">
+                                                <input type="time" id="endTime" name="endTime" value="" />
+                                            </label>
+                                        </div>
                                         <button type="button" id="bouton" onclick="UpdateChartBetweenDate()">send</button>
-                                    </label>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
                             <div class="" style="height:auto">
                                 <canvas id="tempsChart" class=" col-12"></canvas>
                             </div>
@@ -210,8 +224,12 @@
     let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
 
     function UpdateChartBetweenDate() {
-        var beginDate = new Date(document.getElementById("beginDate").value);
-        var endDate = new Date(document.getElementById("endDate").value);
+        var dateBegin = new Date(document.getElementById("beginDate").value);
+        var timeBegin = document.getElementById("beginTime").value;
+        var beginDate = new Date(Date.parse(dateBegin.getFullYear() + "," + (dateBegin.getMonth() + 1) + "," + dateBegin.getDate() + "," + timeBegin));
+        var dateEnd = new Date(document.getElementById("endDate").value);
+        var timeEnd = document.getElementById("endTime").value;
+        var endDate = new Date(Date.parse(dateEnd.getFullYear() + "," + (dateEnd.getMonth() + 1) + "," + dateEnd.getDate() + "," + timeEnd));
         let maxSortBetween = new Array();
         let minSortBetween = new Array();
         let meanSortBetween = new Array();
