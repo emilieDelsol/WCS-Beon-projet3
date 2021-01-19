@@ -42,7 +42,7 @@
 </h2>
         <p class="d-none d-lg-block">&ensp; </p>
     </header>
-    <section class="d-flex flex-row">
+    <section class="d-flex flex-column-reverse flex-lg-row"  >
         <article class="container-fluid">
             <div class="card m-3">
                 <div class="card-header pb-0" style=" color: #201063;">
@@ -61,18 +61,35 @@
                     <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex flex-row justify-content-between ">
+                    <div class="d-flex flex-column flex-lg-row justify-content-between ">
                         <div class="text-center m-1">
                             <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
                             <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
+                                Sort between date
+                            </button>
                         </div>
-                        <div class="text-center">
-                            <label class="endDate">
-                                sort between date :
-                                <input type="datetime" name="beginDate" id="beginDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
-                                <input type="datetime" name="endDate" id="endDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
+                        
+                        <div class="collapse" id="collapseSortByDate">
+                            <div class="card card-body">
+                                <div class="text-center d-flex flex-column flex-lg-row">
+                                    <div class="border m-1 p-1">
+                                        <p>Begin date:</p>
+                                        <label class="beginDate">
+                                            <input type="date" id="beginDate" name="beginDate" value="" />
+                                            <input type="time" id="beginTime" name="beginTime" value="" />
+                                        </label>
+                                    </div>
+                                    <div class="border m-1 p-1">
+                                        <p>End date:</p>
+                                    <label class="endDate">
+                                        <input type="date" name="endDate" id="endDate" value="">
+                                        <input type="time" id="endTime" name="endTime" value="" />
+                                    </label>
+                                    </div>
+                                </div>
                                 <button type="button" id="bouton" onclick="UpdateChartBetweenDate()">send</button>
-                            </label>
+                            </div>
                         </div>
 
 
@@ -149,13 +166,16 @@
   let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
 
     function UpdateChartBetweenDate() {
-        var beginDate = new Date(document.getElementById("beginDate").value);
-        var endDate = new Date(document.getElementById("endDate").value);
+        var dateBegin = new Date(document.getElementById("beginDate").value);
+        var timeBegin = document.getElementById("beginTime").value;
+        var beginDate = new Date(Date.parse(dateBegin.getFullYear() + "," + (dateBegin.getMonth() + 1) + "," + dateBegin.getDate() + "," + timeBegin));
+        var dateEnd = new Date(document.getElementById("endDate").value);
+        var timeEnd = document.getElementById("endTime").value;
+        var endDate = new Date(Date.parse(dateEnd.getFullYear() + "," + (dateEnd.getMonth() + 1) + "," + dateEnd.getDate() + "," + timeEnd));
         let maxSortBetween = new Array();
         let minSortBetween = new Array();
         let meanSortBetween = new Array();
         let myLabelBetween = new Array();
-
         @foreach(EnvironmentPayload envi in environmentOrderByAsc)
         {
              <Text>
