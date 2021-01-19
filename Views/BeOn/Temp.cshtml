@@ -49,11 +49,11 @@
                     <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
                 </div>
                 <div class="card-body text-left">
-                    <h5 class="card-title ">Since last 72h: </h5>
-                    <p class="card-text">-Max:  @env72.OrderByDescending(a => a.Tmax).First().Tmax °C</p>
-                    <p class="card-text">-Min:  @env72.OrderByDescending(a => a.Tmax).First().Tmin °C</p>
-                    <p class="card-text">-Mean:  @env72.OrderByDescending(a => a.Tmax).First().Tmean °C</p>
-                    <p class="card-text">-Total alert duration:  @env72.OrderByDescending(a => a.TotalAlertDuration).First().TotalAlertDuration</p>
+                    <h5 class="card-title "><span id="dateSort">Last 24h:</span> </h5>
+                    <p class="card-text">-Max: <span id="tMax"> @env24.OrderByDescending(a => a.Tmax).First().Tmax</span> °C</p>
+                    <p class="card-text">-Min:  <span id="tMin">@env24.OrderByDescending(a => a.Tmax).First().Tmin</span> °C</p>
+                    <p class="card-text">-Mean: <span id="tMean"> @env24.OrderByDescending(a => a.Tmax).First().Tmean</span> °C</p>
+                    <p class="card-text">-Total alert duration:  <span id="alertDuration">@env24.OrderByDescending(a => a.TotalAlertDuration).First().TotalAlertDuration</span></p>
                 </div>
             </div>
             <div class="card  m-3 ">
@@ -91,10 +91,7 @@
                                 <button type="button" id="bouton" onclick="UpdateChartBetweenDate()">send</button>
                             </div>
                         </div>
-
-
                     </div>
-
                     <div class="" style="height:auto">
                         <canvas id="tempsChart" class=" col-12"></canvas>
                     </div>
@@ -164,6 +161,7 @@
 </main>
 <script type="text/javascript">
   let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
+    let tMaxId = document.getElementById('tMax');
 
     function UpdateChartBetweenDate() {
         var dateBegin = new Date(document.getElementById("beginDate").value);
@@ -189,6 +187,8 @@
         }
            </Text>
         }
+     
+        
         myLineChart.data.datasets[0].data = maxSortBetween;
         myLineChart.data.datasets[1].data = minSortBetween;
         myLineChart.data.datasets[2].data = meanSortBetween;
@@ -198,7 +198,13 @@
             alert("Error! End date must be after start date . \n\nNo values..");
         }
         else {
+            var bDate = beginDate.getDate() + "/" + (beginDate.getMonth() + 1) + "/" + beginDate.getFullYear() + " " + timeBegin;
+            var eDate = endDate.getDate() + "/" + (endDate.getMonth() + 1) + "/" + endDate.getFullYear() + " " + timeEnd;
             alert("Your request:  \n\nbegin date:" + beginDate + " \n \nend date:  " + endDate + ". \n\n  " + maxSortBetween.length + " VALUES\n");
+            document.getElementById("tMax").textContent = Math.max(...maxSortBetween);
+            document.getElementById("tMin").textContent = Math.min(...minSortBetween);
+            document.getElementById("tMean").textContent = Math.max(...meanSortBetween);
+            document.getElementById("dateSort").textContent = "between  : " + bDate + " and " + eDate;
         }
     }
 
