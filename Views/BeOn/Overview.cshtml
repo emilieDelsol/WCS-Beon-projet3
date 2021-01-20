@@ -4,12 +4,34 @@
     Layout = "~/Views/Shared/_layoutBeonPrincipal.cshtml";
     IEnumerable<Device> devices = Model;
 }
+@{
+    bool alert = false;
+
+    foreach (var device in devices)
+    {
+        if (device.EnvironmentPayloads.Count != 0)
+        {
+            IEnumerable<EnvironmentPayload> environmentPayloadsOrderByAsc1 = device.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
+            EnvironmentPayload environmentLast1 = environmentPayloadsOrderByAsc1.Last();
+            IEnumerable<EnvironmentPayload> env72alert1 = environmentPayloadsOrderByAsc1.Where(e => e.TimestampEvent > environmentLast1.TimestampEvent.AddHours(-72));
+
+            foreach (var env in env72alert1)
+            {
+                if (env.EventType == "1" || env.EventType == "2" || env.EventType == "3")
+                {
+                    alert = true;
+                    break;
+                }
+            }
+        }
+    }
+}
 <section class="d-flex flex-column-reverse flex-lg-row">
     <article class="container-fluid p-0">
 
         <div class="card m-3 m-lg-3 ">
             <div class="card-header pb-0 " style=" color: #201063;">
-                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-map-marked"></i> Overview</h5>
+                <h5 class="card-title " style="font-weight: bold;"><img src="~/Icons/mapBlueBeon.svg" alt="" /> Overview</h5>
             </div>
             <div class="card-body">
                 <div id="overview"></div>
@@ -17,8 +39,23 @@
         </div>
     </article>
     <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
-        <div class="h-100 p-0 mr-2 text-center" >
-            <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()"><span class="position-relative d-none d-lg-flex" style="top:50%;"><i class="fas fa-arrow-left"  id="arrowLeft"></i><i class="fas fa-arrow-right d-none" id="arrowRight"></i>&nbsp<i class="far fa-bell "></i></span><span class="position-relative d-flex d-lg-none " style="top:50%;"><i class="fas fa-arrow-down" id="arrowDown"></i><i class="fas fa-arrow-up d-none" id="arrowUp"></i>&nbsp<i class="far fa-bell "></i></span></a>
+        <div class="h-100 p-0 mr-2 text-center">
+            <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
+                <span class="position-relative d-none d-lg-flex" style="top:50%;">
+                    <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
+                    @{ if (alert)
+                        { <img src="~/Icons/notificationBell.svg" alt="" />}
+                        else
+                        {<img src="~/Icons/notification.svg" alt="" />} }
+                </span>
+                <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
+                    <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" /><img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
+                    @{ if (alert)
+                        { <img src="~/Icons/notificationBell.svg" alt="" />}
+                        else
+                        {<img src="~/Icons/notification.svg" alt="" />} }
+                </span>
+            </a>
         </div>
         <div class="row" style="">
             <div class="col text-center" style="width:max-content;">
@@ -59,17 +96,17 @@
                                         if (env.EventType == "1")
                                         {
                                             <div class="alertedcolorred">
-                                                <p> <i class=" fas fa-temperature-high"></i>  Temperature Alert    -   @env.TimestampEvent</p>
+                                                <p><img src="~/Icons/heat.svg" alt="" />  Temperature Alert    -   @env.TimestampEvent</p>
                                             </div> }
                                         else if (env.EventType == "2")
                                         {
                                             <div class="alertcolorgreen ">
-                                                <p><i class=" fas fa-temperature-high"></i> Temperature Alert Terminated   -   @env.TimestampEvent</p>
+                                                <p><img src="~/Icons/heat.svg" alt="" /> Temperature Alert Terminated   -   @env.TimestampEvent</p>
                                             </div> }
                                         else if (env.EventType == "3")
                                         {
                                             <div class="alertcolorblue ">
-                                                <p><i class="  fas fa-exclamation-triangle"></i>  Shock Alert    -   @env.TimestampEvent</p>
+                                                <p> <img src="~/Icons/warningBlueBeon.svg" alt="">  Shock Alert    -   @env.TimestampEvent</p>
                                             </div> }
                                         else
                                         {
@@ -86,7 +123,7 @@
     </aside>
 </section>
 <script type="text/javascript">
-   
+
 let devicesEnvironmentInfos = new Array();
 @{string latitude = "43.7384";
         string longitude = "7.4246";
