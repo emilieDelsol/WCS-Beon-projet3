@@ -1,9 +1,11 @@
 ﻿@model Device
 @{
     ViewData["Title"] = "listDevices";
-    Layout = "~/Views/Shared/_layoutBeonPrincipal.cshtml";
+    Layout = "~/Views/Shared/_layoutBeonDashboard.cshtml";
     Device myDevice = Model;
     IEnumerable<EnvironmentPayload> myDeviceEnv = myDevice.EnvironmentPayloads;
+    //EnvironmentPayload environment = myDeviceEnv.Last();
+    //IEnumerable<EnvironmentPayload> myDeviceEnv72 = myDeviceEnv.Where(e => e.TimestampEvent> environment.TimestampEvent.AddHours(-12));
 }
 
 
@@ -62,12 +64,13 @@
     <script type="text/javascript">
     let deviceEnvironmentInfo = new Array();
 @{string latitude = "43.7384";
-        string longitude = "7.4246";
-        double sMax = 0;
-        double totalShock = 0;
-        String lastContact = "";
-        Int32 tMean = 0;
-        Int32 batteryLvl = 0;
+    string longitude = "7.4246";
+    double sMax = 0;
+    double totalShock = 0;
+    String lastContact = "";
+    Int32 tMean = 0;
+    Int32 batteryLvl = 0;
+    int i = 0;
 }
 @{ foreach (EnvironmentPayload env in myDeviceEnv)
     {
@@ -82,9 +85,11 @@
             totalShock = env.TotalShock;
             tMean = env.Tmean;
             batteryLvl = Convert.ToInt32(env.Batterylvl);
+            i++;
+            
         }      
         <Text>
-            var deviceInfo = ('"@myDevice.DeviceId": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
+            var deviceInfo = ('"@i": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
             deviceEnvironmentInfo.push(deviceInfo);
         </Text>
     }
