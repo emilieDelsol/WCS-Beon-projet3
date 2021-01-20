@@ -105,8 +105,9 @@
                 </div>
             </article>
 
-            <article class="container-fluid p-3 p-lg-0 m-auto d-flex flex-column flex-lg-row justify-content-around">
-                <div class="card m-auto m-lg-3 col-12 col-lg-5 p-0 ">
+            <article class=" p-3 p-lg-0 m-auto d-flex flex-column flex-lg-row ">
+               
+                <div class="card m-auto m-lg-3 col-12 col-lg-5 p-0 " style="height:auto">
                     <div class="card-header pb-0" style=" color: #201063;">
                         <h5 class="card-title " style="font-weight: bold;"><a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><i class="fas fa-map-marked"></i> Location</a></h5>
                     </div>
@@ -114,7 +115,8 @@
                         <div id="map"></div>
                     </div>
                 </div>
-                <div class="col ml-lg-3 mr-lg-3 p-0">
+
+                <div class="col ml-lg-3 mr-lg-3 p-0"  style="height:auto">
                     <div class="card  mt-3 mb-3 col-12 p-0 ">
                         <div class="card-header pb-0" style=" color: #201063;">
                             <h5 class="card-title" style="font-weight: bold; "><a asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><i class="fas fa-temperature-high"></i> Temperature</a></h5>
@@ -125,8 +127,8 @@
                                     <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
                                     <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
                                     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
-                                        Sort between date
-                                    </button>
+                                        Between date
+                                 </button>
                                 </div>
 
                                 <div class="collapse" id="collapseSortByDate">
@@ -150,19 +152,13 @@
                                         <button type="button" id="bouton" onclick="UpdateChartBetweenDate()">send</button>
                                     </div>
                                 </div>
-
-
-                            </div>
-
+                           </div>
                             <div class="" style="height:auto">
-                                <canvas id="tempsChart" class=" col-12"></canvas>
+                                <canvas id="tempsChart" class=" col-12" style="height:300px; "></canvas>
                             </div>
                         </div>
-                        </div>
-                            <div class="" style="height:auto">
-                                <canvas id="tempsChart" class=" col-12"></canvas>
-                            </div>
-                        </div>
+                    </div>
+                </div>
             </article>
         </div>
         <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
