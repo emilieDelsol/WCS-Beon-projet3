@@ -59,11 +59,11 @@
     <main role="main" class="col p-0 d-flex flex-column">
         <header class="border p-2 d-flex justify-content-between">
             <div class="d-none d-lg-block">
-                <h3 class="text-left  ">Dashboard</h3>
+                <h3 class="text-left  "><img src="~/Icons/dashboardPict.svg" alt=""/> Dashboard</h3>
                 <p class="text-left  m-0">@DateTime.Now</p>
             </div>
             <h2 class="text-center m-auto">
-                </i>Tracker @Model.DeviceId
+                <img src="~/Icons/aim.svg" alt=""/> Tracker @Model.DeviceId
         </h2>
         <p class="d-none d-lg-block">&ensp; </p>
     </header>
@@ -185,7 +185,11 @@
                                 {<img src="~/Icons/notification.svg" alt="" />} }
                         </span>
                         <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
-                            <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" /><img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp<img src="~/Icons/notification.svg" alt="" />
+                            <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" /><img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
+                            @{ if (alert)
+                                { <img src="~/Icons/notificationBell.svg" alt="" />}
+                                else
+                                {<img src="~/Icons/notification.svg" alt="" />} }
                         </span>
                     </a>
                 </div>
