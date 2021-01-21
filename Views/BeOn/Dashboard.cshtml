@@ -18,187 +18,236 @@
             Shock = env.Smax;
         }
     } }
-<aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
-    <nav class="navbar navbar-expand navbar-dark flex-lg-column flex-row align-items-start p-0">
-        <div class="collapse navbar-collapse row m-auto">
 
-            <ul class="flex-lg-column flex-row navbar-nav justify-content-between ">
-                <li class="list-group-item  rounded-0" style="  background-color: #201063;">
-                    <a class="nav-link pl-0 text-nowrap" style="color: white; font-weight:bold;" asp-controller="Home" asp-action="Index"><i class="fas fa-home "></i><span class="d-none d-lg-inline"> Home</span></a>
-                </li>
-                <li class="list-group-item" style="  background-color: #201063">
-                    <a class="nav-link pl-0" style="color: white; font-weight:bold;" asp-controller="Beon" asp-action="listDevices"><i class="fas fa-eye "></i> <span class="d-none d-lg-inline">Tracker list</span></a>
-                </li>
-                <li class="list-group-item" style="  background-color: #201063">
-                    <a class="nav-link pl-0" style="color: white; font-weight:bold; " asp-controller="Beon" asp-action="Overview"><i class="fas fa-globe-europe "></i><span class="d-none d-lg-inline"> Overview</span></a>
-                </li>
-                <li class="list-group-item pr-0 pl-0 d-none d-lg-block" style="  background-color: #201063">
-                    <a class="nav-link pl-0 dropdown-toggle  ml-3 " style="color: white; font-weight:bold;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample"><i class="fa fa-star fa-fw"></i> <span class="d-none d-lg-inline"> Dashboard</span></a>
-                    <div class="collapse  " id="collapseExample">
-                        <a class="nav-link pl-3" style="color: white; font-weight:bold; background-color:#150b42" asp-controller="Beon" asp-action="Location1Device"  asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-map-marked"></i> <span class="d-none d-lg-inline"> Location</span></a>
-                        <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-temperature-high"></i><span class="d-none d-lg-inline"> Temperature</span></a>
-                        <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-globe-europe "></i><span class="d-none d-lg-inline"> Overview</span></a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</aside>
-<main role="main" class="col p-0">
+@{
+    bool alert = false;
+    foreach (var env in env72alert)
+    {
+        if (env.EventType == "1" || env.EventType == "2" || env.EventType == "3")
+        {
+            alert = true;
+            break;
+        }
+    }
+}
+    <aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
+        <nav class="navbar navbar-expand navbar-dark flex-lg-column flex-row align-items-start p-0">
+            <div class="collapse navbar-collapse row m-auto">
 
-<section class="container-fluid p-0 ">
-    <header class="border p-2 d-flex justify-content-between">
-        <div class="d-none d-lg-block">
-            <h3 class="text-left  ">Dashboard</h3>
-            <p class="text-left  m-0">@DateTime.Now</p>
-        </div>
-        <h2 class="text-center m-auto">
-            <i class="fas fa-crosshairs"></i>Tracker  @Model.DeviceId
+                <ul class="flex-lg-column flex-row navbar-nav justify-content-between ">
+                    <li class="list-group-item  rounded-0" style="  background-color: #201063;">
+                        <a class="nav-link pl-0 text-nowrap" style="color: white; font-weight:bold;" asp-controller="Home" asp-action="Index"><img src="~/Icons/home.svg" alt="" /> <span class="d-none d-lg-inline m-auto"> Home</span></a>
+                    </li>
+                    <li class="list-group-item" style="  background-color: #201063">
+                        <a class="nav-link pl-0" style="color: white; font-weight:bold;" asp-controller="Beon" asp-action="listDevices"><img src="~/Icons/eye.svg" alt="" /> <span class="d-none d-lg-inline">Tracker list</span></a>
+                    </li>
+                    <li class="list-group-item" style="  background-color: #201063">
+                        <a class="nav-link pl-0" style="color: white; font-weight:bold; " asp-controller="Beon" asp-action="Overview"><img src="~/Icons/earth.svg" alt="" /><span class="d-none d-lg-inline"> Overview</span></a>
+                    </li>
+                    <li class="list-group-item pr-0 pl-0 d-none d-lg-block" style="  background-color: #201063">
+                        <a class="nav-link pl-0 dropdown-toggle  ml-3 " style="color: white; font-weight:bold;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample"><img src="~/Icons/dasboardplain.svg" alt="" /> <span class="d-none d-lg-inline"> Dashboard</span></a>
+                        <div class="collapse  " id="collapseExample">
+                            <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/earth.svg" alt="" /><span class="d-none d-lg-inline"> Overview</span></a>
+                            <a class="nav-link pl-3" style="color: white; font-weight:bold; background-color:#150b42" asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/maps-and-location.svg" alt="" /> <span class="d-none d-lg-inline"> Location</span></a>
+                            <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/heat.svg" alt="" /><span class="d-none d-lg-inline"> Temperature</span></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <main role="main" class="col p-0 d-flex flex-column">
+        <header class="border p-2 d-flex justify-content-between">
+            <div class="d-none d-lg-block">
+                <h3 class="text-left  "><img src="~/Icons/dashboardPict.svg" alt=""/> Dashboard</h3>
+                <p class="text-left  m-0">@DateTime.Now</p>
+            </div>
+            <h2 class="text-center m-auto">
+                <img src="~/Icons/aim.svg" alt=""/> Tracker @Model.DeviceId
         </h2>
         <p class="d-none d-lg-block">&ensp; </p>
     </header>
-    <article class="card-deck p-0  m-0 d-flex flex-column flex-lg-row justify-content-between">
-        <div class="card m-3">
-            <div class="card-header pb-0" style="color: #201063; ">
-                <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-history"></i> Last contact</h5>
-            </div>
-            <div class="card-body ">
-                <p class="card-text">@environment.TimestampEvent</p>
-            </div>
-        </div>
-        <div class="card m-3">
-            <div class="card-header pb-0" style=" color: #201063;">
-                <h5 class="card-title" style="font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> Number of shocks</h5>
-            </div>
-            <div class="card-body ">
-                <p class="card-text ">- total shocks: @NumberOfShock  </p>
-                <p class="card-text ">- since last 72h: @environment.TotalShock </p>
-                <p class="card-text ">- since last contact: @environment.Cptshockovlastperiod </p>
-                <p class="card-text">- Max shock: @Shock g</p>
-            </div>
-        </div>
-        <div class="card m-3">
-            <div class="card-header pb-0" style=" color: #201063;">
-                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-temperature-high"></i> Temperature</h5>
-            </div>
-            <div class="card-body text-center">
-                <h5 class="card-title ">Since last 72h: </h5>
-                <p class="card-text">-Max:  @env72.OrderByDescending(a => a.Tmax).First().Tmax °C</p>
-                <p class="card-text">-Min:  @env72.OrderByDescending(a => a.Tmax).First().Tmin °C</p>
-                <p class="card-text">-Mean:  @env72.OrderByDescending(a => a.Tmax).First().Tmean °C</p>
-                <p class="card-text">-Total alert duration:  @env72.OrderByDescending(a => a.TotalAlertDuration).First().TotalAlertDuration</p>
-                <p class="card-text">-Total alert duration all BDD:  @environmentOrderByAsc.OrderByDescending(a => a.TotalAlertDuration).First().TotalAlertDuration</p>
-            </div>
-        </div>
 
-        <div class="card m-3">
-            <div class="card-header pb-0 mb-0" style=" color: #201063;">
-                <h5 class="card-title " style="font-weight: bold;"><i class="fas fa-battery-full"></i> Battery level</h5>
-            </div>
-            <div class="card-body text-center">
-                <h5 class="card-title " id="batteryTitle"> @environment.Batterylvl</h5>
-                <div class="batteryContainer justify-content-center">
-                    <div class="batteryOuter "><div class="batteryLevel" id="batteryLevel"></div></div>
-                    <div class="batteryBump"></div>
+    <section class="d-flex flex-column-reverse flex-lg-row">
+        <div class="container-fluid p-0 ">
+            <article class="card-deck p-0  m-0 d-flex flex-column flex-lg-row justify-content-between">
+                <div class="card m-3">
+                    <div class="card-header pb-0" style="color: #201063; ">
+                        <h5 class="card-title" style="font-weight: bold;"><img src="~/Icons/back-in-timeBlueBeon.svg" /> Last contact</h5>
+                    </div>
+                    <div class="card-body ">
+                        <p class="card-text">@environment.TimestampEvent</p>
+                    </div>
+                </div>
+                <div class="card m-3">
+                    <div class="card-header pb-0" style=" color: #201063;">
+                        <h5 class="card-title" style="font-weight: bold;"><img src="~/Icons/warningBlueBeon.svg" alt="" /> Number of shocks</h5>
+                    </div>
+                    <div class="card-body ">
+                        <p class="card-text ">- total shocks: @NumberOfShock  </p>
+                        <p class="card-text ">- from last 72h: @environment.TotalShock </p>
+                        <p class="card-text ">- since last contact: @environment.Cptshockovlastperiod </p>
+                        <p class="card-text">- Max shock: @Shock g</p>
+                    </div>
+                </div>
+                <div class="card m-3">
+                    <div class="card-header pb-0" style=" color: #201063;">
+                        <h5 class="card-title" style="font-weight: bold; "><a asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><img src="~/Icons/heatBlueBeon.svg" alt="" /> Temperature</a></h5>
+                    </div>
+                    <div class="card-body text-left">
+                        <h5 class="card-title ">From last 72h: </h5>
+                        <p class="card-text">-Max:  @env72.OrderByDescending(a => a.Tmax).First().Tmax °C</p>
+                        <p class="card-text">-Min:  @env72.OrderByDescending(a => a.Tmax).First().Tmin °C</p>
+                        <p class="card-text">-Mean:  @env72.OrderByDescending(a => a.Tmax).First().Tmean °C</p>
+                        <p class="card-text">-Total alert duration:  @env72.OrderByDescending(a => a.TotalAlertDuration).First().TotalAlertDuration</p>
+                    </div>
+                </div>
+
+                <div class="card m-3">
+                    <div class="card-header pb-0 mb-0" style=" color: #201063;">
+                        <h5 class="card-title " style="font-weight: bold;"><img src="~/Icons/batteryBlueBeon.svg" alt="" /> Battery level</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title " id="batteryTitle"> @environment.Batterylvl</h5>
+                        <div class="batteryContainer justify-content-center">
+                            <div class="batteryOuter "><div class="batteryLevel" id="batteryLevel"></div></div>
+                            <div class="batteryBump"></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class=" p-3 p-lg-0 m-auto d-flex flex-column flex-lg-row ">
+
+                <div class="card m-auto m-lg-3 col-12 col-lg-5 p-0 " style="height:auto">
+                    <div class="card-header pb-0" style=" color: #201063;">
+                        <h5 class="card-title " style="font-weight: bold;"><a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><img src="~/Icons/mapBlueBeon.svg" alt="" /> Location</a></h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="map"></div>
+                    </div>
+                </div>
+
+                <div class="col ml-lg-3 mr-lg-3 p-0" style="height:auto">
+                    <div class="card  mt-3 mb-3 col-12 p-0 ">
+                        <div class="card-header pb-0" style=" color: #201063;">
+                            <h5 class="card-title" style="font-weight: bold; "><a asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><img src="~/Icons/heatBlueBeon.svg" alt="" /> Temperature</a></h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-column flex-lg-row justify-content-between ">
+                                <div class="text-center m-1">
+                                    <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
+                                    <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
+                                        Between date
+                                    </button>
+                                </div>
+
+                                <div class="collapse" id="collapseSortByDate">
+                                    <div class="card card-body">
+                                        <div class="text-center d-flex flex-column flex-lg-row">
+                                            <div class="border m-1 p-1">
+                                                <p>Begin date:</p>
+                                                <label class="beginDate">
+                                                    <input type="date" id="beginDate" name="beginDate" value="" />
+                                                    <input type="time" id="beginTime" name="beginTime" value="" />
+                                                </label>
+                                            </div>
+                                            <div class="border m-1 p-1">
+                                                <p>End date:</p>
+                                                <label class="endDate">
+                                                    <input type="date" name="endDate" id="endDate" value="">
+                                                    <input type="time" id="endTime" name="endTime" value="" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <button type="button" id="bouton" onclick="UpdateChartBetweenDate()">send</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="" style="height:auto">
+                                <canvas id="tempsChart" class=" col-12" style="height:300px; "></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
+            <div>
+                <div class="h-100 p-0 mr-2 text-center">
+                    <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
+                        <span class="position-relative d-none d-lg-flex" style="top:50%;">
+                            <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp  
+                            @{ if (alert)
+                                { <img src="~/Icons/notificationBell.svg" alt="" />}
+                                else
+                                {<img src="~/Icons/notification.svg" alt="" />} }
+                        </span>
+                        <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
+                            <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" /><img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
+                            @{ if (alert)
+                                { <img src="~/Icons/notificationBell.svg" alt="" />}
+                                else
+                                {<img src="~/Icons/notification.svg" alt="" />} }
+                        </span>
+                    </a>
                 </div>
             </div>
-        </div>
-    </article>
+            <div class="row" style="">
+                <div class="col text-center">
+                    <div class="collapse" id="alertCollapse">
+                        <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                            <div class="card-body">
+                                @{ foreach (var env in env72alert)
+                                    {
 
-    <article class="container-fluid p-3 p-lg-0 m-auto d-flex flex-column flex-lg-row justify-content-around">
-        <div class="card m-auto m-lg-3 col-12 col-lg-5 p-0 ">
-            <div class="card-header pb-0" style=" color: #201063;">
-                <h5 class="card-title " style="font-weight: bold;"><a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><i class="fas fa-map-marked"></i> Location</a></h5>
-            </div>
-            <div class="card-body">
-                <div id="map"></div>
-            </div>
-        </div>
-        <div class="col ml-lg-3 mr-lg-3 p-0">
-            <div id="accordion">
-                <div class="card col-12 mr-auto ml-auto mt-3 mb-3 p-0">
-                    <div class="card-header " style=" color: #201063;" id="headingAlert">
-                        <h5 class="mb-0">
-                            <button class="btn  collapsed" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="background-color:red; color: #201063; font-weight:bold">
-                                <i class="far fa-bell"></i><span> Alert!</span>
-                            </button>
-                            <button class="btn  collapsed d-none" data-toggle="collapse" data-target="#collapseAlert" aria-expanded="false" aria-controls="collapseAlert" style="color: #201063; font-weight:bold">
-                                <i class="far fa-bell"></i><span class="">No alert</span>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="collapseAlert" class="collapse" aria-labelledby="headingAlert" data-parent="#accordion">
-                        <div class="card-body">
-                            @{ foreach (var env in env72alert)
-                                {
-
-                                    if (env.EventType == "1")
-                                    {
-                                        <div>
-                                            <p class="alertcolorred fas fa-temperature-high">
-                                                <input type="button"  class=" alertcolorred fas" style="background-color:white; border-width:0px"
-                                                       value="Alert temperature    -   @env.TimestampEvent"                                                                                
-                                                       onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert', '@env.TimestampEventToString', '@env.Tmax', ' °')">
-                                            </p>
-                                        </div> }
-                                    else if (env.EventType == "2")
-                                    {
-                                        <div>
-                                            <p class="alertcolorgreen fas fa-temperature-high">
-                                                <input type="button" class="alertcolorgreen fas" style="background-color:white; border-width:0px" 
-                                                       value="Alert temperature terminée   -   @env.TimestampEvent" 
-                                                       onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert Terminated', '@env.TimestampEventToString', '-', ' °')">
-                                            </p>
-                                        </div> }
-                                    else if (env.EventType == "3")
-                                    {
-                                        <div>
-                                            <p class="alertcolorblue fas fa-exclamation-triangle"> 
-                                                <input type="button" class="alertcolorblue fas" style="background-color:white; border-width:0px"
-                                                       value="Alert Shock    -   @env.TimestampEvent"
-                                                       onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Shock Alert', '@env.TimestampEventToString', '@env.Smax', ' g')">
-                                             </p>
-                                        </div> }
+                                        if (env.EventType == "1")
+                                        {
+                                            <div>
+                                                <p class="alertcolorred" style="width:max-content">
+                                                    <button class="btn border-0 alertcolorred mw-100"
+                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert', '@env.TimestampEventToString', '@env.Tmax', ' °')">
+                                                        <img src="~/Icons/heatBlueBeon.svg" alt=""/>
+                                                        Temperature Alert  <br />  @env.TimestampEvent"
+                                                    </button>
+                                                </p>
+                                            </div> }
+                                        else if (env.EventType == "2")
+                                        {
+                                            <div>
+                                                <p class="alertcolorgreen" style="width:max-content">
+                                                    <button class="btn border-0 alertcolorgreen mw-100"
+                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert Terminated', '@env.TimestampEventToString', '-', ' °')">
+                                                        <img src="~/Icons/heatBlueBeon.svg" alt="" />
+                                                        Temperature Alert Terminated   <br />  @env.TimestampEvent
+                                                    </button>
+                                                </p>
+                                            </div> }
+                                        else if (env.EventType == "3")
+                                        {
+                                            <div>
+                                                <p class="alertcolorblue " style="width:max-content">
+                                                    <button class="btn border-0 alertcolorblue mw-100"
+                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Shock Alert', '@env.TimestampEventToString', '@env.Smax', ' g')">
+                                                        <img src="~/Icons/warningBlueBeon.svg" alt="">
+                                                        Shock Alert    <br />   @env.TimestampEvent
+                                                    </button>
+                                                </p>
+                                            </div> }
                                         else
                                         {
                                             continue;
                                         }
                                     }
                                 }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card  mt-3 mb-3 col-12 p-0 ">
-                <div class="card-header pb-0" style=" color: #201063;">
-                    <h5 class="card-title" style="font-weight: bold; "><a  asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><i class="fas fa-temperature-high"></i> Temperature</a></h5>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex flex-row justify-content-between ">
-                        <div class="text-center m-1">
-                            <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateChart24()">24h</button>
-                            <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateChart72()">72h</button>
-                        </div>
-                        <div class="text-center">
-                            <label class="endDate">
-                                sort between date :
-                                <input type="datetime" name="beginDate" id="beginDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
-                                <input type="datetime" name="endDate" id="endDate" value="" placeholder="yyyy-MM-ddTHH:mm:ss">
-                                <button type="button" id="bouton" onclick="UpdateChartBetweenDate()">send</button>
-                            </label>
-                        </div>
-
-
-                    </div>
-
-                    <div class="" style="height:auto">
-                        <canvas id="tempsChart" class=" col-12"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </article>
-</section>
+        </aside>
+    </section>
 </main>
 
 <script type="text/javascript">
@@ -207,8 +256,12 @@
     let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
 
     function UpdateChartBetweenDate() {
-        var beginDate = new Date(document.getElementById("beginDate").value);
-        var endDate = new Date(document.getElementById("endDate").value);
+        var dateBegin = new Date(document.getElementById("beginDate").value);
+        var timeBegin = document.getElementById("beginTime").value;
+        var beginDate = new Date(Date.parse(dateBegin.getFullYear() + "," + (dateBegin.getMonth() + 1) + "," + dateBegin.getDate() + "," + timeBegin));
+        var dateEnd = new Date(document.getElementById("endDate").value);
+        var timeEnd = document.getElementById("endTime").value;
+        var endDate = new Date(Date.parse(dateEnd.getFullYear() + "," + (dateEnd.getMonth() + 1) + "," + dateEnd.getDate() + "," + timeEnd));
         let maxSortBetween = new Array();
         let minSortBetween = new Array();
         let meanSortBetween = new Array();
@@ -232,11 +285,13 @@
         myLineChart.data.datasets[2].data = meanSortBetween;
         myLineChart.data.labels = myLabelBetween;
         myLineChart.update();
-        if (endDate < beginDate) {
-            alert("Error! End date must be after start date . No values..");
+        if (endDate < beginDate)
+        {
+            alert("Error! End date must be after start date . \n\nNo values..");
         }
-        else {
-            alert("You ask :  begin date:" + beginDate + " end date:  " + endDate + ". THERE IS  " + maxSortBetween.length + " VALUES");
+        else
+        {
+            alert("Your request:  \n\nbegin date:" + beginDate + " \n \nend date:  " + endDate + ". \n\n  " + maxSortBetween.length + " VALUES\n");
         }
     }
 
