@@ -28,6 +28,7 @@ function initMap() {
         inconAnchor: [25, 50],
         popupAnchor: [0,-50]
     })
+
     // Nous ajoutons un marqueur
     var marker = L.marker([lat, lon]/*, { icon: icone }*/).addTo(overview);
 }

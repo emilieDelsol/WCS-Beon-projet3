@@ -8,6 +8,8 @@ let lastlon = 0
 let myNewLatLng = new Array();
 let myLatLng = new Array();
 let lastLatLng = new Array();
+//let firstEnv = jsDeviceEnvironment[0];
+//let lastEnv = jsDeviceEnvironment[deviceEnvironmentInfo.length];
 function initMap() {
     let markers = [];
     overview = L.map('location1device').setView([lat, lon], 11);
@@ -36,6 +38,25 @@ function initMap() {
             continue;
         }
     }
+    var markersRemove = document.getElementsByClassName("leaflet-marker-icon");
+    markersRemove[markersRemove.length - 1].remove();
+    markersRemove[0].remove();
+    var iconeStart = L.icon({
+        iconUrl: "https://icon-library.net/images/start-flag-icon/start-flag-icon-7.jpg",
+        iconSize: [50, 50],
+        iconAnchor: [15,50],
+        popupAnchor: [0,-50]
+    })
+    //iconeStart.bindPopup('Start');
+    L.marker([jsDeviceEnvironment[1].lat, jsDeviceEnvironment[1].lon], { icon: iconeStart }).addTo(overview);
+    var iconeEnd = L.icon({
+        iconUrl: "https://icon-library.net/images/start-flag-icon/start-flag-icon-11.jpg",
+        iconSize: [50, 50],
+        iconAnchor: [50, 40],
+        popupAnchor: [0,- 50]
+    })
+    //iconeEnd.bindPopup('End');
+    L.marker([lastlat, lastlon], { icon: iconeEnd }).addTo(overview);
     var polyline = L.polyline(myLatLng, { color: 'red' }).addTo(overview);
     let group = new L.featureGroup(markers);
     overview.fitBounds(group.getBounds().pad(0.2));
