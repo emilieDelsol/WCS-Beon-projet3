@@ -5,21 +5,24 @@ let overview = null;
 let markerClusters;
 let lastlat = 0;
 let lastlon = 0
-
-var myLatLng = new Array();
+let myNewLatLng = new Array();
+let myLatLng = new Array();
+let lastLatLng = new Array();
 function initMap() {
     let markers = [];
     overview = L.map('location1device').setView([lat, lon], 11);
     markerClusters = L.markerClusterGroup();
     L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
-        minZoom: 1,
-        maxZoom: 20
+        minZoom: 2,
+        maxZoom: 19
     }).addTo(overview);
     for (env in jsDeviceEnvironment) {
+        myNewLatLng = L.latLng(jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon);
+        lastLatLng = L.latLng(lastlat, lastlon);
         let difflat = jsDeviceEnvironment[env].lat - lastlat;
         let difflon = jsDeviceEnvironment[env].lon - lastlon;
-        if (difflat > 0.0045 && difflon > 0.045 || difflat<-0.045 && difflon < -0.0045) {
+        if (L.GeometryUtil.distance(overview,lastLatLng, myNewLatLng) >40) {
             lastlat = jsDeviceEnvironment[env].lat;
             lastlon = jsDeviceEnvironment[env].lon;
             let marker = L.marker([jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon]).addTo(overview);
