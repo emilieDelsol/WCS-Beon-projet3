@@ -6,7 +6,8 @@
     IEnumerable<EnvironmentPayload> environmentOrderByAsc = Model.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
     EnvironmentPayload environment = environmentOrderByAsc.Last();
 
-    IEnumerable<EnvironmentPayload> myDeviceEnv72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-48));
+    IEnumerable<EnvironmentPayload> myDeviceEnv24 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
+    IEnumerable<EnvironmentPayload> myDeviceEnv72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
     IEnumerable<EnvironmentPayload> env72alert = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddMonths(-72));
 
 }
@@ -56,7 +57,41 @@
         <p class="d-none d-lg-block">&ensp; </p>
     </header>
     <section class="d-flex flex-column-reverse flex-lg-row ">
-        <article class="container-fluid p-3 d-flex">
+
+        <article class="container-fluid p-3 d-flex flex-column">
+            <nav class="navbar navbar-dark bg-light justify-content-center">
+                <div class="d-flex flex-column flex-lg-row justify-content-between ">
+                    <div class="text-center m-1">
+                        <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateLocation24()">24h</button>
+                        <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateLocation72()">72h</button>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
+                            Between date
+                        </button>
+                    </div>
+
+                    <div class="collapse" id="collapseSortByDate">
+                        <div class="card card-body">
+                            <div class="text-center d-flex flex-column flex-lg-row">
+                                <div class="border m-1 p-1">
+                                    <p>Begin date:</p>
+                                    <label class="beginDate">
+                                        <input type="date" id="beginDate" name="beginDate" value="" />
+                                        <input type="time" id="beginTime" name="beginTime" value="" />
+                                    </label>
+                                </div>
+                                <div class="border m-1 p-1">
+                                    <p>End date:</p>
+                                    <label class="endDate">
+                                        <input type="date" name="endDate" id="endDate" value="">
+                                        <input type="time" id="endTime" name="endTime" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="button" id="bouton" onclick="UpdateLocationBetweenDate()">send</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
             <div class="card m-auto m-3  w-100 ">
                 <div class="card-header pb-0" style=" color: #201063;">
                     <h5 class="card-title " style="font-weight: bold;"><a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><img src="~/Icons/mapBlueBeon.svg" alt="" /> Location</a></h5>
@@ -173,6 +208,30 @@
         <Text>
             var deviceInfo = ('"@i": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
             deviceEnvironmentInfo.push(deviceInfo);
+        </Text>
+    }
+}
+
+     let deviceEnvironmentInfo24 = new Array();
+@{ foreach (EnvironmentPayload env in myDeviceEnv24)
+    {
+        if (env != null)
+        {
+            double latitudeDouble = Math.Round(env.ComputedLatitude, 6);
+            double longitudeDouble = Math.Round(env.ComputedLongitude, 6);
+            latitude = latitudeDouble.ToString().Replace(',', '.');
+            longitude = longitudeDouble.ToString().Replace(',', '.');
+            lastContact = env.TimestampEventToString;
+            sMax = env.Smax;
+            totalShock = env.TotalShock;
+            tMean = env.Tmean;
+            batteryLvl = Convert.ToInt32(env.Batterylvl);
+            i++;
+
+        }
+        <Text>
+            var deviceInfo = ('"@i": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
+            deviceEnvironmentInfo24.push(deviceInfo);
         </Text>
     }
 }

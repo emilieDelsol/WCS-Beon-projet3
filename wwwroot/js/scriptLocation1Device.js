@@ -1,4 +1,5 @@
 ﻿let jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo + '}'); // -> lastContact - tMean - totalShock - sMax  - batteryLvl
+
 let lat = 43.6043;
 let lon = 1.4437;
 let overview = null;
@@ -22,8 +23,6 @@ function initMap() {
     for (env in jsDeviceEnvironment) {
         myNewLatLng = L.latLng(jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon);
         lastLatLng = L.latLng(lastlat, lastlon);
-        let difflat = jsDeviceEnvironment[env].lat - lastlat;
-        let difflon = jsDeviceEnvironment[env].lon - lastlon;
         if (L.GeometryUtil.distance(overview,lastLatLng, myNewLatLng) >40) {
             lastlat = jsDeviceEnvironment[env].lat;
             lastlon = jsDeviceEnvironment[env].lon;
@@ -64,4 +63,46 @@ function initMap() {
 }
 window.onload = function () {
     initMap();
+};
+
+function updateMapCarte(lat, lon, deviceName, AlertType, AlertTime, AlertValue, Unit) {
+    //Chercher et supprime les markers + popups existants
+    var shadows = document.getElementsByClassName("leaflet-marker-shadow");
+    shadows[0].remove();
+    var markers = document.getElementsByClassName("leaflet-marker-icon");
+    markers[0].remove();
+    var popups = document.getElementsByClassName("leaflet-popup");
+    if (popups.length > 0)
+        popups[0].remove();
+
+
+    overview.setView([lat, lon], 9);
+    marker = L.marker([lat, lon]).addTo(overview);
+    marker.bindPopup(deviceName + " : " + AlertType + "<br>" + AlertTime + "<br> Value : " + AlertValue + Unit);
+    marker.openPopup();
+};
+
+function ChangeColor() {
+    document.getElementById("sortButton72").classList.toggle("btn-success");
+    document.getElementById("sortButton72").classList.toggle("btn-dark");
+    document.getElementById("sortButton24").classList.toggle("btn-success");
+    document.getElementById("sortButton24").classList.toggle("btn-dark");
+}
+function UpdateLocation72() {
+    ChangeColor();
+    let jsDeviceEnvironment24 = JSON.parse('{' + deviceEnvironmentInfo24 + '}'); // -> lastContact - tMean - totalShock - sMax  - batteryLvl
+
+    overview.setView([lat, lon], 9);
+    var polyline = L.polyline(myLatLng, { color: 'green' }).addTo(overview);
+};
+
+
+function UpdateLocation24() {
+    ChangeColor();
+     jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo24 + '}'); // -> lastContact - tMean - totalShock - sMax  - batteryLvl
+
+};
+
+function UpdateLocationBetweenDate() {
+
 };

@@ -235,7 +235,10 @@
             alert("Your request:  \n\nbegin date: " + bDate + "\n\nend date: " + eDate + ". \n\n  " + maxSortBetween.length + " VALUES Found\n");
             document.getElementById("tMax").textContent = Math.max(...maxSortBetween);
             document.getElementById("tMin").textContent = Math.min(...minSortBetween);
-            document.getElementById("tMean").textContent = Math.max(...meanSortBetween);
+            var sumMean = meanSortBetween.reduce(function (a, b) {
+                return a + b;
+            }, 0);
+            document.getElementById("tMean").textContent = Math.round(sumMean / meanSortBetween.length);
             document.getElementById("dateSort").textContent = "between  : " + bDate + " and " + eDate;
         }
     }
@@ -292,5 +295,7 @@
              }
         }
 </script>
+<script src="~/lib/chartjs/Chart.min.js" asp-append-version="true"></script>
+<script src="~/js/scriptChartTemp.js"></script>
 
 
