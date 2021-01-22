@@ -30,40 +30,40 @@
         }
     }
 }
-    <aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
-        <nav class="navbar navbar-expand navbar-dark flex-lg-column flex-row align-items-start p-0">
-            <div class="collapse navbar-collapse row m-auto">
+<aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
+    <nav class="navbar navbar-expand navbar-dark flex-lg-column flex-row align-items-start p-0">
+        <div class="collapse navbar-collapse row m-auto">
 
-                <ul class="flex-lg-column flex-row navbar-nav justify-content-between ">
-                    <li class="list-group-item  rounded-0" style="  background-color: #201063;">
-                        <a class="nav-link pl-0 text-nowrap" style="color: white; font-weight:bold;" asp-controller="Home" asp-action="Index"><img src="~/Icons/home.svg" alt="" /> <span class="d-none d-lg-inline m-auto"> Home</span></a>
-                    </li>
-                    <li class="list-group-item" style="  background-color: #201063">
-                        <a class="nav-link pl-0" style="color: white; font-weight:bold;" asp-controller="Beon" asp-action="listDevices"><img src="~/Icons/eye.svg" alt="" /> <span class="d-none d-lg-inline">Tracker list</span></a>
-                    </li>
-                    <li class="list-group-item" style="  background-color: #201063">
-                        <a class="nav-link pl-0" style="color: white; font-weight:bold; " asp-controller="Beon" asp-action="Overview"><img src="~/Icons/earth.svg" alt="" /><span class="d-none d-lg-inline"> Overview</span></a>
-                    </li>
-                    <li class="list-group-item pr-0 pl-0 d-none d-lg-block" style="  background-color: #201063">
-                        <a class="nav-link pl-0 dropdown-toggle  ml-3 " style="color: white; font-weight:bold;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample"><img src="~/Icons/dasboardplain.svg" alt="" /> <span class="d-none d-lg-inline"> Dashboard</span></a>
-                        <div class="collapse  " id="collapseExample">
-                            <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/earth.svg" alt="" /><span class="d-none d-lg-inline"> Overview</span></a>
-                            <a class="nav-link pl-3" style="color: white; font-weight:bold; background-color:#150b42" asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/maps-and-location.svg" alt="" /> <span class="d-none d-lg-inline"> Location</span></a>
-                            <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/heat.svg" alt="" /><span class="d-none d-lg-inline"> Temperature</span></a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </aside>
-    <main role="main" class="col p-0 d-flex flex-column">
-        <header class="border p-2 d-flex justify-content-between">
-            <div class="d-none d-lg-block">
-                <h3 class="text-left  "><img src="~/Icons/dashboardPict.svg" alt=""/> Dashboard</h3>
-                <p class="text-left  m-0">@DateTime.Now</p>
-            </div>
-            <h2 class="text-center m-auto">
-                <img src="~/Icons/aim.svg" alt=""/> Tracker @Model.DeviceId
+            <ul class="flex-lg-column flex-row navbar-nav justify-content-between ">
+                <li class="list-group-item  rounded-0" style="  background-color: #201063;">
+                    <a class="nav-link pl-0 text-nowrap" style="color: white; font-weight:bold;" asp-controller="Home" asp-action="Index"><img src="~/Icons/home.svg" alt="" /> <span class="d-none d-lg-inline m-auto"> Home</span></a>
+                </li>
+                <li class="list-group-item" style="  background-color: #201063">
+                    <a class="nav-link pl-0" style="color: white; font-weight:bold;" asp-controller="Beon" asp-action="listDevices"><img src="~/Icons/eye.svg" alt="" /> <span class="d-none d-lg-inline">Tracker list</span></a>
+                </li>
+                <li class="list-group-item" style="  background-color: #201063">
+                    <a class="nav-link pl-0" style="color: white; font-weight:bold; " asp-controller="Beon" asp-action="Overview"><img src="~/Icons/earth.svg" alt="" /><span class="d-none d-lg-inline"> Overview</span></a>
+                </li>
+                <li class="list-group-item pr-0 pl-0 d-none d-lg-block" style="  background-color: #201063">
+                    <a class="nav-link pl-0 dropdown-toggle  ml-3 " style="color: white; font-weight:bold;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample"><img src="~/Icons/dasboardplain.svg" alt="" /> <span class="d-none d-lg-inline"> Dashboard</span></a>
+                    <div class="collapse  " id="collapseExample">
+                        <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/earth.svg" alt="" /><span class="d-none d-lg-inline"> Overview</span></a>
+                        <a class="nav-link pl-3" style="color: white; font-weight:bold; background-color:#150b42" asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/maps-and-location.svg" alt="" /> <span class="d-none d-lg-inline"> Location</span></a>
+                        <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/heat.svg" alt="" /><span class="d-none d-lg-inline"> Temperature</span></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</aside>
+<main role="main" class="col p-0 d-flex flex-column">
+    <header class="border p-2 d-flex justify-content-between">
+        <div class="d-none d-lg-block">
+            <h3 class="text-left  "><img src="~/Icons/dashboardPict.svg" alt="" /> Dashboard</h3>
+            <p class="text-left  m-0">@DateTime.Now</p>
+        </div>
+        <h2 class="text-center m-auto">
+            <img src="~/Icons/aim.svg" alt="" /> Tracker @Model.DeviceId
         </h2>
         <p class="d-none d-lg-block">&ensp; </p>
     </header>
@@ -177,7 +177,7 @@
                 <div class="h-100 p-0 mr-2 text-center">
                     <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
                         <span class="position-relative d-none d-lg-flex" style="top:50%;">
-                            <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp  
+                            <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
                             @{ if (alert)
                                 { <img src="~/Icons/notificationBell.svg" alt="" />}
                                 else
@@ -207,7 +207,7 @@
                                                 <p class="alertcolorred" style="width:max-content">
                                                     <button class="btn border-0 alertcolorred mw-100"
                                                             onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert', '@env.TimestampEventToString', '@env.Tmax', ' °')">
-                                                        <img src="~/Icons/heatBlueBeon.svg" alt=""/>
+                                                        <img src="~/Icons/heatBlueBeon.svg" alt="" />
                                                         Temperature Alert  <br />  @env.TimestampEvent"
                                                     </button>
                                                 </p>
@@ -348,3 +348,7 @@
         }
 
 </script>
+<script src="~/lib/chartjs/Chart.min.js" asp-append-version="true"></script>
+<script src="~/js/scriptChartTemp.js"></script>
+<script src="~/js/scriptBattery.js"></script>
+<script src="~/js/scriptCarte.js"></script>
