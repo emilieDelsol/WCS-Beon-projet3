@@ -25,9 +25,9 @@ function initMap() {
     var icone = L.icon({
         iconUrl: "https://img2.freepng.fr/20180702/qu/kisspng-temperature-computer-icons-celsius-thermometer-cli-5b39e62a1b47e8.1921838915305211301118.jpg",
         iconSize: [50, 50],
-        inconAnchor: [25, 50],
-        popupAnchor: [0,-50]
-    })
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50]
+    });
 
     // Nous ajoutons un marqueur
     var marker = L.marker([lat, lon]/*, { icon: icone }*/).addTo(overview);
@@ -40,11 +40,14 @@ window.onload = function () {
 
 function updateMapCarte(lat, lon, deviceName, AlertType, AlertTime, AlertValue, Unit) {
     //Chercher et supprime les markers + popups existants
+    var shadows = document.getElementsByClassName("leaflet-marker-shadow");
+    shadows[0].remove();
     var markers = document.getElementsByClassName("leaflet-marker-icon");
     markers[0].remove();
     var popups = document.getElementsByClassName("leaflet-popup");
     if (popups.length > 0)
         popups[0].remove();
+  
 
     overview.setView([lat, lon], 9);
     marker = L.marker([lat, lon]).addTo(overview);

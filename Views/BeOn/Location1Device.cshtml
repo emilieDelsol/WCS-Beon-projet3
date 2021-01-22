@@ -6,6 +6,7 @@
     IEnumerable<EnvironmentPayload> myDeviceEnv = myDevice.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
     EnvironmentPayload environment = myDeviceEnv.Last();
     IEnumerable<EnvironmentPayload> myDeviceEnv72 = myDeviceEnv.Where(e => e.TimestampEvent> environment.TimestampEvent.AddHours(-48));
+
 }
 
 
@@ -35,32 +36,39 @@
         </div>
     </nav>
 </aside>
-<main role="main" class="col p-0">
-    <article class="container-fluid p-3 d-flex">
-        <div class="card col m-auto m-3  ">
-            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
-                <h5 class="card-title " style="font-weight: bold;"><a asp-controller="BeOn" asp-action="Location1Device" style="color: #48cbd8; "> <i class="fas fa-map-marked"></i> Location</a></h5>
+<main role="main" class="col p-0 d-flex flex-column">
+    <header class="border p-2 d-flex justify-content-between">
+        <h2 class="text-center m-auto">
+            <a class="" style="color:inherit" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><i class="fas fa-crosshairs"></i>Tracker  @Model.DeviceId</a>
+        </h2>
+        <p class="d-none d-lg-block">&ensp; </p>
+    </header>
+    <section class="d-flex flex-row">
+        <article class="container-fluid p-3 d-flex">
+            <div class="card col m-auto m-3  ">
+                <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
+                    <h5 class="card-title " style="font-weight: bold;"><a asp-controller="BeOn" asp-action="Location1Device" style="color: #48cbd8; "> <i class="fas fa-map-marked"></i> Location</a></h5>
+                    </div>
+                <div class="card-body">
+                    <div id="location1device"></div>
+                </div>
             </div>
-            <div class="card-body">
-                <div id="location1device"></div>
+        </article>
+        <div class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
+            <div class="h-100 p-0 mr-2 text-center">
+                <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()"><span class="position-relative d-none d-lg-flex" style="top:50%;"><i class="fas fa-arrow-left" id="arrowLeft"></i><i class="fas fa-arrow-right d-none" id="arrowRight"></i>&nbsp<i class="far fa-bell "></i></span><span class="position-relative d-flex d-lg-none " style="top:50%;"><i class="fas fa-arrow-down" id="arrowDown"></i><i class="fas fa-arrow-up d-none" id="arrowUp"></i>&nbsp<i class="far fa-bell "></i></span></a>
             </div>
-        </div>
-    </article>
-    <div class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
-        <div class="h-100 p-0 mr-2 text-center">
-            <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()"><span class="position-relative d-none d-lg-flex" style="top:50%;"><i class="fas fa-arrow-left" id="arrowLeft"></i><i class="fas fa-arrow-right d-none" id="arrowRight"></i>&nbsp<i class="far fa-bell "></i></span><span class="position-relative d-flex d-lg-none " style="top:50%;"><i class="fas fa-arrow-down" id="arrowDown"></i><i class="fas fa-arrow-up d-none" id="arrowUp"></i>&nbsp<i class="far fa-bell "></i></span></a>
-        </div>
-        <div class="row" style="">
-            <div class="col text-center" style="width:max-content;">
-                <div class="collapse" id="alertCollapse">
-                    <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+            <div class="row" style="">
+                <div class="col text-center" style="width:max-content;">
+                    <div class="collapse" id="alertCollapse">
+                        <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-
+        </section>
+    </main>
     <script type="text/javascript">
     let deviceEnvironmentInfo = new Array();
 @{string latitude = "43.7384";
@@ -96,3 +104,4 @@
 }
     </script>
     <script src="~/js/scriptLocation1Device.js"></script>
+
