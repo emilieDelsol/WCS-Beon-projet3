@@ -1,4 +1,4 @@
-﻿// On initialise la latitude et la longitude de Toulouse (centre de la carte)
+// On initialise la latitude et la longitude de Toulouse (centre de la carte)
 var lat = 43.6043 ;
 var lon = 1.4437;
 
@@ -28,7 +28,6 @@ function initMap() {
         iconAnchor: [25, 50],
         popupAnchor: [0, -50]
     });
-
     // Nous ajoutons un marqueur
     var marker = L.marker([lat, lon]/*, { icon: icone }*/).addTo(overview);
 }
