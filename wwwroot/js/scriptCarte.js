@@ -1,4 +1,4 @@
-﻿// On initialise la latitude et la longitude de Toulouse (centre de la carte)
+// On initialise la latitude et la longitude de Toulouse (centre de la carte)
 var lat = 43.6043 ;
 var lon = 1.4437;
 
@@ -25,7 +25,7 @@ function initMap() {
     var icone = L.icon({
         iconUrl: "https://img2.freepng.fr/20180702/qu/kisspng-temperature-computer-icons-celsius-thermometer-cli-5b39e62a1b47e8.1921838915305211301118.jpg",
         iconSize: [50, 50],
-        inconAnchor: [25, 50],
+        iconAnchor: [25, 50],
         popupAnchor: [0, -50]
     });
     // Nous ajoutons un marqueur
