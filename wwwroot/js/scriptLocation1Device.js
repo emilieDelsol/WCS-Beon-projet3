@@ -1,11 +1,11 @@
 ﻿let jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo24 + '}'); // -> lastContact - tMean - totalShock - sMax  - batteryLvl
+let isActive24 = true;
+let isActive72 = false;
 
 let lat = 43.6043;
 let lon = 1.4437;
 let overview = null;
 let marker;
-let startMarker;
-let finishMarker;
 let markers = new Array();
 var shadows = new Array();
 var popups = new Array();
@@ -35,33 +35,36 @@ window.onload = function () {
 
 
 function ChangeColor() {
-    document.getElementById("sortButton72").classList.toggle("btn-success");
-    document.getElementById("sortButton72").classList.toggle("btn-dark");
-    document.getElementById("sortButton24").classList.toggle("btn-success");
-    document.getElementById("sortButton24").classList.toggle("btn-dark");
+
+
+        document.getElementById("sortButton72").classList.toggle("btn-success");
+        document.getElementById("sortButton72").classList.toggle("btn-dark");
+        document.getElementById("sortButton24").classList.toggle("btn-success");
+        document.getElementById("sortButton24").classList.toggle("btn-dark");
 }
 function UpdateLocation72() {
     ChangeColor();
+    isActive24 = false;
     RemoveMarkersAndPolyline();
-    let jsDeviceEnvironment72 = JSON.parse('{' + deviceEnvironmentInfo72 + '}'); 
-    InitialisationMarkersTrack(jsDeviceEnvironment72);
+    jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo72 + '}'); 
+    InitialisationMarkersTrack(jsDeviceEnvironment);
     polyline.remove();
     AddPolyline("red");
 };
 
 function UpdateLocation24() {
-    jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo24 + '}');
     ChangeColor();
     RemoveMarkersAndPolyline();
+    jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo24 + '}');
     InitialisationMarkersTrack(jsDeviceEnvironment);
     AddPolyline("green");
 };
 
 function UpdateLocationBetweenDate() {
-     jsDeviceEnvironment = JSON.parse('{' +  deviceEnvironmentInfoBetween  + '}');
+    let jsDeviceEnvironmentBetween = JSON.parse('{' +  deviceEnvironmentInfoBetween  + '}');
     ChangeColor();
     RemoveMarkersAndPolyline();
-    InitialisationMarkersTrack(jsDeviceEnvironment);
+    InitialisationMarkersTrack(jsDeviceEnvironmentBetween);
     AddPolyline("blue");
 };
 function RemoveMarkersAndPolyline()
@@ -72,6 +75,8 @@ function RemoveMarkersAndPolyline()
     for (var shadow of shadows) { shadow.remove() };
     for (var popup of popups) { popup.remove() };
     polyline.remove();
+    startMarker.remove();
+    finishMarker.remove();
 }
 function AddPolyline(colorChoice)
 {
@@ -118,13 +123,11 @@ function InitialisationMarkersTrack(jsDeviceEnvironment )
     startMarker.bindPopup('<h5>device id: ' + env + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl + '% </p><p><a href="/Beon/Dashboard?IdDevice=' + env + '">link to dashboard </a></p>');
     markers[0].remove();
     startMarker.addTo(overview);
-    markers.push(startMarker);
 
     finishMarker = L.marker([markers[markers.length - 1]._latlng.lat, markers[markers.length-1]._latlng.lng], { icon: finishIcon }).addTo(overview);
     finishMarker.bindPopup('<h5>device id: ' + env + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl + '% </p><p><a href="/Beon/Dashboard?IdDevice=' + env + '">link to dashboard </a></p>');
     markers[markers.length-1].remove();
     finishMarker.addTo(overview);
-    markers.push(finishMarker);
 
     let group = new L.featureGroup(markers);
     overview.fitBounds(group.getBounds().pad(0.2));
