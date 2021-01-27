@@ -1,108 +1,153 @@
-﻿let jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo + '}'); // -> lastContact - tMean - totalShock - sMax  - batteryLvl
-
+﻿let jsDeviceEnvironment =  JSON.parse('{' + deviceEnvironmentInfo24 + '}') ; // -> lastContact - tMean - totalShock - sMax  - batteryLvl
+let jsDeviceEnvironment24;
+let jsDeviceEnvironment72;
+let isActive24= false;
 let lat = 43.6043;
 let lon = 1.4437;
 let overview = null;
-let markerClusters;
+let marker;
+let markers = new Array();
+let shadows = new Array();
+let popups = new Array();
 let lastlat = 0;
 let lastlon = 0
 let myNewLatLng = new Array();
 let myLatLng = new Array();
 let lastLatLng = new Array();
-//let firstEnv = jsDeviceEnvironment[0];
-//let lastEnv = jsDeviceEnvironment[deviceEnvironmentInfo.length];
-function initMap() {
-    let markers = [];
+let markersRemove = new Array();
+let polyline;
+function initMap()
+{
     overview = L.map('location1device').setView([lat, lon], 11);
-    markerClusters = L.markerClusterGroup();
     L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
         minZoom: 2,
         maxZoom: 19
     }).addTo(overview);
+
+    InitialisationMarkersTrack(jsDeviceEnvironment);
+    CreatePolyline("blue");
+    polyline.addTo(overview);
+    UpdateLocation24();
+}
+window.onload = function () {
+    initMap();
+    
+};
+
+
+function ChangeColor(firstDiv, secondDiv) {
+
+    firstDiv.classList.remove("btn-dark");
+    firstDiv.classList.add("btn-success");
+    secondDiv.classList.remove("btn-success");
+    secondDiv.classList.add("btn-dark");
+}
+function UpdateLocation72() {
+    if (isActive24) {
+        jsDeviceEnvironment72 = JSON.parse('{' + deviceEnvironmentInfo72 + '}'); 
+        ChangeColor(document.getElementById("sortButton72"), document.getElementById("sortButton24"));
+        RemoveAllMarkers();
+        RemovePolyline();
+
+        InitialisationMarkersTrack(jsDeviceEnvironment72);
+        CreatePolyline("red");
+        polyline.addTo(overview);
+        isActive24 = false;
+    }
+};
+
+function UpdateLocation24() {
+    if (!isActive24) {
+        jsDeviceEnvironment24 = JSON.parse('{' + deviceEnvironmentInfo24 + '}'); 
+        ChangeColor(document.getElementById("sortButton24"), document.getElementById("sortButton72"));
+        RemoveAllMarkers();
+        RemovePolyline();
+
+        InitialisationMarkersTrack(jsDeviceEnvironment24);
+        CreatePolyline("green");
+        polyline.addTo(overview);
+        isActive24 = true;
+    }
+};
+
+function UpdateLocationBetweenDate() {
+    let jsDeviceEnvironmentBetween = JSON.parse('{' +  deviceEnvironmentInfoBetween  + '}');
+    RemoveAllMarkers();
+    RemovePolyline();
+
+    InitialisationMarkersTrack(jsDeviceEnvironmentBetween);
+    CreatePolyline("orange");
+    polyline.addTo(overview);
+};
+
+function RemoveAllMarkers()
+{
+    shadows = document.getElementsByClassName("leaflet-marker-shadow");
+    popups = document.getElementsByClassName("leaflet-popup");
+    for (var marker of markers) { marker.remove() };
+    for (var shadow of shadows) { shadow.remove() };
+    for (var popup of popups) { popup.remove() };
+     startMarker.remove();
+    finishMarker.remove();
+}
+
+function RemovePolyline() {
+    polyline.remove();
+
+}
+function CreatePolyline(colorChoice) {
+    polyline = L.polyline(myLatLng, { color: colorChoice });
+}
+
+function InitialisationMarkersTrack(jsDeviceEnvironment )
+{
+    markers = [];
+    myNewLatLng = [];
+    myLatLng = [];
+    lastLatLng = [];
+    var startIcon = L.icon({
+        iconUrl: "https://image.flaticon.com/icons/png/512/1850/1850761.png",
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50]
+    });
+    var finishIcon = L.icon({
+        iconUrl: " https://image.flaticon.com/icons/png/128/1021/1021107.png",
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50]
+    });
+   
     for (env in jsDeviceEnvironment) {
         myNewLatLng = L.latLng(jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon);
         lastLatLng = L.latLng(lastlat, lastlon);
-        if (L.GeometryUtil.distance(overview,lastLatLng, myNewLatLng) >40) {
+        if (L.GeometryUtil.distance(overview, lastLatLng, myNewLatLng) > 40) {
             lastlat = jsDeviceEnvironment[env].lat;
             lastlon = jsDeviceEnvironment[env].lon;
-            let marker = L.marker([jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon]).addTo(overview);
+         
+            marker = L.marker([jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon]).addTo(overview);
             marker.bindPopup('<h5>device id: ' + env + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl + '% </p><p><a href="/Beon/Dashboard?IdDevice=' + env + '">link to dashboard </a></p>');
-            markerClusters.addLayer(marker);
+            marker.addTo(overview);
             markers.push(marker);
-            let arrayProvisoire = [lastlat , lastlon];
+            let arrayProvisoire = [lastlat, lastlon];
             myLatLng.push(arrayProvisoire);
         }
         else {
             continue;
         }
     }
-    var markersRemove = document.getElementsByClassName("leaflet-marker-icon");
-    markersRemove[markersRemove.length - 1].remove();
-    markersRemove[0].remove();
-    var iconeStart = L.icon({
-        iconUrl: "https://icon-library.net/images/start-flag-icon/start-flag-icon-7.jpg",
-        iconSize: [50, 50],
-        iconAnchor: [15,50],
-        popupAnchor: [0,-50]
-    })
-    //iconeStart.bindPopup('Start');
-    L.marker([jsDeviceEnvironment[1].lat, jsDeviceEnvironment[1].lon], { icon: iconeStart }).addTo(overview);
-    var iconeEnd = L.icon({
-        iconUrl: "https://icon-library.net/images/start-flag-icon/start-flag-icon-11.jpg",
-        iconSize: [50, 50],
-        iconAnchor: [50, 40],
-        popupAnchor: [0,- 50]
-    })
-    //iconeEnd.bindPopup('End');
-    L.marker([lastlat, lastlon], { icon: iconeEnd }).addTo(overview);
-    var polyline = L.polyline(myLatLng, { color: 'red' }).addTo(overview);
+    startMarker = L.marker([markers[0]._latlng.lat, markers[0]._latlng.lng], { icon: startIcon }).addTo(overview);
+    startMarker.bindPopup(markers[0]._popup._content);
+    markers[0].remove();
+    startMarker.addTo(overview);
+
+    finishMarker = L.marker([markers[markers.length - 1]._latlng.lat, markers[markers.length - 1]._latlng.lng], { icon: finishIcon }).addTo(overview);
+    finishMarker.bindPopup(markers[markers.length-1]._popup._content);
+    markers[markers.length-1].remove();
+    finishMarker.addTo(overview);
+
     let group = new L.featureGroup(markers);
     overview.fitBounds(group.getBounds().pad(0.2));
 
 }
-window.onload = function () {
-    initMap();
-};
-
-function updateMapCarte(lat, lon, deviceName, AlertType, AlertTime, AlertValue, Unit) {
-    //Chercher et supprime les markers + popups existants
-    var shadows = document.getElementsByClassName("leaflet-marker-shadow");
-    shadows[0].remove();
-    var markers = document.getElementsByClassName("leaflet-marker-icon");
-    markers[0].remove();
-    var popups = document.getElementsByClassName("leaflet-popup");
-    if (popups.length > 0)
-        popups[0].remove();
-
-
-    overview.setView([lat, lon], 9);
-    marker = L.marker([lat, lon]).addTo(overview);
-    marker.bindPopup(deviceName + " : " + AlertType + "<br>" + AlertTime + "<br> Value : " + AlertValue + Unit);
-    marker.openPopup();
-};
-
-function ChangeColor() {
-    document.getElementById("sortButton72").classList.toggle("btn-success");
-    document.getElementById("sortButton72").classList.toggle("btn-dark");
-    document.getElementById("sortButton24").classList.toggle("btn-success");
-    document.getElementById("sortButton24").classList.toggle("btn-dark");
-}
-function UpdateLocation72() {
-    ChangeColor();
-    let jsDeviceEnvironment24 = JSON.parse('{' + deviceEnvironmentInfo24 + '}'); // -> lastContact - tMean - totalShock - sMax  - batteryLvl
-
-    overview.setView([lat, lon], 9);
-    var polyline = L.polyline(myLatLng, { color: 'green' }).addTo(overview);
-};
-
-
-function UpdateLocation24() {
-    ChangeColor();
-     jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo24 + '}'); // -> lastContact - tMean - totalShock - sMax  - batteryLvl
-
-};
-
-function UpdateLocationBetweenDate() {
-
-};
