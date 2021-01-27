@@ -34,17 +34,15 @@ window.onload = function () {
 };
 
 
-function ChangeColor() {
+function ChangeColor(firstDiv, secondDiv) {
 
-
-        document.getElementById("sortButton72").classList.toggle("btn-success");
-        document.getElementById("sortButton72").classList.toggle("btn-dark");
-        document.getElementById("sortButton24").classList.toggle("btn-success");
-        document.getElementById("sortButton24").classList.toggle("btn-dark");
+    firstDiv.classList.remove("btn-dark");
+    firstDiv.classList.add("btn-success");
+    secondDiv.classList.remove("btn-success");
+    secondDiv.classList.add("btn-dark");
 }
 function UpdateLocation72() {
-    ChangeColor();
-    isActive24 = false;
+    ChangeColor(document.getElementById("sortButton72"), document.getElementById("sortButton24"));
     RemoveMarkersAndPolyline();
     jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo72 + '}'); 
     InitialisationMarkersTrack(jsDeviceEnvironment);
@@ -53,7 +51,8 @@ function UpdateLocation72() {
 };
 
 function UpdateLocation24() {
-    ChangeColor();
+    ChangeColor(document.getElementById("sortButton24"), document.getElementById("sortButton72"));
+
     RemoveMarkersAndPolyline();
     jsDeviceEnvironment = JSON.parse('{' + deviceEnvironmentInfo24 + '}');
     InitialisationMarkersTrack(jsDeviceEnvironment);
