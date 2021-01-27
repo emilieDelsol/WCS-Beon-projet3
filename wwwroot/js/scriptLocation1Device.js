@@ -43,6 +43,12 @@ function ChangeColor(firstDiv, secondDiv) {
     secondDiv.classList.remove("btn-success");
     secondDiv.classList.add("btn-dark");
 }
+function RemoveColorSortButton() {
+    document.getElementById("sortButton72").classList.remove("btn-success");
+    document.getElementById("sortButton24").classList.remove("btn-success");
+    document.getElementById("sortButton72").classList.add("btn-dark");
+    document.getElementById("sortButton24").classList.add("btn-dark");
+}
 function UpdateLocation72() {
     if (isActive24) {
         jsDeviceEnvironment72 = JSON.parse('{' + deviceEnvironmentInfo72 + '}'); 
@@ -72,6 +78,8 @@ function UpdateLocation24() {
 };
 
 function UpdateLocationBetweenDate() {
+    isActive24 = false;
+    RemoveColorSortButton();
     let jsDeviceEnvironmentBetween = JSON.parse('{' +  deviceEnvironmentInfoBetween  + '}');
     RemoveAllMarkers();
     RemovePolyline();
