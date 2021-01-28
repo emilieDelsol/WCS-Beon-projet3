@@ -99,12 +99,7 @@ function UpdateLocationBetweenDate() {
 };
 
 
-}
-function CreatePolyline(colorChoice) {
-    polyline = L.polyline(myLatLng, { color: colorChoice }).arrowheads({size:'10%', yawn: 20, fill: true });
-}
-
-function InitialisationMarkersTrack(jsDeviceEnvironment )
+function InitialisationMap(jsDeviceEnvironment )
 {
     markers = [];
     myNewLatLng = [];
@@ -178,7 +173,7 @@ function RemoveAllMarkers() {
 }
 
 function CreatePolyline(colorChoice) {
-    polyline = L.polyline(myLatLng, { color: colorChoice });
+    polyline = L.polyline(myLatLng, { color: colorChoice }).arrowheads({ size: '10%', yawn: 20, fill: true });
 }
 
 function RemovePolyline() {
