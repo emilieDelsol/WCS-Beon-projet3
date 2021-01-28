@@ -62,6 +62,7 @@
             <nav class="navbar navbar-dark bg-light justify-content-center">
                 <div class="d-flex flex-column flex-lg-row justify-content-between ">
                     <div class="text-center m-1">
+                        
                         <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateLocation24()">24h</button>
                         <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateLocation72()">72h</button>
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
@@ -94,7 +95,11 @@
             </nav>
             <div class="card m-auto m-3  w-100 ">
                 <div class="card-header pb-0" style=" color: #201063;">
-                    <h5 class="card-title " style="font-weight: bold;"><a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><img src="~/Icons/mapBlueBeon.svg" alt="" /> Location</a> </h5>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title " style="font-weight: bold;">
+                            <a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><img src="~/Icons/mapBlueBeon.svg" alt="" /> Location</a>
+                        </h5>
+                    </div>
                     <p id="betweenDate"></p>
                 </div>
                 <div class="card-body">
