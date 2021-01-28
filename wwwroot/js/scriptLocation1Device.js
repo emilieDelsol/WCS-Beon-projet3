@@ -99,7 +99,12 @@ function UpdateLocationBetweenDate() {
 };
 
 
-function InitialisationMap(jsDeviceEnvironment )
+}
+function CreatePolyline(colorChoice) {
+    polyline = L.polyline(myLatLng, { color: colorChoice }).arrowheads({size:'10%', yawn: 20, fill: true });
+}
+
+function InitialisationMarkersTrack(jsDeviceEnvironment )
 {
     markers = [];
     myNewLatLng = [];
