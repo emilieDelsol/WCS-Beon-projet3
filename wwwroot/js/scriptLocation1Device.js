@@ -10,7 +10,7 @@ let markers = new Array();
 let shadows = new Array();
 let popups = new Array();
 let lastlat = 0;
-let lastlon = 0
+let lastlon = 0;
 let myNewLatLng = new Array();
 let myLatLng = new Array();
 let lastLatLng = new Array();
@@ -25,16 +25,17 @@ function initMap()
         maxZoom: 19
     }).addTo(overview);
 
-    InitialisationMarkersTrack(jsDeviceEnvironment);
+    InitialisationMap(jsDeviceEnvironment);
     CreatePolyline("blue");
     polyline.addTo(overview);
     UpdateLocation24();
+    AddMarkers();
+    AddStartStopMarkers();
 }
 window.onload = function () {
     initMap();
     
 };
-
 
 function ChangeColor(firstDiv, secondDiv) {
 
@@ -43,12 +44,14 @@ function ChangeColor(firstDiv, secondDiv) {
     secondDiv.classList.remove("btn-success");
     secondDiv.classList.add("btn-dark");
 }
+
 function RemoveColorSortButton() {
     document.getElementById("sortButton72").classList.remove("btn-success");
     document.getElementById("sortButton24").classList.remove("btn-success");
     document.getElementById("sortButton72").classList.add("btn-dark");
     document.getElementById("sortButton24").classList.add("btn-dark");
 }
+
 function UpdateLocation72() {
     if (isActive24) {
         jsDeviceEnvironment72 = JSON.parse('{' + deviceEnvironmentInfo72 + '}'); 
@@ -56,10 +59,12 @@ function UpdateLocation72() {
         RemoveAllMarkers();
         RemovePolyline();
 
-        InitialisationMarkersTrack(jsDeviceEnvironment72);
+        InitialisationMap(jsDeviceEnvironment72);
         CreatePolyline("red");
         polyline.addTo(overview);
         isActive24 = false;
+        AddMarkers();
+        AddStartStopMarkers();
     }
 };
 
@@ -70,38 +75,29 @@ function UpdateLocation24() {
         RemoveAllMarkers();
         RemovePolyline();
 
-        InitialisationMarkersTrack(jsDeviceEnvironment24);
+        InitialisationMap(jsDeviceEnvironment24);
         CreatePolyline("green");
         polyline.addTo(overview);
         isActive24 = true;
+        AddMarkers();
+        AddStartStopMarkers();
     }
 };
 
 function UpdateLocationBetweenDate() {
+    let jsDeviceEnvironmentBetween = JSON.parse('{' +  deviceEnvironmentInfoBetween  + '}');
     isActive24 = false;
     RemoveColorSortButton();
-    let jsDeviceEnvironmentBetween = JSON.parse('{' +  deviceEnvironmentInfoBetween  + '}');
     RemoveAllMarkers();
     RemovePolyline();
 
-    InitialisationMarkersTrack(jsDeviceEnvironmentBetween);
+    InitialisationMap(jsDeviceEnvironmentBetween);
     CreatePolyline("orange");
     polyline.addTo(overview);
+    AddMarkers();
+    AddStartStopMarkers();
 };
 
-function RemoveAllMarkers()
-{
-    shadows = document.getElementsByClassName("leaflet-marker-shadow");
-    popups = document.getElementsByClassName("leaflet-popup");
-    for (var marker of markers) { marker.remove() };
-    for (var shadow of shadows) { shadow.remove() };
-    for (var popup of popups) { popup.remove() };
-     startMarker.remove();
-    finishMarker.remove();
-}
-
-function RemovePolyline() {
-    polyline.remove();
 
 }
 function CreatePolyline(colorChoice) {
@@ -130,13 +126,12 @@ function InitialisationMarkersTrack(jsDeviceEnvironment )
     for (env in jsDeviceEnvironment) {
         myNewLatLng = L.latLng(jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon);
         lastLatLng = L.latLng(lastlat, lastlon);
-        if (L.GeometryUtil.distance(overview, lastLatLng, myNewLatLng) > 40) {
+        if (L.GeometryUtil.distance(overview, lastLatLng, myNewLatLng) > 50) {
             lastlat = jsDeviceEnvironment[env].lat;
             lastlon = jsDeviceEnvironment[env].lon;
          
-            marker = L.marker([jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon]).addTo(overview);
+            marker = L.marker([jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon])
             marker.bindPopup('<h5>device id: ' + env + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl + '% </p><p><a href="/Beon/Dashboard?IdDevice=' + env + '">link to dashboard </a></p>');
-            marker.addTo(overview);
             markers.push(marker);
             let arrayProvisoire = [lastlat, lastlon];
             myLatLng.push(arrayProvisoire);
@@ -145,17 +140,47 @@ function InitialisationMarkersTrack(jsDeviceEnvironment )
             continue;
         }
     }
-    startMarker = L.marker([markers[0]._latlng.lat, markers[0]._latlng.lng], { icon: startIcon }).addTo(overview);
+    startMarker = L.marker([markers[0]._latlng.lat, markers[0]._latlng.lng], { icon: startIcon });
     startMarker.bindPopup(markers[0]._popup._content);
-    markers[0].remove();
-    startMarker.addTo(overview);
 
-    finishMarker = L.marker([markers[markers.length - 1]._latlng.lat, markers[markers.length - 1]._latlng.lng], { icon: finishIcon }).addTo(overview);
-    finishMarker.bindPopup(markers[markers.length-1]._popup._content);
-    markers[markers.length-1].remove();
-    finishMarker.addTo(overview);
+    finishMarker = L.marker([markers[markers.length - 1]._latlng.lat, markers[markers.length - 1]._latlng.lng], { icon: finishIcon });
+    finishMarker.bindPopup(markers[markers.length - 1]._popup._content);
 
     let group = new L.featureGroup(markers);
     overview.fitBounds(group.getBounds().pad(0.2));
+}
 
+function AddStartStopMarkers() {
+    startMarker.addTo(overview);
+    finishMarker.addTo(overview);
+}
+
+function AddMarkers() {
+    for (marker of markers) {
+        marker.addTo(overview);
+    }
+    markers[0].remove();
+    markers[markers.length-1].remove();
+}
+
+function RemoveMarkers() {
+    shadows = document.getElementsByClassName("leaflet-marker-shadow");
+    popups = document.getElementsByClassName("leaflet-popup");
+    for (var marker of markers) { marker.remove() };
+    for (var shadow of shadows) { shadow.remove() };
+    for (var popup of popups) { popup.remove() };
+}
+
+function RemoveAllMarkers() {
+    RemoveMarkers();
+    startMarker.remove();
+    finishMarker.remove();
+}
+
+function CreatePolyline(colorChoice) {
+    polyline = L.polyline(myLatLng, { color: colorChoice });
+}
+
+function RemovePolyline() {
+    polyline.remove();
 }
