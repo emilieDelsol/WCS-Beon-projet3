@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Icons\" />
+    <Folder Include="wwwroot\lib\leaflet\" />
   </ItemGroup>
 
 </Project>
