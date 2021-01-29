@@ -243,7 +243,6 @@
             document.getElementById("valuesFound").textContent = myLabelBetween.length;
             isActive24 = false;
             isActive72 = false;
-            RemoveColorSortButton();
         }
     }
 
@@ -299,12 +298,7 @@
              }
         }
 
-    function RemoveColorSortButton() {
-        document.getElementById("sortButton72").classList.remove("btn-success");
-        document.getElementById("sortButton24").classList.remove("btn-success");
-        document.getElementById("sortButton72").classList.add("btn-dark");
-        document.getElementById("sortButton24").classList.add("btn-dark");
-    }
+ 
 
 </script>
 <script src="~/lib/chartjs/Chart.min.js" asp-append-version="true"></script>
