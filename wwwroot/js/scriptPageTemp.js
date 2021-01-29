@@ -73,7 +73,10 @@ function UpdateChart72() {
     myLineChart.data.datasets[2].data = mean72;
     myLineChart.data.labels = myLabel72;
     myLineChart.update();
-  
+    document.getElementById("tMax").textContent = Math.max(...max72);
+    document.getElementById("tMin").textContent = Math.min(...min72);
+    document.getElementById("tMean").textContent = Math.max(...mean72);
+    document.getElementById("dateSort").textContent = "Last 72h:";
 };
 
 
@@ -86,7 +89,10 @@ function UpdateChart24() {
     myLineChart.data.datasets[2].data = mean24;
     myLineChart.data.labels = myLabel24;
     myLineChart.update();
-  
+    document.getElementById("tMax").textContent = Math.max(...max24);
+    document.getElementById("tMin").textContent = Math.min(...min24);
+    document.getElementById("tMean").textContent = Math.max(...mean24);
+    document.getElementById("dateSort").textContent = "Last 24h:";
 };
 
 
