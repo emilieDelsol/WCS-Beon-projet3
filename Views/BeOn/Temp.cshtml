@@ -100,6 +100,7 @@
                         <p class="card-text">-Max: <span id="tMax"> @env24.OrderByDescending(a => a.Tmax).First().Tmax</span> °C</p>
                         <p class="card-text">-Min:  <span id="tMin">@env24.OrderByDescending(a => a.Tmax).First().Tmin</span> °C</p>
                         <p class="card-text">-Mean: <span id="tMean"> @env24.OrderByDescending(a => a.Tmax).First().Tmean</span> °C</p>
+                        <p class="card-text">-Values found: <span id="valuesFound">@env24.Count()</span></p>
                     </div>
                 </div>
                 <div class="card  m-3 p-0 col-11  col-lg-8  " style="height:auto">
@@ -239,6 +240,9 @@
             }, 0);
             document.getElementById("tMean").textContent = Math.round(sumMean / meanSortBetween.length);
             document.getElementById("dateSort").textContent = "between  : " + bDate + " and " + eDate;
+            document.getElementById("valuesFound").textContent = myLabelBetween.length;
+            isActive24 = false;
+            isActive72 = false;
         }
     }
 
@@ -293,6 +297,9 @@
                 </text>
              }
         }
+
+ 
+
 </script>
 <script src="~/lib/chartjs/Chart.min.js" asp-append-version="true"></script>
 <script src="~/js/scriptPageTemp.js"></script>
