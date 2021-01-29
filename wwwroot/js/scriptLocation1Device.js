@@ -18,6 +18,7 @@ let myLatLng = new Array();
 let lastLatLng = new Array();
 let markersRemove = new Array();
 let polyline;
+
 function initMap()
 {
     overview = L.map('location1device').setView([lat, lon], 11);
@@ -103,6 +104,8 @@ function InitialisationMap(jsDeviceEnvironment )
     myNewLatLng = [];
     myLatLng = [];
     lastLatLng = [];
+    let positionningMessageNumber = 0;
+
     var startIcon = L.icon({
         iconUrl: "https://image.flaticon.com/icons/png/512/1850/1850761.png",
         iconSize: [50, 50],
@@ -115,16 +118,17 @@ function InitialisationMap(jsDeviceEnvironment )
         iconAnchor: [25, 50],
         popupAnchor: [0, -50]
     });
-   
+    
     for (env in jsDeviceEnvironment) {
         myNewLatLng = L.latLng(jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon);
         lastLatLng = L.latLng(lastlat, lastlon);
         if (L.GeometryUtil.distance(overview, lastLatLng, myNewLatLng) > 50) {
+            positionningMessageNumber ++;
             lastlat = jsDeviceEnvironment[env].lat;
             lastlon = jsDeviceEnvironment[env].lon;
          
             marker = L.marker([jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon])
-            marker.bindPopup('<h5>positionning id: ' + env + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl );
+            marker.bindPopup('<h5>Positionning Id: ' + positionningMessageNumber + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl );
             markers.push(marker);
             let arrayProvisoire = [lastlat, lastlon];
             myLatLng.push(arrayProvisoire);
