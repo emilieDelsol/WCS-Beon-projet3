@@ -77,6 +77,7 @@ function UpdateChart72() {
     document.getElementById("tMin").textContent = Math.min(...min72);
     document.getElementById("tMean").textContent = Math.max(...mean72);
     document.getElementById("dateSort").textContent = "Last 72h:";
+    document.getElementById("valuesFound").textContent = myLabel72.length;
 };
 
 
@@ -93,6 +94,8 @@ function UpdateChart24() {
     document.getElementById("tMin").textContent = Math.min(...min24);
     document.getElementById("tMean").textContent = Math.max(...mean24);
     document.getElementById("dateSort").textContent = "Last 24h:";
+    document.getElementById("valuesFound").textContent = myLabel24.length;
+
 };
 
 
