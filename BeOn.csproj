@@ -13,4 +13,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Icons\" />
+    <Folder Include="wwwroot\lib\leaflet\" />
+  </ItemGroup>
+
 </Project>
