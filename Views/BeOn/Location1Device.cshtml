@@ -88,7 +88,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <button type="button" id="bouton" onclick="UpdateListBetweenDate()">send</button>
+                            <button type="button" id="bouton" onclick="UpdateLocationBetween()">send</button>
                         </div>
                     </div>
                 </div>
@@ -247,9 +247,8 @@
     }
 }
 
-    function UpdateListBetweenDate()
-    {
-         var dateBegin = new Date(document.getElementById("beginDate").value);
+    function UpdateLocationBetween() {
+        var dateBegin = new Date(document.getElementById("beginDate").value);
         var timeBegin = document.getElementById("beginTime").value;
         var beginDate = new Date(Date.parse(dateBegin.getFullYear() + "," + (dateBegin.getMonth() + 1) + "," + dateBegin.getDate() + "," + timeBegin));
         var dateEnd = new Date(document.getElementById("endDate").value);
@@ -274,12 +273,11 @@
 
              <Text>
 
-            var dateToCompare = new Date('@env.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")');
-            if (dateToCompare >= beginDate && endDate>=dateToCompare)
-            {
-                    var deviceInfo = ('"@i": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
-                deviceEnvironmentInfoBetween.push(deviceInfo);
-            }
+        var dateToCompare = new Date('@env.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")');
+        if (dateToCompare >= beginDate && endDate >= dateToCompare) {
+            var deviceInfo = ('"@i": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
+            deviceEnvironmentInfoBetween.push(deviceInfo);
+        }
            </Text>
           }
       }
@@ -292,8 +290,26 @@
             alert("Your request:  \n\nbegin date: " + bDate + "\n\nend date: " + eDate + ". \n\n  " + deviceEnvironmentInfoBetween.length + " VALUES Found\n");
 
         }
-        document.getElementById("betweenDate").textContent = "begin date: " + bDate + "\n\nend date: " + eDate + ".\n\n  " + deviceEnvironmentInfoBetween.length + " VALUES Found";
-        UpdateLocationBetweenDate();
+      
+
+        if (!isActiveBetween) {
+
+            let jsDeviceEnvironmentBetween = JSON.parse('{' + deviceEnvironmentInfoBetween + '}');
+            isActive24 = false;
+            isActive72 = false;
+            isActiveBetween = true;
+
+            RemoveColorSortButton();
+            RemoveAllMarkers();
+            RemovePolyline();
+
+            InitialisationMap(jsDeviceEnvironmentBetween);
+            CreatePolyline("orange");
+            polyline.addTo(overview);
+            AddMarkers();
+            AddStartStopMarkers();
+            document.getElementById("betweenDate").textContent = "begin date: " + bDate + "\n\nend date: " + eDate + ".\n\n  " + deviceEnvironmentInfoBetween.length + " VALUES Found";
+        }
     }
 
 </script>
