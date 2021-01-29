@@ -1,7 +1,9 @@
 ﻿let jsDeviceEnvironment =  JSON.parse('{' + deviceEnvironmentInfo24 + '}') ; // -> lastContact - tMean - totalShock - sMax  - batteryLvl
 let jsDeviceEnvironment24;
 let jsDeviceEnvironment72;
-let isActive24= false;
+let isActive24 = false;
+isActive72 = false;
+isActiveBetween = false;
 let lat = 43.6043;
 let lon = 1.4437;
 let overview = null;
@@ -53,7 +55,7 @@ function RemoveColorSortButton() {
 }
 
 function UpdateLocation72() {
-    if (isActive24) {
+    if (!isActive72) {
         jsDeviceEnvironment72 = JSON.parse('{' + deviceEnvironmentInfo72 + '}'); 
         ChangeColor(document.getElementById("sortButton72"), document.getElementById("sortButton24"));
         RemoveAllMarkers();
@@ -63,8 +65,12 @@ function UpdateLocation72() {
         CreatePolyline("red");
         polyline.addTo(overview);
         isActive24 = false;
+        isActive72 = true;
+        isActiveBetween = false;
         AddMarkers();
         AddStartStopMarkers();
+        document.getElementById("betweenDate").textContent = "72 hours";
+
     }
 };
 
@@ -79,24 +85,15 @@ function UpdateLocation24() {
         CreatePolyline("green");
         polyline.addTo(overview);
         isActive24 = true;
+        isActive72 = false;
+        isActiveBetween = false;
         AddMarkers();
         AddStartStopMarkers();
+        document.getElementById("betweenDate").textContent = "24 hours";
     }
 };
 
-function UpdateLocationBetweenDate() {
-    let jsDeviceEnvironmentBetween = JSON.parse('{' +  deviceEnvironmentInfoBetween  + '}');
-    isActive24 = false;
-    RemoveColorSortButton();
-    RemoveAllMarkers();
-    RemovePolyline();
 
-    InitialisationMap(jsDeviceEnvironmentBetween);
-    CreatePolyline("orange");
-    polyline.addTo(overview);
-    AddMarkers();
-    AddStartStopMarkers();
-};
 
 
 function InitialisationMap(jsDeviceEnvironment )
@@ -126,7 +123,7 @@ function InitialisationMap(jsDeviceEnvironment )
             lastlon = jsDeviceEnvironment[env].lon;
          
             marker = L.marker([jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon])
-            marker.bindPopup('<h5>device id: ' + env + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl );
+            marker.bindPopup('<h5>positionning id: ' + env + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl );
             markers.push(marker);
             let arrayProvisoire = [lastlat, lastlon];
             myLatLng.push(arrayProvisoire);
