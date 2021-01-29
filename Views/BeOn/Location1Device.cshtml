@@ -292,12 +292,11 @@
         }
       
 
-        if (!isActiveBetween) {
+   
 
             let jsDeviceEnvironmentBetween = JSON.parse('{' + deviceEnvironmentInfoBetween + '}');
             isActive24 = false;
             isActive72 = false;
-            isActiveBetween = true;
 
             RemoveColorSortButton();
             RemoveAllMarkers();
@@ -309,7 +308,7 @@
             AddMarkers();
             AddStartStopMarkers();
             document.getElementById("betweenDate").textContent = "begin date: " + bDate + "\n\nend date: " + eDate + ".\n\n  " + deviceEnvironmentInfoBetween.length + " VALUES Found";
-        }
+
     }
 
 </script>
