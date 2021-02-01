@@ -14,3 +14,10 @@ test:
     - dotnet test
   dependencies:
     - build
+
+qualimetry:
+  stage: qualimetry
+  script:
+    - dotnet $env:MSBUILD_SONARSCANNER_PATH\\SonarScanner.MSBuild.dll begin /k:"be-on" /d:sonar.login="1b66983f7f6b483606accc1b8c02085fb20ed3cd"
+    - dotnet build
+    - dotnet sonarscanner end /d:sonar.login="1b66983f7f6b483606accc1b8c02085fb20ed3cd"
