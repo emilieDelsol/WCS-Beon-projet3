@@ -8,7 +8,6 @@ namespace BeOnos
     {
         public string Name { get; set; }
         public IList<Permission> Permissions { get; set; }
-
         public bool ContainsPermission(String permissionName)
         {
             return Permissions.Any(permission => permission.Name == permissionName);
