@@ -58,7 +58,7 @@ let myLineChart = new Chart(line, {
 
         }
     }
-});
+})
 
 
 function ChangeColor(firstDiv, secondDiv) {
@@ -81,7 +81,7 @@ function UpdateChart72() {
     myLineChart.update();
     isActive24 = false;
     isActive72 = true;
-};
+}
 
 
 function UpdateChart24() {
@@ -96,6 +96,6 @@ function UpdateChart24() {
     isActive24 = true;
     isActive72 = false; 
    
-};
+}
 
 
