@@ -22,7 +22,6 @@ namespace BeOn
                         .HasMany(d => d.EnvironmentPayloads)
                         .WithOne(e => e.Device)
                         .HasForeignKey(e => e.DeviceId);
-            //base.OnModelCreating(modelBuilder);
         }
     }
 }

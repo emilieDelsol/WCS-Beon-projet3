@@ -1,16 +1,13 @@
 using BeOn.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BeOn.Controllers
 {
 	public class BeOnController : Controller
 	{
-		private BeOnContext _context;
+		private readonly BeOnContext _context;
 		public BeOnController(BeOnContext injectedBeonContext)
         {
 			_context = injectedBeonContext;
@@ -32,10 +29,9 @@ namespace BeOn.Controllers
 		}
 		public IActionResult Dashboard(string IdDevice)
 		{
-			IEnumerable<Device> devices = new List<Device>();
-			Device device = new Device();
-			devices = from a in _context.Devices where(a.DeviceId == IdDevice) select a;
-			device = devices.First();
+			
+			IQueryable<Device> devices = from a in _context.Devices where(a.DeviceId == IdDevice) select a;
+			Device device = devices.First();
 			if(device.EnvironmentPayloads.Count == 0)
             {
 				return View("Default");
@@ -44,19 +40,15 @@ namespace BeOn.Controllers
 		}
 		public IActionResult Location1Device(string IdDevice)
 		{
-			IEnumerable<Device> devices = new List<Device>();
-			Device device = new Device();
-			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
-			device = devices.First();
+			IQueryable<Device> devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
+			Device device = devices.First();
 			return View(device);
 		}	
 		
 		public IActionResult Temp(string IdDevice)
 		{
-			IEnumerable<Device> devices = new List<Device>();
-			Device device = new Device();
-			devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
-			device = devices.First();
+			IQueryable<Device> devices = from a in _context.Devices where (a.DeviceId == IdDevice) select a;
+			Device device = devices.First();
 			return View(device);
 		}
 
