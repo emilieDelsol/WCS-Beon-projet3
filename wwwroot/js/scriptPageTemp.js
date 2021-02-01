@@ -1,6 +1,4 @@
 ﻿let line = document.getElementById('tempsChart');
-let isActive24 = true;
-let isActive72 = false;
 let myLineChart = new Chart(line, {
     type: 'line',
     data: {
@@ -58,44 +56,46 @@ let myLineChart = new Chart(line, {
 
         }
     }
-})
-
-
-function ChangeColor(firstDiv, secondDiv) {
-
-    firstDiv.classList.remove("btn-dark");
-    firstDiv.classList.add("btn-success");
-    secondDiv.classList.remove("btn-success");
-    secondDiv.classList.add("btn-dark");
+});
+function ChangeColor() {
+    document.getElementById("sortButton72").classList.toggle("btn-success");
+    document.getElementById("sortButton72").classList.toggle("btn-dark");
+    document.getElementById("sortButton24").classList.toggle("btn-success");
+    document.getElementById("sortButton24").classList.toggle("btn-dark");
 }
-
 function UpdateChart72() {
 
-    if (!isActive72) {
-        ChangeColor(document.getElementById("sortButton72"), document.getElementById("sortButton24"));
+    if (myLineChart.data.labels == myLabel24) {
+        ChangeColor();
     }
     myLineChart.data.datasets[0].data = max72;
     myLineChart.data.datasets[1].data = min72;
     myLineChart.data.datasets[2].data = mean72;
     myLineChart.data.labels = myLabel72;
     myLineChart.update();
-    isActive24 = false;
-    isActive72 = true;
-}
+    document.getElementById("tMax").textContent = Math.max(...max72);
+    document.getElementById("tMin").textContent = Math.min(...min72);
+    document.getElementById("tMean").textContent = Math.max(...mean72);
+    document.getElementById("dateSort").textContent = "Last 72h:";
+    document.getElementById("valuesFound").textContent = myLabel72.length;
+};
 
 
 function UpdateChart24() {
-    if (!isActive24) {
-        ChangeColor(document.getElementById("sortButton24"), document.getElementById("sortButton72"));
+    if (myLineChart.data.labels == myLabel72) {
+        ChangeColor();
     }
     myLineChart.data.datasets[0].data = max24;
     myLineChart.data.datasets[1].data = min24;
     myLineChart.data.datasets[2].data = mean24;
     myLineChart.data.labels = myLabel24;
     myLineChart.update();
-    isActive24 = true;
-    isActive72 = false; 
-   
-}
+    document.getElementById("tMax").textContent = Math.max(...max24);
+    document.getElementById("tMin").textContent = Math.min(...min24);
+    document.getElementById("tMean").textContent = Math.max(...mean24);
+    document.getElementById("dateSort").textContent = "Last 24h:";
+    document.getElementById("valuesFound").textContent = myLabel24.length;
+
+};
 
 

@@ -1,7 +1,26 @@
-﻿
+﻿@model Device
 @{
     ViewData["Title"] = "listDevices";
-    Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
+    Layout = "~/Views/Shared/_layoutBeonDashboard.cshtml";
+    Device myDevice = Model;
+    IEnumerable<EnvironmentPayload> environmentOrderByAsc = Model.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
+    EnvironmentPayload environment = environmentOrderByAsc.Last();
+
+    IEnumerable<EnvironmentPayload> myDeviceEnv24 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
+    IEnumerable<EnvironmentPayload> myDeviceEnv72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
+    IEnumerable<EnvironmentPayload> env72alert = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddMonths(-72));
+
+}
+@{
+    bool alert = false;
+    foreach (var env in env72alert)
+    {
+        if (env.EventType == "1" || env.EventType == "2" || env.EventType == "3")
+        {
+            alert = true;
+            break;
+        }
+    }
 }
 
 <aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
@@ -30,28 +49,269 @@
         </div>
     </nav>
 </aside>
-<main role="main" class="col p-0">
-    <article class="container-fluid p-3 d-flex">
-        <div class="card col m-auto m-3  ">
-            <div class="card-header pb-0" style="background-color: #212429; color: #48cbd8;">
-                <h5 class="card-title " style="font-weight: bold;"><a asp-controller="BeOn" asp-action="Location1Device" style="color: #48cbd8; "> <i class="fas fa-map-marked"></i> Location</a></h5>
-            </div>
-            <div class="card-body">
-                <div id="map"></div>
-            </div>
-        </div>
-        <div class=" m-auto ">
-            <div class="btn-group dropleft ml-3 mr-0">
-                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="far fa-bell"></i>
-                </button>
-                <div class="dropdown-menu ">
-                    <a class="dropdown-item"><i class="fas fa-temperature-low"></i> Temp: -10°C</a>
-                    <a class="dropdown-item"><i class="fas fa-temperature-high"></i> Temp: 55°C</a>
-                    <a class="dropdown-item"><i class="fas fa-hammer"></i> Shock: 2G</a>
-                    <a class="dropdown-item"><i class="fas fa-battery-quarter"></i> Low battery</a>
+<main role="main" class="col p-0 d-flex flex-column">
+    <header class="border p-2 d-flex justify-content-between">
+        <h2 class="text-center m-auto">
+            <a class="" style="color:inherit" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/aim.svg" alt="" />Tracker  @Model.DeviceId</a>
+        </h2>
+        <p class="d-none d-lg-block">&ensp; </p>
+    </header>
+    <section class="d-flex flex-column-reverse flex-lg-row ">
+
+        <article class="container-fluid p-3 d-flex flex-column">
+            <nav class="navbar navbar-dark bg-light justify-content-center">
+                <div class="d-flex flex-column flex-lg-row justify-content-between ">
+                    <div class="text-center m-1">
+
+                        <button type="button" id="sortButton24" class="btn btn-success" onclick="UpdateLocation24()">24h</button>
+                        <button type="button" id="sortButton72" class="btn btn-dark" onclick="UpdateLocation72()">72h</button>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
+                            Between date
+                        </button>
+                    </div>
+
+                    <div class="collapse" id="collapseSortByDate">
+                        <div class="card card-body">
+                            <div class="text-center d-flex flex-column flex-lg-row">
+                                <div class="border m-1 p-1">
+                                    <p>Begin date:</p>
+                                    <label class="beginDate">
+                                        <input type="date" id="beginDate" name="beginDate" value="" />
+                                        <input type="time" id="beginTime" name="beginTime" value="" />
+                                    </label>
+                                </div>
+                                <div class="border m-1 p-1">
+                                    <p>End date:</p>
+                                    <label class="endDate">
+                                        <input type="date" name="endDate" id="endDate" value="">
+                                        <input type="time" id="endTime" name="endTime" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="button" id="bouton" onclick="UpdateLocationBetween()">send</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="card m-auto m-3  w-100 ">
+                <div class="card-header pb-0" style=" color: #201063;">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title " style="font-weight: bold;">
+                            <a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><img src="~/Icons/mapBlueBeon.svg" alt="" /> Location</a>
+                        </h5>
+                    <p id="betweenDate"></p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="location1device"></div>
                 </div>
             </div>
-        </div>
-    </article>
-    </main>
+        </article>
+        <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
+            <div>
+                <div class="h-100 p-0 mr-2 text-center">
+                    <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
+                        <span class="position-relative d-none d-lg-flex" style="top:50%;">
+                            <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
+                            @{ if (alert)
+                                { <img src="~/Icons/notificationBell.svg" alt="" />}
+                                else
+                                {<img src="~/Icons/notification.svg" alt="" />} }
+                        </span>
+                        <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
+                            <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" /><img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
+                            @{ if (alert)
+                                { <img src="~/Icons/notificationBell.svg" alt="" />}
+                                else
+                                {<img src="~/Icons/notification.svg" alt="" />} }
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="row" style="">
+                <div class="col text-center">
+                    <div class="collapse" id="alertCollapse">
+                        <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                            <div class="card-body">
+                                @{ foreach (var env in env72alert)
+                                    {
+
+                                        if (env.EventType == "1")
+                                        {
+                                            <div>
+                                                <p class="alertcolorred" style="width:max-content">
+                                                    <button class="btn border-0 alertcolorred mw-100"
+                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert', '@env.TimestampEventToString', '@env.Tmax', ' °')">
+                                                        <img src="~/Icons/heatBlueBeon.svg" alt="" />
+                                                        Temperature Alert  <br />  @env.TimestampEvent"
+                                                    </button>
+                                                </p>
+                                            </div> }
+                                        else if (env.EventType == "2")
+                                        {
+                                            <div>
+                                                <p class="alertcolorgreen" style="width:max-content">
+                                                    <button class="btn border-0 alertcolorgreen mw-100"
+                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert Terminated', '@env.TimestampEventToString', '-', ' °')">
+                                                        <img src="~/Icons/heatBlueBeon.svg" alt="" />
+                                                        Temperature Alert Terminated   <br />  @env.TimestampEvent
+                                                    </button>
+                                                </p>
+                                            </div> }
+                                        else if (env.EventType == "3")
+                                        {
+                                            <div>
+                                                <p class="alertcolorblue " style="width:max-content">
+                                                    <button class="btn border-0 alertcolorblue mw-100"
+                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Shock Alert', '@env.TimestampEventToString', '@env.Smax', ' g')">
+                                                        <img src="~/Icons/warningBlueBeon.svg" alt="">
+                                                        Shock Alert    <br />   @env.TimestampEvent
+                                                    </button>
+                                                </p>
+                                            </div> }
+                                        else
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </section>
+</main>
+<script type="text/javascript">
+
+
+</script>
+<script type="text/javascript">
+
+     let deviceEnvironmentInfo24 = new Array();
+    let deviceEnvironmentInfo72 = new Array();
+    let deviceEnvironmentInfoBetween = new Array();
+@{string latitude = "43.7384";
+    string longitude = "7.4246";
+    double sMax = 0;
+    double totalShock = 0;
+    String lastContact = "";
+    Int32 tMean = 0;
+    Int32 batteryLvl = 0;
+    int i = 0;
+}
+@{ foreach (EnvironmentPayload env in myDeviceEnv72)
+    {
+        if (env != null)
+        {
+            double latitudeDouble = Math.Round(env.ComputedLatitude, 6);
+            double longitudeDouble = Math.Round(env.ComputedLongitude, 6);
+            latitude = latitudeDouble.ToString().Replace(',', '.');
+            longitude = longitudeDouble.ToString().Replace(',', '.');
+            lastContact = env.TimestampEventToString;
+            sMax = env.Smax;
+            totalShock = env.TotalShock;
+            tMean = env.Tmean;
+            batteryLvl = Convert.ToInt32(env.Batterylvl);
+            i++;
+
+        }
+        <Text>
+            var deviceInfo = ('"@i": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
+            deviceEnvironmentInfo72.push(deviceInfo);
+        </Text>
+    }
+}
+
+@{ foreach (EnvironmentPayload env in myDeviceEnv24)
+    {
+        if (env != null)
+        {
+            double latitudeDouble = Math.Round(env.ComputedLatitude, 6);
+            double longitudeDouble = Math.Round(env.ComputedLongitude, 6);
+            latitude = latitudeDouble.ToString().Replace(',', '.');
+            longitude = longitudeDouble.ToString().Replace(',', '.');
+            lastContact = env.TimestampEventToString;
+            sMax = env.Smax;
+            totalShock = env.TotalShock;
+            tMean = env.Tmean;
+            batteryLvl = Convert.ToInt32(env.Batterylvl);
+            i++;
+
+        }
+        <Text>
+            var deviceInfo = ('"@i": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
+            deviceEnvironmentInfo24.push(deviceInfo);
+        </Text>
+    }
+}
+
+    function UpdateLocationBetween() {
+        var dateBegin = new Date(document.getElementById("beginDate").value);
+        var timeBegin = document.getElementById("beginTime").value;
+        var beginDate = new Date(Date.parse(dateBegin.getFullYear() + "," + (dateBegin.getMonth() + 1) + "," + dateBegin.getDate() + "," + timeBegin));
+        var dateEnd = new Date(document.getElementById("endDate").value);
+        var timeEnd = document.getElementById("endTime").value;
+        var endDate = new Date(Date.parse(dateEnd.getFullYear() + "," + (dateEnd.getMonth() + 1) + "," + dateEnd.getDate() + "," + timeEnd));
+        deviceEnvironmentInfoBetween = [];
+      @foreach (EnvironmentPayload env in environmentOrderByAsc)
+      {
+          if (env != null)
+          {
+              double latitudeDouble = Math.Round(env.ComputedLatitude, 6);
+              double longitudeDouble = Math.Round(env.ComputedLongitude, 6);
+              latitude = latitudeDouble.ToString().Replace(',', '.');
+              longitude = longitudeDouble.ToString().Replace(',', '.');
+              lastContact = env.TimestampEventToString;
+              sMax = env.Smax;
+              totalShock = env.TotalShock;
+              tMean = env.Tmean;
+              batteryLvl = Convert.ToInt32(env.Batterylvl);
+              i++;
+
+
+             <Text>
+
+        var dateToCompare = new Date('@env.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")');
+        if (dateToCompare >= beginDate && endDate >= dateToCompare) {
+            var deviceInfo = ('"@i": {"lat":' +  @latitude + ',"lon":' + @longitude + ',"batteryLvl":' + @batteryLvl +',"sMax":' + @sMax  + ',"totalShock":' + @totalShock  + ',"tMean":' + @tMean + ',"lastContact": "@lastContact"}');
+            deviceEnvironmentInfoBetween.push(deviceInfo);
+        }
+           </Text>
+          }
+      }
+        if (endDate < beginDate) {
+            alert("Error! End date must be after start date . \n\nNo values..");
+        }
+        else {
+            var bDate = beginDate.getDate() + "/" + (beginDate.getMonth() + 1) + "/" + beginDate.getFullYear() + " " + timeBegin;
+            var eDate = endDate.getDate() + "/" + (endDate.getMonth() + 1) + "/" + endDate.getFullYear() + " " + timeEnd;
+            alert("Your request:  \n\nbegin date: " + bDate + "\n\nend date: " + eDate + ". \n\n  " + deviceEnvironmentInfoBetween.length + " VALUES Found\n");
+
+        }
+      
+
+   
+
+            let jsDeviceEnvironmentBetween = JSON.parse('{' + deviceEnvironmentInfoBetween + '}');
+            isActive24 = false;
+            isActive72 = false;
+
+            RemoveColorSortButton();
+            RemoveAllMarkers();
+            RemovePolyline();
+
+            InitialisationMap(jsDeviceEnvironmentBetween);
+            CreatePolyline("orange");
+            polyline.addTo(overview);
+            AddMarkers();
+            AddStartStopMarkers();
+            document.getElementById("betweenDate").textContent = "begin date: " + bDate + "\n\nend date: " + eDate + ".\n\n  " + deviceEnvironmentInfoBetween.length + " VALUES Found";
+
+    }
+
+</script>
+<script src="~/js/scriptLocation1Device.js"></script>
+
+
