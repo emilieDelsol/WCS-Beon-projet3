@@ -128,7 +128,7 @@ function InitialisationMap(jsDeviceEnvironment )
             lastlon = jsDeviceEnvironment[env].lon;
          
             marker = L.marker([jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon])
-            marker.bindPopup('<h5>Positionning Id: ' + positionningMessageNumber + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl );
+            marker.bindPopup('<h5>Value number: ' + positionningMessageNumber + '</h5> <p> Last contact: ' + jsDeviceEnvironment[env].lastContact + ' </p><p>Temp mean: ' + jsDeviceEnvironment[env].tMean + ' °C</p><p>Total shock: ' + jsDeviceEnvironment[env].totalShock + ' </p><p> Smax: ' + jsDeviceEnvironment[env].sMax + ' </p><p> BatteryLvl: ' + jsDeviceEnvironment[env].batteryLvl );
             markers.push(marker);
             let arrayProvisoire = [lastlat, lastlon];
             myLatLng.push(arrayProvisoire);
