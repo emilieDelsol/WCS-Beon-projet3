@@ -20,6 +20,6 @@ qualimetry:
   stage: qualimetry
   script:
     - dotnet tool install --global dotnet-sonarscanner
-    - dotnet sonarscanner begin /k:"be-on" /d:sonar.login="1b66983f7f6b483606accc1b8c02085fb20ed3cd"
+    - dotnet sonarscanner begin /k:"be-on" /d:sonar.login="1b66983f7f6b483606accc1b8c02085fb20ed3cd" /d:sonar.host.url="https://sonarqube.sharprover.wilders.dev"
     - dotnet build
     - dotnet sonarscanner end /d:sonar.login="1b66983f7f6b483606accc1b8c02085fb20ed3cd"
