@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - qualimetry
 
 build:
   stage: build
