@@ -9,7 +9,7 @@ namespace BeOnosTest
         [Test]
         public void TestCheckPassword()
         {
-            User user = new User
+            UserBeOnos user = new UserBeOnos
             {
                 Password = "test"
             };

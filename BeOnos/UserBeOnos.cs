@@ -2,10 +2,10 @@
 
 namespace BeOnos
 {
-    public class User
+    public class UserBeOnos
     {
-        public String Password { private get; set; }
-        public String PasswordHash { get => BCrypt.Net.BCrypt.HashPassword(Password); }
+        public String Password { private get=> Password; set { BCrypt.Net.BCrypt.HashPassword(Password); } }
+        public String PasswordHash { get => (Password); }
         public String Identifier { get; set; }
 
         public Boolean CheckPassword(String password)

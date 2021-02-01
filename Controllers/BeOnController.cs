@@ -1,5 +1,7 @@
 using BeOn.Models;
+using BeOnos;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -51,6 +53,33 @@ namespace BeOn.Controllers
 			Device device = devices.First();
 			return View(device);
 		}
+
+		public void CheckUser(string Identifier, string Password)
+        {
+			User userContext = _context.Users.Where(a => a.Name == Identifier).First();
+			if (userContext != null)
+            {
+				//cherche le pass hashé en base
+				string passwordHash = userContext.PasswordHash;	
+				UserBeOnos userBeOnos = new UserBeOnos() { Identifier = Identifier, Password = passwordHash };
+				bool passwordIsValid = userBeOnos.CheckPassword(Password);
+				if (passwordIsValid)
+                {
+					Console.WriteLine("Identifier : " + Identifier + "\nPassword is OK");
+                }
+                else 
+				{
+					Console.WriteLine("Identifier : " + Identifier + "\nWrong Password");
+				}
+
+            }
+            else 
+			{
+				Console.WriteLine("Wrong Identifier");           
+			}
+		
+
+        }
 
 	}
 }

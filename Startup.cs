@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using BeOnos;
 
 namespace BeOn
 {
@@ -27,6 +28,9 @@ namespace BeOn
             services.AddDbContext<BeOnContext>(b => b.UseLazyLoadingProxies().UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
+            services.Add(BeOnos(options => options.userfield="BeOnos"));
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +53,7 @@ namespace BeOn
             {
                 app.UseHttpsRedirection();
             }
+            env.ApplicationName = "BeOnos";
 
             app.UseStaticFiles();
 

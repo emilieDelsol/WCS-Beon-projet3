@@ -8,6 +8,7 @@ namespace BeOn
         public DbSet<Device> Devices { get; set; }
         public DbSet<EnvironmentPayload> EnvironmentPayloads { get; set; }
         public DbSet<PositionningPayload> PositionningPayloads { get; set; }
+        public DbSet<User> Users { get; set; }
         public BeOnContext(DbContextOptions<BeOnContext> options)
             : base(options) { }        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,6 +23,7 @@ namespace BeOn
                         .HasMany(d => d.EnvironmentPayloads)
                         .WithOne(e => e.Device)
                         .HasForeignKey(e => e.DeviceId);
+
         }
     }
 }
