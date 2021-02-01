@@ -6,7 +6,9 @@
 }
 @{
     bool alert = false;
-
+    <script>
+        let alertExist = false;
+    </script>
     foreach (var device in devices)
     {
         if (device.EnvironmentPayloads.Count != 0)
@@ -20,6 +22,9 @@
                 if (env.EventType == "1" || env.EventType == "2" || env.EventType == "3")
                 {
                     alert = true;
+                    <script>
+                        alertExist = true;
+                    </script>
                     break;
                 }
             }
@@ -40,7 +45,7 @@
     </article>
     <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
         <div class="h-100 p-0 mr-2 text-center">
-            <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
+            <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow(alertExist)">
                 <span class="position-relative d-none d-lg-flex" style="top:50%;">
                     <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
                     @{ if (alert)
@@ -57,69 +62,73 @@
                 </span>
             </a>
         </div>
-        <div class="row" >
-            <div class="col text-center" style="width:max-content;">
-                <div class="collapse" id="alertCollapse">
-                    <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
-                        @{
-                            string flag = "";
-                            foreach (var device in devices)
-                            {
-                                if (device.EnvironmentPayloads.Count != 0)
-                                {
-
-                                    IEnumerable<EnvironmentPayload> environmentPayloadsOrderByAsc = device.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
-                                    EnvironmentPayload environmentLast = environmentPayloadsOrderByAsc.Last();
-                                    IEnumerable<EnvironmentPayload> env72alert = environmentPayloadsOrderByAsc.Where(e => e.TimestampEvent > environmentLast.TimestampEvent.AddHours(-72));
-
-
-                                    foreach (var env in env72alert)
+        @{ if (alert)
+            {
+                <div class="row" >
+                    <div class="col text-center" style="width:max-content;">
+                        <div class="collapse" id="alertCollapse">
+                            <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                                @{
+                                    string flag = "";
+                                    foreach (var device in devices)
                                     {
+                                        if (device.EnvironmentPayloads.Count != 0)
+                                        {
 
-                                        if ((env.EventType == "1" || env.EventType == "2" || env.EventType == "3") && flag != device.DeviceId)
-                                        {
-                                            <div class="dropdown-divider"></div>
-                                            <div>
-                                                <p>
-                                                    Device:  @device.DeviceId
-                                                </p>
-                                                <p>
-                                                    Last contact: <br /> @environmentLast.TimestampEvent
-                                                </p>
-                                                <p>
-                                                    <a asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@device.DeviceId">Link to dashboard</a>
-                                                </p>
-                                            </div>
-                                            <div class="dropdown-divider"></div>
-                                            flag = device.DeviceId;
-                                        }
-                                        if (env.EventType == "1")
-                                        {
-                                            <div class="alertedcolorred">
-                                                <p><img src="~/Icons/heat.svg" alt="" />  Temperature Alert    -   @env.TimestampEvent</p>
-                                            </div> }
-                                        else if (env.EventType == "2")
-                                        {
-                                            <div class="alertcolorgreen ">
-                                                <p><img src="~/Icons/heat.svg" alt="" /> Temperature Alert Terminated   -   @env.TimestampEvent</p>
-                                            </div> }
-                                        else if (env.EventType == "3")
-                                        {
-                                            <div class="alertcolorblue ">
-                                                <p> <img src="~/Icons/warningBlueBeon.svg" alt="">  Shock Alert    -   @env.TimestampEvent</p>
-                                            </div> }
-                                        else
-                                        {
-                                            continue;
+                                            IEnumerable<EnvironmentPayload> environmentPayloadsOrderByAsc = device.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
+                                            EnvironmentPayload environmentLast = environmentPayloadsOrderByAsc.Last();
+                                            IEnumerable<EnvironmentPayload> env72alert = environmentPayloadsOrderByAsc.Where(e => e.TimestampEvent > environmentLast.TimestampEvent.AddHours(-72));
+
+
+                                            foreach (var env in env72alert)
+                                            {
+
+                                                if ((env.EventType == "1" || env.EventType == "2" || env.EventType == "3") && flag != device.DeviceId)
+                                                {
+                                                    <div class="dropdown-divider"></div>
+                                                    <div>
+                                                        <p>
+                                                            Device:  @device.DeviceId
+                                                        </p>
+                                                        <p>
+                                                            Last contact: <br /> @environmentLast.TimestampEvent
+                                                        </p>
+                                                        <p>
+                                                            <a asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@device.DeviceId">Link to dashboard</a>
+                                                        </p>
+                                                    </div>
+                                                    <div class="dropdown-divider"></div>
+                                                    flag = device.DeviceId;
+                                                }
+                                                if (env.EventType == "1")
+                                                {
+                                                    <div class="alertedcolorred">
+                                                        <p><img src="~/Icons/heat.svg" alt="" />  Temperature Alert    -   @env.TimestampEvent</p>
+                                                    </div> }
+                                                else if (env.EventType == "2")
+                                                {
+                                                    <div class="alertcolorgreen ">
+                                                        <p><img src="~/Icons/heat.svg" alt="" /> Temperature Alert Terminated   -   @env.TimestampEvent</p>
+                                                    </div> }
+                                                else if (env.EventType == "3")
+                                                {
+                                                    <div class="alertcolorblue ">
+                                                        <p> <img src="~/Icons/warningBlueBeon.svg" alt="">  Shock Alert    -   @env.TimestampEvent</p>
+                                                    </div> }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        }
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+        }
+    }
     </aside>
 </section>
 <script type="text/javascript">

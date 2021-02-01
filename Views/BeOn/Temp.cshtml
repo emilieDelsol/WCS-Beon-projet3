@@ -12,11 +12,17 @@
 
 @{
     bool alert = false;
+    <script>
+        let alertExist = false;
+    </script>
     foreach (var env in env72alert)
     {
         if (env.EventType == "1" || env.EventType == "2" || env.EventType == "3")
         {
             alert = true;
+            <script>
+                alertExist = true;
+            </script>
             break;
         }
     }
@@ -118,7 +124,7 @@
         <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
             <div>
                 <div class="h-100 p-0 mr-2 text-center">
-                    <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
+                    <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow(alertExist)">
                         <span class="position-relative d-none d-lg-flex" style="top:50%;">
                             <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
                             @{ if (alert)
@@ -136,58 +142,62 @@
                     </a>
                 </div>
             </div>
-            <div class="row" style="">
-                <div class="col text-center">
-                    <div class="collapse" id="alertCollapse">
-                        <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
-                            <div class="card-body">
-                                @{ foreach (var env in env72alert)
-                                    {
+            @{ if (alert)
+                {
+                    <div class="row" style="">
+                        <div class="col text-center">
+                            <div class="collapse" id="alertCollapse">
+                                <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                                    <div class="card-body">
+                                        @{ foreach (var env in env72alert)
+                                            {
 
-                                        if (env.EventType == "1")
-                                        {
-                                            <div>
-                                                <p class="alertcolorred" style="width:max-content">
-                                                    <button class="btn border-0 alertcolorred mw-100"
-                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert', '@env.TimestampEventToString', '@env.Tmax', ' °')">
-                                                        <img src="~/Icons/heatBlueBeon.svg" alt="" />
-                                                        Temperature Alert  <br />  @env.TimestampEvent"
-                                                    </button>
-                                                </p>
-                                            </div> }
-                                        else if (env.EventType == "2")
-                                        {
-                                            <div>
-                                                <p class="alertcolorgreen" style="width:max-content">
-                                                    <button class="btn border-0 alertcolorgreen mw-100"
-                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert Terminated', '@env.TimestampEventToString', '-', ' °')">
-                                                        <img src="~/Icons/heatBlueBeon.svg" alt="" />
-                                                        Temperature Alert Terminated   <br />  @env.TimestampEvent
-                                                    </button>
-                                                </p>
-                                            </div> }
-                                        else if (env.EventType == "3")
-                                        {
-                                            <div>
-                                                <p class="alertcolorblue " style="width:max-content">
-                                                    <button class="btn border-0 alertcolorblue mw-100"
-                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Shock Alert', '@env.TimestampEventToString', '@env.Smax', ' g')">
-                                                        <img src="~/Icons/warningBlueBeon.svg" alt="">
-                                                        Shock Alert    <br />   @env.TimestampEvent
-                                                    </button>
-                                                </p>
-                                            </div> }
-                                        else
-                                        {
-                                            continue;
+                                                if (env.EventType == "1")
+                                                {
+                                                    <div>
+                                                        <p class="alertcolorred" style="width:max-content">
+                                                            <button class="btn border-0 alertcolorred mw-100"
+                                                                    onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert', '@env.TimestampEventToString', '@env.Tmax', ' °')">
+                                                                <img src="~/Icons/heatBlueBeon.svg" alt="" />
+                                                                Temperature Alert  <br />  @env.TimestampEvent"
+                                                            </button>
+                                                        </p>
+                                                    </div> }
+                                                else if (env.EventType == "2")
+                                                {
+                                                    <div>
+                                                        <p class="alertcolorgreen" style="width:max-content">
+                                                            <button class="btn border-0 alertcolorgreen mw-100"
+                                                                    onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert Terminated', '@env.TimestampEventToString', '-', ' °')">
+                                                                <img src="~/Icons/heatBlueBeon.svg" alt="" />
+                                                                Temperature Alert Terminated   <br />  @env.TimestampEvent
+                                                            </button>
+                                                        </p>
+                                                    </div> }
+                                                else if (env.EventType == "3")
+                                                {
+                                                    <div>
+                                                        <p class="alertcolorblue " style="width:max-content">
+                                                            <button class="btn border-0 alertcolorblue mw-100"
+                                                                    onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Shock Alert', '@env.TimestampEventToString', '@env.Smax', ' g')">
+                                                                <img src="~/Icons/warningBlueBeon.svg" alt="">
+                                                                Shock Alert    <br />   @env.TimestampEvent
+                                                            </button>
+                                                        </p>
+                                                    </div> }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            }
                                         }
-                                    }
-                                }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                }
+            }
         </aside>
     </section>
 </main>
