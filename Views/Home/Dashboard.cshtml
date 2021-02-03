@@ -1,35 +1,9 @@
 ﻿@model Device
-@{ ViewData["Title"] = "Dashboard";
-    Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml"; }
-
-@{
-    IEnumerable<EnvironmentPayload> environmentOrderByAsc = Model.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
-    EnvironmentPayload environment = environmentOrderByAsc.Last();
-    IEnumerable<EnvironmentPayload> env72 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-72));
-    IEnumerable<EnvironmentPayload> env24 = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddHours(-24));
-    IEnumerable<EnvironmentPayload> env72alert = environmentOrderByAsc.Where(e => e.TimestampEvent > environment.TimestampEvent.AddMonths(-72));
-
-    double Shock = 0;
-    int NumberOfShock = environmentOrderByAsc.Count(a => a.EventType == "3");
-    foreach (EnvironmentPayload env in environmentOrderByAsc)
-    {
-        if (env.Smax > Shock)
-        {
-            Shock = env.Smax;
-        }
-    } }
-
-@{
-    bool alert = false;
-    foreach (var env in env72alert)
-    {
-        if (env.EventType == "1" || env.EventType == "2" || env.EventType == "3")
-        {
-            alert = true;
-            break;
-        }
-    }
+@{ 
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutBeonDashboard.cshtml";
 }
+
 <aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
     <nav class="navbar navbar-expand navbar-dark flex-lg-column flex-row align-items-start p-0">
         <div class="collapse navbar-collapse row m-auto">
@@ -76,7 +50,7 @@
                         <h5 class="card-title" style="font-weight: bold;"><img src="~/Icons/back-in-timeBlueBeon.svg" /> Last contact</h5>
                     </div>
                     <div class="card-body ">
-                        <p class="card-text">@environment.TimestampEvent</p>
+                        <p class="card-text">TimeStamp</p>
                     </div>
                 </div>
                 <div class="card m-3">
@@ -84,10 +58,10 @@
                         <h5 class="card-title" style="font-weight: bold;"><img src="~/Icons/warningBlueBeon.svg" alt="" /> Number of shocks</h5>
                     </div>
                     <div class="card-body ">
-                        <p class="card-text ">- total shocks: @NumberOfShock  </p>
-                        <p class="card-text ">- from last 72h: @environment.TotalShock </p>
-                        <p class="card-text ">- since last contact: @environment.Cptshockovlastperiod </p>
-                        <p class="card-text">- Max shock: @Shock g</p>
+                        <p class="card-text ">- total shocks:  </p>
+                        <p class="card-text ">- from last 72h:  </p>
+                        <p class="card-text ">- since last contact:  </p>
+                        <p class="card-text">- Max shock: g</p>
                     </div>
                 </div>
                 <div class="card m-3">
@@ -96,9 +70,9 @@
                     </div>
                     <div class="card-body text-left">
                         <h5 class="card-title ">From last 72h: </h5>
-                        <p class="card-text">-Max:  @env72.OrderByDescending(a => a.Tmax).First().Tmax °C</p>
-                        <p class="card-text">-Min:  @env72.OrderByDescending(a => a.Tmax).First().Tmin °C</p>
-                        <p class="card-text">-Mean:  @env72.OrderByDescending(a => a.Tmax).First().Tmean °C</p>
+                        <p class="card-text">-Max:  °C</p>
+                        <p class="card-text">-Min:  °C</p>
+                        <p class="card-text">-Mean: °C</p>
                     </div>
                 </div>
 
@@ -107,7 +81,7 @@
                         <h5 class="card-title " style="font-weight: bold;"><img src="~/Icons/batteryBlueBeon.svg" alt="" /> Battery level</h5>
                     </div>
                     <div class="card-body text-center">
-                        <h5 class="card-title " id="batteryTitle"> @environment.Batterylvl</h5>
+                        <h5 class="card-title " id="batteryTitle"> {battery level} </h5>
                         <div class="batteryContainer justify-content-center">
                             <div class="batteryOuter "><div class="batteryLevel" id="batteryLevel"></div></div>
                             <div class="batteryBump"></div>
@@ -177,16 +151,12 @@
                     <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
                         <span class="position-relative d-none d-lg-flex" style="top:50%;">
                             <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
-                            @{ if (alert)
-                                { <img src="~/Icons/notificationBell.svg" alt="" />}
-                                else
-                                {<img src="~/Icons/notification.svg" alt="" />} }
+                                <img src="~/Icons/notificationBell.svg" alt="" />}
+                                <img src="~/Icons/notification.svg" alt="" />} }
                         </span>
                         <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
                             <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" /><img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
-                            @{ if (alert)
                                 { <img src="~/Icons/notificationBell.svg" alt="" />}
-                                else
                                 {<img src="~/Icons/notification.svg" alt="" />} }
                         </span>
                     </a>
@@ -196,49 +166,31 @@
                 <div class="col text-center">
                     <div class="collapse" id="alertCollapse">
                         <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
-                            <div class="card-body">
-                                @{ foreach (var env in env72alert)
-                                    {
-
-                                        if (env.EventType == "1")
-                                        {
-                                            <div>
-                                                <p class="alertcolorred" style="width:max-content">
-                                                    <button class="btn border-0 alertcolorred mw-100"
-                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert', '@env.TimestampEventToString', '@env.Tmax', ' °')">
-                                                        <img src="~/Icons/heatBlueBeon.svg" alt="" />
-                                                        Temperature Alert  <br />  @env.TimestampEvent"
-                                                    </button>
-                                                </p>
-                                            </div> }
-                                        else if (env.EventType == "2")
-                                        {
-                                            <div>
-                                                <p class="alertcolorgreen" style="width:max-content">
-                                                    <button class="btn border-0 alertcolorgreen mw-100"
-                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert Terminated', '@env.TimestampEventToString', '-', ' °')">
-                                                        <img src="~/Icons/heatBlueBeon.svg" alt="" />
-                                                        Temperature Alert Terminated   <br />  @env.TimestampEvent
-                                                    </button>
-                                                </p>
-                                            </div> }
-                                        else if (env.EventType == "3")
-                                        {
-                                            <div>
-                                                <p class="alertcolorblue " style="width:max-content">
-                                                    <button class="btn border-0 alertcolorblue mw-100"
-                                                            onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Shock Alert', '@env.TimestampEventToString', '@env.Smax', ' g')">
-                                                        <img src="~/Icons/warningBlueBeon.svg" alt="">
-                                                        Shock Alert    <br />   @env.TimestampEvent
-                                                    </button>
-                                                </p>
-                                            </div> }
-                                        else
-                                        {
-                                            continue;
-                                        }
-                                    }
-                                }
+                              <div class="card-body">
+                                <div>
+                                    <p class="alertcolorred" style="width:max-content">
+                                        <button class="btn border-0 alertcolorred mw-100">
+                                            <img src="~/Icons/heatBlueBeon.svg" alt="" />
+                                            Temperature Alert  <br />  "
+                                        </button>
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="alertcolorgreen" style="width:max-content">
+                                        <button class="btn border-0 alertcolorgreen mw-100">
+                                            <img src="~/Icons/heatBlueBeon.svg" alt="" />
+                                            Temperature Alert Terminated   <br />  
+                                        </button>
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="alertcolorblue " style="width:max-content">
+                                        <button class="btn border-0 alertcolorblue mw-100">
+                                            <img src="~/Icons/warningBlueBeon.svg" alt="">
+                                            Shock Alert    <br />   
+                                        </button>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -247,106 +199,4 @@
         </aside>
     </section>
 </main>
-
-<script type="text/javascript">
-    var LastLatitude = '@environment.ComputedLatitudeFormatted';
-    var LastLongitude = '@environment.ComputedLongitudeFormatted';
-    let batteryLvl = @Convert.ToInt32(environment.Batterylvl);
-
-    function UpdateChartBetweenDate() {
-        var dateBegin = new Date(document.getElementById("beginDate").value);
-        var timeBegin = document.getElementById("beginTime").value;
-        var beginDate = new Date(Date.parse(dateBegin.getFullYear() + "," + (dateBegin.getMonth() + 1) + "," + dateBegin.getDate() + "," + timeBegin));
-        var dateEnd = new Date(document.getElementById("endDate").value);
-        var timeEnd = document.getElementById("endTime").value;
-        var endDate = new Date(Date.parse(dateEnd.getFullYear() + "," + (dateEnd.getMonth() + 1) + "," + dateEnd.getDate() + "," + timeEnd));
-        let maxSortBetween = new Array();
-        let minSortBetween = new Array();
-        let meanSortBetween = new Array();
-        let myLabelBetween = new Array();
-
-        @foreach(EnvironmentPayload envi in environmentOrderByAsc)
-        {
-             <Text>
-        var dateToCompare = new Date('@envi.TimestampEvent.ToString("yyyy-MM-ddTHH:mm:ss")');
-        if (dateToCompare >= beginDate && endDate>=dateToCompare)
-        {
-            maxSortBetween.push(@envi.Tmax);
-            minSortBetween.push(@envi.Tmin);
-            meanSortBetween.push(@envi.Tmean);
-             myLabelBetween.push("@envi.TimestampEvent.Day/@envi.TimestampEvent.Month/@envi.TimestampEvent.Year @envi.TimestampEvent.Hour:@envi.TimestampEvent.Minute ");
-        }
-           </Text>
-        }
-        myLineChart.data.datasets[0].data = maxSortBetween;
-        myLineChart.data.datasets[1].data = minSortBetween;
-        myLineChart.data.datasets[2].data = meanSortBetween;
-        myLineChart.data.labels = myLabelBetween;
-        myLineChart.update();
-        if (endDate < beginDate)
-        {
-            alert("Error! End date must be after start date . \n\nNo values..");
-        }
-        else
-        {
-            alert("Your request:  \n\nbegin date:" + beginDate + " \n \nend date:  " + endDate + ". \n\n  " + maxSortBetween.length + " VALUES\n");
-        }
-    }
-
-        let min72 = new Array();
-        let max72 = new Array();
-        let mean72 = new Array();
-        let myLabel72 = new Array();
-        let min24 = new Array();
-        let max24 = new Array();
-        let mean24 = new Array();
-        let myLabel24 = new Array();
-        let i = 1;
-        let j = 1;
-        let maxx24;
-        let minx24;
-        let meanx24;
-        let maxx72;
-        let minx72;
-    let meanx72;
-
-
-    @{
-
-            IEnumerable<EnvironmentPayload> environmentSortBetweenDate = environmentOrderByAsc;
-
-        <text>
-            maxx24 = @env24.OrderByDescending(a => a.Tmax).First().Tmax;
-            minx24 = @env24.OrderByDescending(a => a.Tmin).First().Tmin;
-            meanx24 = @env24.OrderByDescending(a => a.Tmean).First().Tmean;
-            maxx72 = @env72.OrderByDescending(a => a.Tmax).First().Tmax;
-            minx72 = @env72.OrderByDescending(a => a.Tmin).First().Tmin;
-            meanx72 = @env72.OrderByDescending(a => a.Tmean).First().Tmean;
-        </text>
-            foreach (EnvironmentPayload env in env72)
-            {
-
-                 <text>
-                min72.push(@env.Tmin)
-                max72.push(@env.Tmax)
-    mean72.push(@env.Tmean);
-    myLabel72.push("@env.TimestampEvent.Day/@env.TimestampEvent.Month/@env.TimestampEvent.Year @env.TimestampEvent.Hour:@env.TimestampEvent.Minute ");
-                i = i + 1;
-                </text>
-            }
-            foreach (EnvironmentPayload env in env24.OrderBy(e=>e.TimestampEvent))
-            {
-                <text>
-                min24.push(@env.Tmin)
-                max24.push(@env.Tmax)
-                mean24.push(@env.Tmean);
-                myLabel24.push("@env.TimestampEvent.Day/@env.TimestampEvent.Month/@env.TimestampEvent.Year @env.TimestampEvent.Hour:@env.TimestampEvent.Minute ");
-                j = j + 1;
-                </text>
-             }
-        }
-</script>
-<script src="~/lib/chartjs/Chart.min.js" asp-append-version="true"></script>
-<script src="~/js/scriptChartTemp.js"></script>
-<script src="~/js/scriptBattery.js"></script>
-<script src="~/js/scriptCarte.js"></script>
+}

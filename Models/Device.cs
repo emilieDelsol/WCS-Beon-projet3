@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BeOn.Models
 {
     [Table("device")]
-    public  class Device
+    public class Device
     {
         [Column("id_device")]
         [Key]
@@ -20,8 +20,8 @@ namespace BeOn.Models
 
         [Column("endproductcertificate")]
         public virtual string EndProductCertificate { get; set; }
-        public virtual ICollection<EnvironmentPayload> EnvironmentPayloads { get; set; }
-        public virtual ICollection<PositionningPayload> PositionningPayloads { get; set; }
+        public virtual ICollection<DeviceEnvironment> EnvironmentPayloads { get; set; }
+        public virtual ICollection<DevicePositionning> PositionningPayloads { get; set; }
        
     }
 }

@@ -1,25 +1,122 @@
-﻿@{
-    ViewData["Title"] = "View";
-    Layout = null;
+﻿@model IEnumerable<Device>
+
+@{
+    ViewData["Title"] = "listDevices";
+    Layout = "~/Views/Shared/_LayoutBeonPrincipal.cshtml";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BeOn</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/beon.css" />
 
-</head>
-<body class="d-flex" style="height:100vh;width:100vw">
+<section class="d-flex flex-column-reverse flex-lg-row">
+    <article class="container-fluid p-0">
+        <div class="border m-3 m-lg-0">
 
-<div class="text-center m-auto">
-    <h1 class="display-4"><img src="~/logoBeOn.png" alt="logo beon" class="" style="width:50vh; max-width:100%;"/></h1>
-    <button type="button" class="btn btn-info btn-lg mb-5 "> <a asp-controller="Beon" asp-action="Overview" style="color:#FFFF"> Enter</a> </button>
-</div>
+            <div class="border p-3">
+                <h3 class="text-left">Tracker List</h3>
+            </div>
+            <table class="table ">
+                <caption class="d-none"> Tracker list </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Device Id</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ /* foreach (Device dev in Model)
+{
+<tr>
+@if (dev.EnvironmentPayloads.Count != 0)
+{
+<th scope="row"> <a asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@dev.DeviceId"> @dev.DeviceId</a></th>
+}
+else
+{
+<th scope="row">  @dev.DeviceId <i class="text-muted">No data available</i></th>
+}
+</tr>
+}*/
+                    }
+                </tbody>
+            </table>
+        </div>
+    </article>
+    <aside class="d-flex flex-column flex-lg-row-reverse m-3 mr-lg-0  p-0  ">
+        <div class="h-100 p-0 mr-2 text-center">
+            <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
+                <span class="position-relative d-none d-lg-flex" style="top:50%;">
+                    <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
+                        <img src="~/Icons/notificationBell.svg" alt="" />
+                        <img src="~/Icons/notification.svg" alt="" />
+                </span>
+                <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
+                    <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" />
+                    <img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
+                        <img src="~/Icons/notificationBell.svg" alt="" />
+                        <img src="~/Icons/notification.svg" alt="" />
+                </span>
+            </a>
+        </div>
+        <div class="row" >
+            <div class="col text-center" style="width:max-content;">
+                <div class="collapse" id="alertCollapse">
+                    <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                        @{ /*
+                          string flag = "";
+                          foreach (var device in devices)
+                          {
+                              if (device.EnvironmentPayloads.Count != 0)
+                              {
 
-</body>
-</html>
+                                  IEnumerable<EnvironmentPayload> environmentPayloadsOrderByAsc = device.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
+                                  EnvironmentPayload environmentLast = environmentPayloadsOrderByAsc.Last();
+                                  IEnumerable<EnvironmentPayload> env72alert = environmentPayloadsOrderByAsc.Where(e => e.TimestampEvent > environmentLast.TimestampEvent.AddHours(-72));
+
+
+                                  foreach (var env in env72alert)
+                                  {
+
+                                      if ((env.EventType == "1" || env.EventType == "2" || env.EventType == "3") && flag != device.DeviceId)
+                                      {
+                                          <div class="dropdown-divider"></div>
+                                          <div>
+                                              <p>
+                                                  Device:  @device.DeviceId
+                                              </p>
+                                              <p>
+                                                  Last contact: <br /> @environmentLast.TimestampEvent
+                                              </p>
+                                              <p>
+                                                  <a asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@device.DeviceId">Link to dashboard</a>
+                                              </p>
+                                          </div>
+                                          <div class="dropdown-divider"></div>
+                                          flag = device.DeviceId;
+                                      }
+                                      if (env.EventType == "1")
+                                      {
+                                          <div class="alertedcolorred">
+                                              <p> <img src="~/Icons/heat.svg" alt="" />  Temperature Alert    -   @env.TimestampEvent</p>
+                                          </div> }
+                                      else if (env.EventType == "2")
+                                      {
+                                          <div class="alertcolorgreen ">
+                                              <p><img src="~/Icons/heat.svg" alt="" /> Temperature Alert Terminated   -   @env.TimestampEvent</p>
+                                          </div> }
+                                      else if (env.EventType == "3")
+                                      {
+                                          <div class="alertcolorblue ">
+                                              <p><img src="~/Icons/warningBlueBeon.svg" alt="">  Shock Alert    -   @env.TimestampEvent</p>
+                                          </div> }
+                                      else
+                                      {
+                                          continue;
+                                      }
+                                  }
+                              }
+                          }
+                      } */
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+</section>

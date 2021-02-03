@@ -1,7 +1,7 @@
 ﻿using BeOnAuth;
 using System;
 
-namespace BeOnAuth
+namespace BeOnAuthTest
 {
     public class Permission : IPermission
     {

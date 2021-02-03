@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BeOnosTest\**" />
+    <Compile Remove="BeOnos\**" />
+    <Content Remove="BeOnosTest\**" />
+    <Content Remove="BeOnos\**" />
+    <EmbeddedResource Remove="BeOnosTest\**" />
+    <EmbeddedResource Remove="BeOnos\**" />
+    <None Remove="BeOnosTest\**" />
+    <None Remove="BeOnos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.1" />
@@ -16,6 +27,10 @@
   <ItemGroup>
     <Folder Include="wwwroot\Icons\" />
     <Folder Include="wwwroot\lib\leaflet\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="BeOnos\BeOnAuth.csproj" />
   </ItemGroup>
 
 </Project>

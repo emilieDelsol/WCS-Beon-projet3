@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BeOn.Models
 {
     [Table("positionning_payload")]
-    public class PositionningPayload
+    public class DevicePositionning
     {
         [Column("id_device")]
         public String DeviceId { get; set; }
@@ -18,11 +18,9 @@ namespace BeOn.Models
 
         [Column("computed_latitude")]
         public double ComputedLatitude { get; set; }
-        public string ComputedLatitudeFormatted { get { return Convert.ToString(Math.Round(ComputedLatitude, 6)).Replace(",", "."); } }
 
         [Column("computed_longitude")]
         public double ComputedLongitude { get; set; }
-        public string ComputedLongitudeFormatted { get { return Convert.ToString(Math.Round(ComputedLongitude, 6)).Replace(",", "."); } }
 
         [Column("radius")]
         public int Radius { get; set; }
@@ -41,16 +39,18 @@ namespace BeOn.Models
 
         [Column("timestamppayload")]
         public DateTime TimestampPayload { get; set; }
+        
         [Column("event_type")]
         public string EventType { get; set; }
+        
         [Column("long")]
-        public double Long { get; set; }
+        public double Longitude { get; set; }
 
         [Column("lat")]
-        public double Lat { get; set; }
+        public double Latitude { get; set; }
 
         [Column("alt")]
-        public int Alt { get; set; }
+        public int Altitude { get; set; }
 
         [Column("hdop")]
         public int Hdop { get; set; }

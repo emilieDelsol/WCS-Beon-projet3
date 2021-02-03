@@ -1,33 +1,35 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using BeOn.Models;
+using BeOn.Repository;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace BeOn.Controllers
 {
     public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
+	{
+		private readonly DeviceRepository _deviceRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+		public HomeController(DeviceRepository deviceRepository)
         {
-            _logger = logger;
+			_deviceRepository = deviceRepository;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+		public IActionResult Index()
+		{
+			return View(_deviceRepository.All);
+		}
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+		[HttpGet]
+		public IActionResult Details([FromQuery] String deviceId)
+		{
+			Device device = _deviceRepository.FindById(deviceId);
+			ViewResult viewResult = View("Default");
+			if (device.EnvironmentPayloads.Count > 0)
+            {
+				viewResult = View(device);
+            }
+			return viewResult;
+		}
+	}
 }

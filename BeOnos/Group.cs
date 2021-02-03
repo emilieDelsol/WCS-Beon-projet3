@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace BeOnos
+namespace BeOnAuth
 {
     public class Group
     {
-        public IList<Role> Roles { get; set; }
+        public Role Role { get; set; }
 
-        public bool IsAllowedTo(String permissionName)
+        public bool IsAllowedTo(IPermission permission)
         {
-            Boolean permissionContained = false;
-            foreach (Role role in Roles)
-            {
-                permissionContained = role.ContainsPermission(permissionName);
-                if (permissionContained)
-                {
-                    return true;
-                }
-            }
-            return false;
+            throw new NotImplementedException();
         }
     }
 }

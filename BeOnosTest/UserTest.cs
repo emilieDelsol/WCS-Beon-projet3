@@ -1,8 +1,8 @@
-using BeOnos;
+using BeOnAuth;
 using NUnit.Framework;
 using System;
 
-namespace BeOnosTest
+namespace BeOnAuthTest
 {
     public class UserTest
     {
