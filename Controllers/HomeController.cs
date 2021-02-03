@@ -20,16 +20,11 @@ namespace BeOn.Controllers
 			return View(_deviceRepository.All);
 		}
 
-		[HttpGet]
-		public IActionResult Details([FromQuery] String deviceId)
+		[HttpGet("[action]/{deviceId}")]
+		public IActionResult Details([FromRoute] String deviceId)
 		{
 			Device device = _deviceRepository.FindById(deviceId);
-			ViewResult viewResult = View("Default");
-			if (device.EnvironmentPayloads.Count > 0)
-            {
-				viewResult = View(device);
-            }
-			return viewResult;
+			return View(device);
 		}
 	}
 }

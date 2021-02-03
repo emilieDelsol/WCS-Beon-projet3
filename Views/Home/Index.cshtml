@@ -13,26 +13,20 @@
                 <h3 class="text-left">Tracker List</h3>
             </div>
             <table class="table ">
-                <caption class="d-none"> Tracker list </caption>
+                <caption class="d-none">Tracker list</caption>
                 <thead>
                     <tr>
                         <th scope="col">Device Id</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @{ /* foreach (Device dev in Model)
-{
-<tr>
-@if (dev.EnvironmentPayloads.Count != 0)
-{
-<th scope="row"> <a asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@dev.DeviceId"> @dev.DeviceId</a></th>
-}
-else
-{
-<th scope="row">  @dev.DeviceId <i class="text-muted">No data available</i></th>
-}
-</tr>
-}*/
+                  @{
+                      foreach (Device device in Model)
+                      {
+                          <tr>
+                              <th scope="row"><a asp-controller="Home" asp-action="Details" asp-route-deviceId="@device.DeviceId">@device.DeviceId</a></th>
+                          </tr>
+                      }
                     }
                 </tbody>
             </table>
@@ -58,65 +52,31 @@ else
             <div class="col text-center" style="width:max-content;">
                 <div class="collapse" id="alertCollapse">
                     <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
-                        @{ /*
-                          string flag = "";
-                          foreach (var device in devices)
-                          {
-                              if (device.EnvironmentPayloads.Count != 0)
-                              {
-
-                                  IEnumerable<EnvironmentPayload> environmentPayloadsOrderByAsc = device.EnvironmentPayloads.OrderBy(a => a.TimestampEvent);
-                                  EnvironmentPayload environmentLast = environmentPayloadsOrderByAsc.Last();
-                                  IEnumerable<EnvironmentPayload> env72alert = environmentPayloadsOrderByAsc.Where(e => e.TimestampEvent > environmentLast.TimestampEvent.AddHours(-72));
-
-
-                                  foreach (var env in env72alert)
-                                  {
-
-                                      if ((env.EventType == "1" || env.EventType == "2" || env.EventType == "3") && flag != device.DeviceId)
-                                      {
-                                          <div class="dropdown-divider"></div>
-                                          <div>
-                                              <p>
-                                                  Device:  @device.DeviceId
-                                              </p>
-                                              <p>
-                                                  Last contact: <br /> @environmentLast.TimestampEvent
-                                              </p>
-                                              <p>
-                                                  <a asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@device.DeviceId">Link to dashboard</a>
-                                              </p>
-                                          </div>
-                                          <div class="dropdown-divider"></div>
-                                          flag = device.DeviceId;
-                                      }
-                                      if (env.EventType == "1")
-                                      {
-                                          <div class="alertedcolorred">
-                                              <p> <img src="~/Icons/heat.svg" alt="" />  Temperature Alert    -   @env.TimestampEvent</p>
-                                          </div> }
-                                      else if (env.EventType == "2")
-                                      {
-                                          <div class="alertcolorgreen ">
-                                              <p><img src="~/Icons/heat.svg" alt="" /> Temperature Alert Terminated   -   @env.TimestampEvent</p>
-                                          </div> }
-                                      else if (env.EventType == "3")
-                                      {
-                                          <div class="alertcolorblue ">
-                                              <p><img src="~/Icons/warningBlueBeon.svg" alt="">  Shock Alert    -   @env.TimestampEvent</p>
-                                          </div> }
-                                      else
-                                      {
-                                          continue;
-                                      }
-                                  }
-                              }
-                          }
-                      } */
-                        }
-                    </div>
+                      <div class="dropdown-divider"></div>
+                        <div>
+                            <p>
+                                Device:  
+                            </p>
+                            <p>
+                                Last contact: <br /> 
+                            </p>
+                            <p>
+                                <a asp-controller="Beon" asp-action="Dashboard">Link to dashboard</a>
+                            </p>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                          <div class="alertedcolorred">
+                              <p> <img src="~/Icons/heat.svg" alt="" />  Temperature Alert -</p>
+                          </div>
+                          <div class="alertcolorgreen ">
+                              <p><img src="~/Icons/heat.svg" alt="" /> Temperature Alert Terminated -</p>
+                          </div>
+                          <div class="alertcolorblue ">
+                              <p><img src="~/Icons/warningBlueBeon.svg" alt="">  Shock Alert -</p>
+                          </div>
+                      </div>
+                  </div>
                 </div>
             </div>
-        </div>
     </aside>
 </section>
