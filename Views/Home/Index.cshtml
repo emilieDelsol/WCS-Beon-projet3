@@ -1,42 +1,32 @@
-﻿@model IEnumerable<Device>
-
-@{
+﻿@{
     ViewData["Title"] = "listDevices";
-    Layout = "~/Views/Shared/_LayoutBeonPrincipal.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="d-flex flex-column-reverse flex-lg-row">
-    <article class="container-fluid p-0">
-        <div class="border m-3 m-lg-0">
+  
+  <article class="container-fluid p-0">
+      <div class="border m-3 m-lg-0">
 
-            <div class="border p-3">
-                <h3 class="text-left">Tracker List</h3>
-            </div>
-            <table class="table ">
-                <caption class="d-none">Tracker list</caption>
-                <thead>
-                    <tr>
-                        <th scope="col">Device Id</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  @{
-                      foreach (Device device in Model)
-                      {
-                          <tr>
-                              <th scope="row"><a asp-controller="Home" asp-action="Details" asp-route-deviceId="@device.DeviceId">@device.DeviceId</a></th>
-                          </tr>
-                      }
-                    }
-                </tbody>
-            </table>
+        <div class="border p-3">
+          <h3 class="text-left">Tracker List</h3>
         </div>
+
+        <ul class="list-group">
+          @foreach (Device device in Model)
+          {
+            <li class="list-group-item">
+              <a asp-action="Details" asp-controller="Home" asp-route-deviceId="@device.DeviceId">@device.DeviceId</a>
+            </li>
+          }
+        </ul>
     </article>
+
     <aside class="d-flex flex-column flex-lg-row-reverse m-3 mr-lg-0  p-0  ">
         <div class="h-100 p-0 mr-2 text-center">
             <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
                 <span class="position-relative d-none d-lg-flex" style="top:50%;">
-                    <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
+                    <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight">&nbsp
                         <img src="~/Icons/notificationBell.svg" alt="" />
                         <img src="~/Icons/notification.svg" alt="" />
                 </span>

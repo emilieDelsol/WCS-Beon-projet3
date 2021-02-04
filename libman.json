@@ -5,6 +5,18 @@
     {
       "library": "Chart.js@2.9.4",
       "destination": "wwwroot/lib/chartjs"
+    },
+    {
+      "library": "vue@3.0.5",
+      "destination": "wwwroot/vue/"
+    },
+    {
+      "library": "axios@0.21.1",
+      "destination": "wwwroot/axios/",
+      "files": [
+        "axios.min.js",
+        "axios.min.map"
+      ]
     }
   ]
 }

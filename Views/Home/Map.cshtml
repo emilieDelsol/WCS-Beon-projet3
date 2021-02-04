@@ -1,0 +1,60 @@
+﻿@model Device
+
+@{
+  ViewData["Title"] = "Overview";
+  Layout = "~/Views/Shared/_layoutBeonPrincipal.cshtml";
+}
+
+<section class="d-flex flex-column-reverse flex-lg-row">
+    <article class="container-fluid p-0">
+
+        <div class="card m-3 m-lg-3 ">
+            <div class="card-header pb-0 " style=" color: #201063;">
+                <h5 class="card-title " style="font-weight: bold;"><img src="~/Icons/mapBlueBeon.svg" alt="" /> Overview</h5>
+            </div>
+            <div class="card-body">
+                <div id="overview"></div>
+            </div>
+        </div>
+    </article>
+    <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
+        <div class="h-100 p-0 mr-2 text-center">
+            <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
+                <span class="position-relative d-none d-lg-flex" style="top:50%;">
+                    <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
+                        <img src="~/Icons/notificationBell.svg" alt="" />
+                        <img src="~/Icons/notification.svg" alt="" />
+                </span>
+                <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
+                    <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" /><img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
+                        <img src="~/Icons/notificationBell.svg" alt="" />
+                        <img src="~/Icons/notification.svg" alt="" />
+                </span>
+            </a>
+        </div>
+        <div class="row" >
+            <div class="col text-center" style="width:max-content;">
+                <div class="collapse" id="alertCollapse">
+                    <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                      <div class="dropdown-divider"></div>
+                      <div>
+                          <p>Device:</p>
+                          <p>Last contact:</p>
+                          <p><a asp-controller="Beon" asp-action="Dashboard">Link to dashboard</a></p>
+                      </div>
+                      <div class="dropdown-divider"></div>
+                      <div class="alertedcolorred">
+                          <img src="~/Icons/heat.svg" alt="" /><span>Temperature Alert -</span></p>
+                      </div>
+                      <div class="alertcolorgreen ">
+                          <p><img src="~/Icons/heat.svg" alt="" /><span>Temperature Alert Terminated -</span>
+                      </div>
+                      <div class="alertcolorblue ">
+                          <img src="~/Icons/warningBlueBeon.svg" alt=""><span>Shock Alert -</span></p>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+</section>
