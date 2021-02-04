@@ -1,0 +1,33 @@
+﻿<script>
+  app.component('temperature', {
+    data: function () {
+      return {
+        maxTemperature: undefined,
+        minTemperature: undefined,
+        meanTemperature: undefined
+      }
+    },
+    mounted: function () {
+      Axios.get(`/Device/Temperatures/${this.device_id}?last=true`)
+        .then((response) => {
+          this.maxTemperature = response.data[0].max
+          this.minTemperature = response.data[0].min
+          this.meanTemperature = response.data[0].mean
+        })
+    },
+    props: { device_id: String },
+    template: `
+      <div class="card m-3">  
+        <div class="card-header pb-0" style=" color: #201063;">
+          <h5 class="card-title" style="font-weight: bold; "><img src="/Icons/heatBlueBeon.svg" alt="" />Temperature from last 72h</h5>
+        </div>
+        <div class="card-body text-left">
+          <h5 class="card-title "> </h5>
+          <p class="card-text">Max: {{ maxTemperature }} °C</p>
+          <p class="card-text">Min: {{ minTemperature }} °C</p>
+          <p class="card-text">Mean: {{ meanTemperature }} °C</p>
+        </div>
+      </div>
+    `
+  })
+  </script>

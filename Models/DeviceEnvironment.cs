@@ -1,10 +1,11 @@
-﻿using System;
+﻿using BeOn.Repository;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BeOn.Models
 {
     [Table("environment_payload")]
-    public class DeviceEnvironment
+    public class DeviceEnvironment : ITimestampable
     {
         [Column("id_device")]
         public String DeviceId { get; set; }
@@ -36,7 +37,7 @@ namespace BeOn.Models
         public string Frametype { get; set; }
 
         [Column("batterylvl")]
-        public double Batterylvl {get; set; }
+        public double BatteryLevel {get; set; }
 
         [Column("timestamppayload")]
         public DateTime DatePayload { get; set; }
@@ -64,5 +65,8 @@ namespace BeOn.Models
 
         [Column("cptshockovlastperiod")]
         public int Cptshockovlastperiod { get; set; }
+
+        [NotMapped]
+        public DateTime Timestamp => TimestampEvent;
     }
 }

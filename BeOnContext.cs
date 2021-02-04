@@ -6,8 +6,8 @@ namespace BeOn
     public class BeOnContext : DbContext
     {
         public DbSet<Device> Devices { get; set; }
-        public DbSet<DeviceEnvironment> EnvironmentPayloads { get; set; }
-        public DbSet<DevicePositionning> PositionningPayloads { get; set; }
+        public DbSet<DeviceEnvironment> Environments { get; set; }
+        public DbSet<DevicePositionning> Positionnings { get; set; }
         public DbSet<Role> Roles { get; set; }
         
         public BeOnContext(DbContextOptions<BeOnContext> options)

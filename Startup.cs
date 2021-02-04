@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace BeOn
 {
@@ -22,6 +23,9 @@ namespace BeOn
         {
             services.AddDbContext<BeOnContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<DeviceRepository>();
+            services.AddScoped<EnvironmentRepository>();
+            services.AddScoped<PermissionRepository>();
+            services.AddScoped<PercentageFormatter>(services => new PercentageFormatter(Int32.Parse(Configuration["Formatter:Percentage:Magnitude"])));
             services.AddControllersWithViews();
         }
 

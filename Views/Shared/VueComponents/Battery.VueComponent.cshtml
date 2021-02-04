@@ -1,0 +1,43 @@
+﻿<script>
+  app.component('battery', {
+    data: function () {
+      return {
+        level: 0
+      }
+    },
+    computed: {
+      color: function () {
+        let color = "lightgreen"
+        if (this.level <= 33) {
+          color = "red"
+        }
+        else if (this.level <= 66) {
+          color = "yellow"
+        }
+        return color
+      }
+    },
+    mounted: function () {
+      Axios.get(`/Device/Battery/${this.device_id}?last=true`)
+        .then((response) => {
+          this.level = response.data[0]
+        })
+    },
+    template: `
+      <div class="card m-3">
+        <div class="card-header pb-0 mb-0" style=" color: #201063;">
+          <h5 class="card-title " style="font-weight: bold;"><img src="/Icons/batteryBlueBeon.svg" alt="" /> Battery level</h5>
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title" id="batteryTitle">{{ level }} %</h5>
+            <div class="batteryContainer justify-content-center">
+              <div class="batteryOuter">
+                <div class="batteryLevel" :style="'width:' + level + '%; background-color:' + color"></div>
+              </div>
+              <div class="batteryBump"></div>
+            </div>
+        </div>
+      </div>`,
+    props: { device_id: String },
+  })
+</script>

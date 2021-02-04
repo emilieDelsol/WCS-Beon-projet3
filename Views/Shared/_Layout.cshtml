@@ -22,6 +22,7 @@
 <body>
 
   <partial name="NavBar.Partial" />
+
   <div class="container-fluid">
     <div class="row  flex-column flex-lg-row">
       <aside class=" p-0  flex-shrink-1" style="  background-color: #201063">
@@ -72,6 +73,9 @@
       @RenderSection("Vue", required: true)
       <script>
         var app = Vue.createApp(vueData)
+      </script>
+        @RenderSection("VueComponents", required: false)
+      <script>
         app.mount('#app')
       </script>
     }
