@@ -4,6 +4,7 @@ using BeOn.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace BeOn.Controllers
@@ -52,6 +53,17 @@ namespace BeOn.Controllers
                                                                     { "mean", environment.Tmean }
                                                                 });
             return Ok(temperatures);
+        }
+        [ActionName("Contact")]
+        [HttpGet]
+        public IActionResult GetContacts([FromRoute] String deviceId,
+                                                            [FromQuery] TimestampFilter<DeviceEnvironment> filter)
+		{
+            Device device = _deviceRepository.FindById(deviceId);
+            IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
+            IEnumerable<String> dateTimes = filter.Apply(environments)
+                                                        .Select(environments => environments.TimestampEvent.ToString("f", DateTimeFormatInfo.InvariantInfo));
+            return Ok(dateTimes);
         }
     }
 }

@@ -30,15 +30,10 @@
 <section class="d-flex flex-column-reverse flex-lg-row">
   <div class="container-fluid p-0 ">
     <article class="card-deck p-0  m-0 d-flex flex-column flex-lg-row justify-content-between">
-      <div class="card m-3">
-        <div class="card-header pb-0" style="color: #201063; ">
-          <h5 class="card-title" style="font-weight: bold;"><img src="~/Icons/back-in-timeBlueBeon.svg" /> Last contact</h5>
-        </div>
-        <div class="card-body ">
-          <p class="card-text">TimeStamp</p>
-        </div>
-      </div>
-      <div class="card m-3">
+     
+        <last-contact :device_id="deviceId"/>
+      
+        <div class="card m-3">
         <div class="card-header pb-0" style=" color: #201063;">
           <h5 class="card-title" style="font-weight: bold;"><img src="~/Icons/warningBlueBeon.svg" alt="" /> Number of shocks</h5>
         </div>
@@ -186,4 +181,5 @@
 @section VueComponents {
   <partial name="VueComponents/Battery.VueComponent" />
   <partial name="VueComponents/Temperature.VueComponent" />
+  <partial name="VueComponents/LastContact.VueComponent" />
 } 
