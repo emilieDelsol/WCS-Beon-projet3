@@ -70,7 +70,7 @@ function UpdateLocation72() {
         isActiveBetween = false;
         AddMarkers();
         AddStartStopMarkers();
-        document.getElementById("betweenDate").textContent = "Last 72 hours.  Values found: " + deviceEnvironmentInfo24.length;
+        document.getElementById("betweenDate").textContent = "Last 72 hours.  Values found: " + deviceEnvironmentInfo72.length;
 
 
     }
