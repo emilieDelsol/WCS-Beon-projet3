@@ -122,7 +122,7 @@ function InitialisationMap(jsDeviceEnvironment )
     for (env in jsDeviceEnvironment) {
         myNewLatLng = L.latLng(jsDeviceEnvironment[env].lat, jsDeviceEnvironment[env].lon);
         lastLatLng = L.latLng(lastlat, lastlon);
-        if (L.GeometryUtil.distance(overview, lastLatLng, myNewLatLng) > 50) {
+        if (compareGPScoordinates(lastLatLng, myNewLatLng, 0, 08) ){
             positionningMessageNumber ++;
             lastlat = jsDeviceEnvironment[env].lat;
             lastlon = jsDeviceEnvironment[env].lon;
@@ -180,4 +180,8 @@ function CreatePolyline(colorChoice) {
 
 function RemovePolyline() {
     polyline.remove();
+}
+
+function compareGPScoordinates(firstTable, secondTable, precision) {
+    return (Math.abs(firstTable.lat - secondTable.lat) >= precision && Math.abs(firstTable.lng - secondTable.lng) >= precision)
 }
