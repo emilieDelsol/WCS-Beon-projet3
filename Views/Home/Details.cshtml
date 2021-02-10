@@ -6,14 +6,9 @@
 }
 
 @section AdditionalLinks {
-    <li class="list-group-item pr-0 pl-0 d-none d-lg-block" style="  background-color: #201063">
-        <a class="nav-link pl-0 dropdown-toggle  ml-3 " style="color: white; font-weight:bold;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample"><img src="~/Icons/dasboardplain.svg" alt="" /> <span class="d-none d-lg-inline"> Dashboard</span></a>
-        <div class="collapse  " id="collapseExample">
             <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Dashboard" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/earth.svg" alt="" /><span class="d-none d-lg-inline"> Overview</span></a>
             <a class="nav-link pl-3" style="color: white; font-weight:bold; background-color:#150b42" asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/maps-and-location.svg" alt="" /> <span class="d-none d-lg-inline"> Location</span></a>
             <a class="nav-link pl-3" style="color: white; font-weight:bold;  background-color:#150b42" asp-controller="Beon" asp-action="Temp" asp-route-IdDevice="@Model.DeviceId"><img src="~/Icons/heat.svg" alt="" /><span class="d-none d-lg-inline"> Temperature</span></a>
-        </div>
-    </li>
 }
 
 <header class="border p-2 d-flex justify-content-between">
