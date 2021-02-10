@@ -72,7 +72,7 @@
     },
     methods: {
       updateLastPeriodTemperatures: function ({ hours, minutes = 0, seconds = 0 }) {
-        let period = hours * 3600000 + minutes * 360000 + seconds * 1000
+        let period = hours * 3600000 + minutes * 60000 + seconds * 1000
         Axios.get(`/Device/Temperatures/${this.device_id}/?period=${period}`)
           .then(response => {
             this.temperatures = response.data
