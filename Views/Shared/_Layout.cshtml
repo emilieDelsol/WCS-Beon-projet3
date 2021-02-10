@@ -34,23 +34,22 @@
                 <a class="nav-link pl-0 text-nowrap" style=" font-weight:bold;color:white" asp-controller="Home" asp-action="Index"><img src="~/Icons/home.svg" alt="" /> <span class="d-none d-lg-inline"> Home</span></a>
               </li>
               <li class="list-group-item" style="  background-color: #201063">
-                <a class="nav-link pl-0" style=" font-weight:bold; color:white;" asp-controller="Beon" asp-action="listDevices"><img src="~/Icons/eye.svg" alt="" /> <span class="d-none d-lg-inline">Tracker list</span></a>
+                <a class="nav-link pl-0" style=" font-weight:bold; color:white;" asp-controller="Home" asp-action="List"><img src="~/Icons/eye.svg" alt="" /> <span class="d-none d-lg-inline">Tracker list</span></a>
               </li>
               <li class="list-group-item" style="  background-color: #201063">
-                <a class="nav-link pl-0" style=" font-weight:bold;color:white " asp-controller="Beon" asp-action="Overview"><img src="~/Icons/earth.svg" alt="" /><span class="d-none d-lg-inline"> Overview</span></a>
+                <a class="nav-link pl-0" style=" font-weight:bold;color:white " asp-controller="Home" asp-action="Map"><img src="~/Icons/earth.svg" alt="" /><span class="d-none d-lg-inline"> Overview</span></a>
               </li>
               @RenderSection("AdditionalLinks", required: false)
             </ul>
           </div>
         </nav>
       </aside>
-    </div>
 
-    <div class="container">
-      <main role="main" class="pb-3" id="app">
+      <main role="main" class="col p-0" id="app">
         @RenderBody()
       </main>
     </div>
+  </div>
 
     <partial name="Footer.Partial" />
 

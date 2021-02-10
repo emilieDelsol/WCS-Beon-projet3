@@ -35,7 +35,7 @@ namespace BeOn.Filters
 
         public IQueryable<T> ApplyBetween(IEnumerable<T> entities)
         {
-            return entities.Where(entity => (BeginDate >= entity.Timestamp) && (entity.Timestamp <= EndDate))
+            return entities.Where(entity => (BeginDate >= entity.Timestamp) && (entity.Timestamp <= EndDate)) //chager tri , beginDate doit etre <= Timestamp 
                            .AsQueryable();
         }
     }

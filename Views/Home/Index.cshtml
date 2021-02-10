@@ -1,72 +1,25 @@
 ﻿@{
-    ViewData["Title"] = "listDevices";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Home";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BeOn</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/beon.css" />
 
-<section class="d-flex flex-column-reverse flex-lg-row">
-  
-  <article class="container-fluid p-0">
-      <div class="border m-3 m-lg-0">
+</head>
+<body class="d-flex" style="height:100vh;width:100vw">
 
-        <div class="border p-3">
-          <h3 class="text-left">Tracker List</h3>
-        </div>
+    <div class="text-center m-auto">
+        <h1 class="display-4"><img src="~/logoBeOn.png" alt="logo beon" class="" style="width:50vh; max-width:100%;" /></h1>
+        <a class="btn btn-info btn-lg mb-5 " asp-controller="Home" asp-action="List" style="color:#FFFF"> Enter</a> 
+    </div>
 
-        <ul class="list-group">
-          @foreach (Device device in Model)
-          {
-            <li class="list-group-item">
-              <a asp-action="Details" asp-controller="Home" asp-route-deviceId="@device.DeviceId">@device.DeviceId</a>
-            </li>
-          }
-        </ul>
-    </article>
-
-    <aside class="d-flex flex-column flex-lg-row-reverse m-3 mr-lg-0  p-0  ">
-        <div class="h-100 p-0 mr-2 text-center">
-            <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
-                <span class="position-relative d-none d-lg-flex" style="top:50%;">
-                    <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight">&nbsp
-                        <img src="~/Icons/notificationBell.svg" alt="" />
-                        <img src="~/Icons/notification.svg" alt="" />
-                </span>
-                <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
-                    <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" />
-                    <img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
-                        <img src="~/Icons/notificationBell.svg" alt="" />
-                        <img src="~/Icons/notification.svg" alt="" />
-                </span>
-            </a>
-        </div>
-        <div class="row" >
-            <div class="col text-center" style="width:max-content;">
-                <div class="collapse" id="alertCollapse">
-                    <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
-                      <div class="dropdown-divider"></div>
-                        <div>
-                            <p>
-                                Device:  
-                            </p>
-                            <p>
-                                Last contact: <br /> 
-                            </p>
-                            <p>
-                                <a asp-controller="Beon" asp-action="Dashboard">Link to dashboard</a>
-                            </p>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                          <div class="alertedcolorred">
-                              <p> <img src="~/Icons/heat.svg" alt="" />  Temperature Alert -</p>
-                          </div>
-                          <div class="alertcolorgreen ">
-                              <p><img src="~/Icons/heat.svg" alt="" /> Temperature Alert Terminated -</p>
-                          </div>
-                          <div class="alertcolorblue ">
-                              <p><img src="~/Icons/warningBlueBeon.svg" alt="">  Shock Alert -</p>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-            </div>
-    </aside>
-</section>
+</body>
+</html>

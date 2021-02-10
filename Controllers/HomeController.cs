@@ -17,7 +17,15 @@ namespace BeOn.Controllers
 
 		public IActionResult Index()
 		{
+			return View();
+		}
+		public IActionResult List()
+		{
 			return View(_deviceRepository.All);
+		}
+		public IActionResult Map()
+		{
+			return View();
 		}
 
 		[HttpGet("[action]/{deviceId}")]
