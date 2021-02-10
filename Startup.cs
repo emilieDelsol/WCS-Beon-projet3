@@ -25,7 +25,7 @@ namespace BeOn
             services.AddScoped<DeviceRepository>();
             services.AddScoped<EnvironmentRepository>();
             services.AddScoped<PermissionRepository>();
-            services.AddScoped<PercentageFormatter>(services => new PercentageFormatter(Int32.Parse(Configuration["Formatter:Percentage:Magnitude"])));
+            services.AddScoped<PercentageFormatter>(services => new PercentageFormatter(1));
             services.AddControllersWithViews();
         }
 
