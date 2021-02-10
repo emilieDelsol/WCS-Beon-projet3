@@ -7,6 +7,6 @@ namespace BeOn.Filters
 {
     public interface IFilter<T>
     {
-        IQueryable<T> Apply(IEnumerable<T> entities);
+        IQueryable<T> Apply(IQueryable<T> entities);
     }
 }

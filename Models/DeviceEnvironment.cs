@@ -46,10 +46,10 @@ namespace BeOn.Models
         public string EventType{ get; set; }
 
         [Column("tmax")]
-        public int Tmax { get; set; }
+        public int MaximumTemperature { get; set; }
 
         [Column("tmin")]
-        public int Tmin { get; set; }
+        public int MinimumTemperature { get; set; }
 
         [Column("tmean")]
         public int Tmean { get; set; }

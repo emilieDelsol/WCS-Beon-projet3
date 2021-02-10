@@ -45,13 +45,12 @@ namespace BeOn.Controllers
         {
             Device device = _deviceRepository.FindById(deviceId);
             IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
-            IQueryable<IDictionary<String, Int32>> temperatures = filter.Apply(environments)
-                                                                .Select((environment) => new Dictionary<String, Int32>
-                                                                {
-                                                                    { "min", environment.Tmin },
-                                                                    { "max", environment.Tmax },
-                                                                    { "mean", environment.Tmean }
-                                                                });
+            var temperatures = filter.Apply(environments).Select((environment) => new Dictionary<String, Int32>
+            {
+                { "min", environment.MinimumTemperature },
+                { "max", environment.MaximumTemperature },
+                { "mean", (environment.MinimumTemperature + environment.MaximumTemperature) / 2 }
+            });
             return Ok(temperatures);
         }
         [ActionName("Contact")]
@@ -67,4 +66,3 @@ namespace BeOn.Controllers
         }
     }
 }
-
