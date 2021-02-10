@@ -47,6 +47,7 @@ namespace BeOn.Controllers
             IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
             var temperatures = filter.Apply(environments).Select((environment) => new Dictionary<String, Int32>
             {
+                { "timestamp", environment.Timestamp.Millisecond },
                 { "min", environment.MinimumTemperature },
                 { "max", environment.MaximumTemperature },
                 { "mean", (environment.MinimumTemperature + environment.MaximumTemperature) / 2 }
@@ -61,7 +62,7 @@ namespace BeOn.Controllers
             Device device = _deviceRepository.FindById(deviceId);
             IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
             IEnumerable<String> dateTimes = filter.Apply(environments)
-                                                        .Select(environments => environments.TimestampEvent.ToString("f", DateTimeFormatInfo.InvariantInfo));
+                                                        .Select(environments => environments.Timestamp.ToString("f", DateTimeFormatInfo.InvariantInfo));
             return Ok(dateTimes);
         }
     }

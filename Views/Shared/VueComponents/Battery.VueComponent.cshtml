@@ -18,7 +18,7 @@
       }
     },
     mounted: function () {
-      Axios.get(`/Device/Battery/${this.device_id}?last=true`)
+      Axios.get(`/Device/Battery/${this.device_id}?period=0`)
         .then((response) => {
           this.level = response.data[0]
         })

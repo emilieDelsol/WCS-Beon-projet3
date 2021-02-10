@@ -12,8 +12,7 @@ namespace BeOn.Models
         public virtual Device Device { get; set; }
 
         [Column("timestampevent")]
-        public DateTime TimestampEvent { get; set; }
-        [NotMapped]
+        public DateTime Timestamp { get; set; }
 
         [Column("seq_number")]
         public int SeqNumber { get; set; }
@@ -65,8 +64,5 @@ namespace BeOn.Models
 
         [Column("cptshockovlastperiod")]
         public int Cptshockovlastperiod { get; set; }
-
-        [NotMapped]
-        public DateTime Timestamp => TimestampEvent;
     }
 }

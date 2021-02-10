@@ -16,7 +16,7 @@ namespace BeOn
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DeviceEnvironment>()
-                        .HasKey(environmentPayload => new { environmentPayload.DeviceId, environmentPayload.TimestampEvent, environmentPayload.SeqNumber });
+                        .HasKey(environmentPayload => new { environmentPayload.DeviceId, environmentPayload.Timestamp, environmentPayload.SeqNumber });
 
             modelBuilder.Entity<DevicePositionning>()
                         .HasKey(positionningPayload => new { positionningPayload.DeviceId, positionningPayload.TimestampEvent, positionningPayload.SeqNumber });

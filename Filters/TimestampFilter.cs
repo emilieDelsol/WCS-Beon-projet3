@@ -7,7 +7,7 @@ namespace BeOn.Filters
     public class TimestampFilter<T> : IFilter<T> where T : ITimestampable
     {
         public DateTime BeginsAt { get; set; } = DateTime.MaxValue;
-        public Boolean Backwards { get; set; } = false;
+        public Boolean Backwards { get; set; } = true;
 
         public Double Period
         {
@@ -17,34 +17,30 @@ namespace BeOn.Filters
             }
             set
             {
-                if (value <= 0)
-                {
-                    _periodTimeSpan = TimeSpan.MinValue;
-                }
                 _periodTimeSpan = TimeSpan.FromMilliseconds(value);
             }
         }
-        private TimeSpan _periodTimeSpan = TimeSpan.MinValue;
+        private TimeSpan _periodTimeSpan = TimeSpan.FromMilliseconds(0);
 
         public IQueryable<T> Apply(IQueryable<T> entities)
         {
             DateTime endDate;
             if (BeginsAt == DateTime.MaxValue)
             {
-                endDate = entities.OrderBy(e => e.Timestamp)
-                                  .Select(e => e.Timestamp)
-                                  .Last();
+                BeginsAt = entities.OrderBy(e => e.Timestamp)
+                                   .Select(e => e.Timestamp)
+                                   .Last();
             }
             IQueryable<T> filtered;
             if (Backwards)
             {
                 endDate = BeginsAt - _periodTimeSpan;
-                filtered = entities.Where(entity => BeginsAt >= entity.Timestamp && entity.Timestamp >= endDate);
+                filtered = entities.Where(entity => entity.Timestamp <= BeginsAt && entity.Timestamp >= endDate);
             }
             else
             {
                 endDate = BeginsAt + _periodTimeSpan;
-                filtered = entities.Where(entity => endDate >= entity.Timestamp && entity.Timestamp >= BeginsAt);
+                filtered = entities.Where(entity => entity.Timestamp <= endDate && entity.Timestamp >= BeginsAt);
             }
             return filtered;
         }

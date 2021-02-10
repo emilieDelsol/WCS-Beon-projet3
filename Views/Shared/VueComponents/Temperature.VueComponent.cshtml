@@ -8,7 +8,7 @@
       }
     },
     mounted: function () {
-      Axios.get(`/Device/Temperatures/${this.device_id}?last=true`)
+      Axios.get(`/Device/Temperatures/${this.device_id}`)
         .then((response) => {
           this.maxTemperature = response.data[0].max
           this.minTemperature = response.data[0].min

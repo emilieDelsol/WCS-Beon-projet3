@@ -43,7 +43,12 @@
       return this
     },
     Update: function (temperatures) {
+      this._chart.data.labels = []
+      this._chart.data.datasets[0].data = []
+      this._chart.data.datasets[1].data = []
+      this._chart.data.datasets[2].data = []
       for (let i in temperatures) {
+        this._chart.data.labels.push(temperatures[i].timestamp)
         this._chart.data.datasets[0].data.push(temperatures[i].max)
         this._chart.data.datasets[1].data.push(temperatures[i].mean)
         this._chart.data.datasets[2].data.push(temperatures[i].min)
@@ -68,14 +73,7 @@
     methods: {
       updateLastPeriodTemperatures: function ({ hours, minutes = 0, seconds = 0 }) {
         let period = hours * 3600000 + minutes * 360000 + seconds * 1000
-        Axios.get(`/Device/Temperatures/${this.device_id}/?last=true&period=${period}`)
-          .then(response => {
-            this.temperatures = response.data
-            this.chart.Update(this.temperatures)
-          })
-      },
-      updateTemperaturesBetween: function ({ beginDate, endDate }) {
-        Axios.get(`/Device/Temperatures/${this.device_id}/?beginDate=${beginDate}&period=${endDate}`)
+        Axios.get(`/Device/Temperatures/${this.device_id}/?period=${period}`)
           .then(response => {
             this.temperatures = response.data
             this.chart.Update(this.temperatures)
