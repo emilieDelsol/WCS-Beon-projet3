@@ -1,0 +1,129 @@
+﻿<script>
+  let TemperatureChart = {
+    _chart: undefined,
+    Create: function (tagId) {
+      let chartTag = document.getElementById(tagId)
+      this._chart = new Chart(chartTag, {
+        type: 'line', data: {
+          datasets: [
+            {
+              backgroundColor: '#ffd7d8',
+              borderColor: 'red',
+              data: [],
+              label: '# temp max',
+              radius: 2,
+              showLine: false
+            },
+            {
+              backgroundColor: 'rgba(255, 255, 255, .4)',
+              borderColor: 'green',
+              data: [],
+              label: '# temp mean',
+              radius: 0
+            },
+            {
+              backgroundColor: '#d6e5fc',
+              borderColor: 'blue',
+              data: [],
+              label: '# temp min',
+              radius: 2,
+              showLine: false
+            }
+          ]
+        },
+        options: {
+          legend: { labels: {} },
+          label: "Diagramme températures",
+          scales: {
+            xAxes: [{ ticks: { beginAtZero: false } }],
+            yAxes: [{ ticks: { beginAtZero: false } }]
+          }
+        }
+      })
+      return this
+    },
+    Update: function (temperatures) {
+      for (let i in temperatures) {
+        this._chart.data.datasets[0].data.push(temperatures[i].max)
+        this._chart.data.datasets[1].data.push(temperatures[i].mean)
+        this._chart.data.datasets[2].data.push(temperatures[i].min)
+      }
+      this._chart.update()
+    }
+  }
+
+  app.component('temperature-chart', {
+    data: function () {
+      return {
+        begin: { date: undefined, time: undefined },
+        end: { date: undefined, time: undefined },
+        temperatures: [],
+        chart: undefined
+      }
+    },
+    mounted: function () {
+      this.chart = TemperatureChart.Create('temperatureChart')
+      this.updateLastPeriodTemperatures({ hours: 24 })
+    },
+    methods: {
+      updateLastPeriodTemperatures: function ({ hours, minutes = 0, seconds = 0 }) {
+        let period = hours * 3600000 + minutes * 360000 + seconds * 1000
+        Axios.get(`/Device/Temperatures/${this.device_id}/?last=true&period=${period}`)
+          .then(response => {
+            this.temperatures = response.data
+            this.chart.Update(this.temperatures)
+          })
+      },
+      updateTemperaturesBetween: function ({ beginDate, endDate }) {
+        Axios.get(`/Device/Temperatures/${this.device_id}/?beginDate=${beginDate}&period=${endDate}`)
+          .then(response => {
+            this.temperatures = response.data
+            this.chart.Update(this.temperatures)
+          })
+      }
+    },
+    props: {
+      'device_id': String
+    },
+    template:
+      `<div class="card-header pb-0" style=" color: #201063;">
+        <h5 class="card-title" style="font-weight: bold; "><a style="color: #201063;"><img src="~/Icons/heatBlueBeon.svg" alt="" />Temperature</h5>
+      </div>
+      <div class="card-body">
+        <div class="d-flex flex-column flex-lg-row justify-content-between ">
+          <div class="text-center m-1">
+            <button v-on:click="updateLastPeriodTemperatures({ hours: 24 })" type="button" class="btn btn-success">24h</button>
+            <button v-on:click="updateLastPeriodTemperatures({ hours: 72 })" type="button" class="btn btn-dark">72h</button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
+              Between date
+            </button>
+          </div>
+
+          <div class="collapse" id="collapseSortByDate">
+            <div class="card card-body">
+              <div class="text-center d-flex flex-column flex-lg-row">
+                <div class="border m-1 p-1">
+                  <p>Begin date:</p>
+                  <label class="beginDate">
+                    <input type="date" v-model="begin.date" />
+                    <input type="time" v-model="begin.Time" />
+                  </label>
+                </div>
+                <div class="border m-1 p-1">
+                  <p>End date:</p>
+                  <label class="endDate">
+                    <input type="date" v-model="end.date" />
+                    <input type="time" v-model="end.time" />
+                  </label>
+                </div>
+              </div>
+              <button type="button" id="bouton">Send</button>
+            </div>
+          </div>
+        </div>
+        <div class="" style="height:auto">
+          <canvas id="temperatureChart" class=" col-12" style="height:300px; "></canvas>
+        </div>
+      </div>`
+  })
+</script> 
