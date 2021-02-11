@@ -91,15 +91,17 @@
       'device_id': String
     },
     template:
-      `<div class="card-header pb-0" style=" color: #201063;">
+      `
+<div class="card  mt-3 mb-3 col-12 p-0 " >
+    <div class="card-header pb-0" style=" color: #201063;">
         <h5 class="card-title" style="font-weight: bold; "><img src="~/Icons/heatBlueBeon.svg" alt="" />Temperature</h5>
-      </div>
-      <div class="card-body">
-        <div class="d-flex flex-column flex-lg-row justify-content-between ">
+    </div>
+    <div class="card-body">
+        <div class="d-flex flex-column justify-content-between ">
           <div class="text-center m-1">
-            <button v-on:click="updateLastPeriodTemperatures({ hours: 24 })" type="button" class="btn btn-success">24h</button>
-            <button v-on:click="updateLastPeriodTemperatures({ hours: 72 })" type="button" class="btn btn-dark">72h</button>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
+            <button v-on:click="updateLastPeriodTemperatures({ hours: 24 })" type="button" class="btn btn-success m-1">24h</button>
+            <button v-on:click="updateLastPeriodTemperatures({ hours: 72 })" type="button" class="btn btn-dark m-1">72h</button>
+            <button class="btn btn-primary m-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
               Between date
             </button>
           </div>
@@ -127,8 +129,9 @@
           </div>
         </div>
         <div class="" style="height:auto">
-          <canvas id="temperatureChart" class=" col-12" style="height:300px; "></canvas>
+          <canvas id="temperatureChart" class=" col-12" style="height:400px; "></canvas>
         </div>
-      </div>`
+      </div>
+    </div>`
   })
 </script> 

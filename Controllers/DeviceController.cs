@@ -106,13 +106,15 @@ namespace BeOn.Controllers
         {
             Device device = _deviceRepository.FindById(deviceId);
             IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
-            var alerts = filter.Apply(environments).Select((environment) => new Dictionary<String, Double>
+
+			IQueryable<Dictionary<string, double>> alerts = filter.Apply(environments).Select((environment) => new Dictionary<String, Double>
             {
                 { "timestamp", environment.Timestamp.Millisecond },
                 { "latitude", Math.Round(environment.ComputedLatitude,6) },
                 { "longitude", Math.Round(environment.ComputedLongitude,6) },
                 { "eventType", Convert.ToInt32(environment.EventType) }
             });
+
             return Ok(alerts);
         }
     }
