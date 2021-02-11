@@ -74,11 +74,18 @@
       updateLastPeriodTemperatures: function ({ hours, minutes = 0, seconds = 0 }) {
         let period = hours * 3600000 + minutes * 360000 + seconds * 1000
         Axios.get(`/Device/Temperatures/${this.device_id}/?period=${period}`)
-          .then(response => {
-            this.temperatures = response.data
-            this.chart.Update(this.temperatures)
-          })
-      }
+                   .then(response => {
+                        this.temperatures = response.data
+                        this.chart.Update(this.temperatures)
+                    })
+        },
+        updateTemperaturesBetween: function () {
+            Axios.get(`/Device/TemperaturesBetween/${this.device_id}/?BeginDate=${this.begin.date}T${ this.begin.time}&EndDate=${this.end.date}T${ this.end.time}`)
+                       .then(response => {
+                            this.temperatures = response.data
+                            this.chart.Update(this.temperatures)
+                        })
+        }
     },
     props: {
       'device_id': String
@@ -104,7 +111,7 @@
                   <p>Begin date:</p>
                   <label class="beginDate">
                     <input type="date" v-model="begin.date" />
-                    <input type="time" v-model="begin.Time" />
+                    <input type="time" v-model="begin.time" />
                   </label>
                 </div>
                 <div class="border m-1 p-1">
@@ -115,7 +122,7 @@
                   </label>
                 </div>
               </div>
-              <button type="button" id="bouton">Send</button>
+              <button v-on:click="updateTemperaturesBetween" type="button" id="bouton">Send</button>
             </div>
           </div>
         </div>

@@ -54,6 +54,24 @@ namespace BeOn.Controllers
             });
             return Ok(temperatures);
         }
+        [ActionName("TemperaturesBetween")]
+        [HttpGet]
+         public IActionResult GetTemperatureBetween([FromRoute] String deviceId,
+                                                [FromQuery] DateTimeFilter<DeviceEnvironment>filter)
+		{
+            Device device = _deviceRepository.FindById(deviceId);
+            IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
+            var temperatures = filter.Apply(environments).Select((environment)=>new Dictionary<String,Int32>
+            {
+                    { "timestamp", environment.Timestamp.Millisecond },
+                { "min", environment.MinimumTemperature },
+                { "max", environment.MaximumTemperature },
+                { "mean", (environment.MinimumTemperature + environment.MaximumTemperature) / 2 }
+            });
+            return Ok(temperatures);
+
+        }
+
         [ActionName("Contact")]
         [HttpGet]
         public IActionResult GetContacts([FromRoute] String deviceId,
@@ -65,5 +83,6 @@ namespace BeOn.Controllers
                                                         .Select(environments => environments.Timestamp.ToString("f", DateTimeFormatInfo.InvariantInfo));
             return Ok(dateTimes);
         }
+
     }
 }
