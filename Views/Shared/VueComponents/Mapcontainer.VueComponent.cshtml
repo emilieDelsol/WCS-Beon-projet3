@@ -1,0 +1,36 @@
+﻿<script>
+    app.component('mapcontainer', {
+        data: function () {
+            return {
+                myMap: null,
+                latitude: 0,
+                longitude:0
+            }
+        },
+        mounted() {
+            Axios.get(`/Device/MapContainer/${this.device_id}`)
+                .then((response) => {
+                    this.latitude = response.data[0].latitude
+                    this.longitude = response.data[0].longitude
+                    this.initMap();
+                })
+        },
+        methods: {
+             initMap() {
+                 var myMap = L.map('myMap').setView([43.6043, 1.4437], 11);
+                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
+                    minZoom: 1,
+                    maxZoom: 20
+                }).addTo(myMap);
+                marker = L.marker([this.latitude, this.longitude]).addTo(myMap);
+            }
+        },
+        props: { device_id: String },
+
+        template: `
+                #myMap`
+    })
+</script>
+
+

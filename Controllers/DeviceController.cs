@@ -84,5 +84,36 @@ namespace BeOn.Controllers
             return Ok(dateTimes);
         }
 
+        [ActionName("MapContainer")]
+        [HttpGet]
+        public IActionResult GetCoordinates([FromRoute] String deviceId,
+                                               [FromQuery] TimestampFilter<DeviceEnvironment> filter)
+        {
+            Device device = _deviceRepository.FindById(deviceId);
+            IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
+            var coordinates = filter.Apply(environments).Select((environment) => new Dictionary<String, Double>
+                {
+                    { "latitude", Math.Round(environment.ComputedLatitude,6) },
+                    { "longitude", Math.Round(environment.ComputedLongitude,6) },
+                });
+            return Ok(coordinates);
+        }
+
+        [ActionName("Alert")]
+        [HttpGet]
+        public IActionResult GetAlerts([FromRoute] String deviceId,
+                                            [FromQuery] TimestampFilter<DeviceEnvironment> filter)
+        {
+            Device device = _deviceRepository.FindById(deviceId);
+            IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
+            var alerts = filter.Apply(environments).Select((environment) => new Dictionary<String, Double>
+            {
+                { "timestamp", environment.Timestamp.Millisecond },
+                { "latitude", Math.Round(environment.ComputedLatitude,6) },
+                { "longitude", Math.Round(environment.ComputedLongitude,6) },
+                { "eventType", Convert.ToInt32(environment.EventType) }
+            });
+            return Ok(alerts);
+        }
     }
 }
