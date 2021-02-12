@@ -1,4 +1,4 @@
-﻿using BeOn.Filters;
+using BeOn.Filters;
 using BeOn.Models;
 using BeOn.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -83,6 +83,25 @@ namespace BeOn.Controllers
                                                         .Select(environments => environments.Timestamp.ToString("f", DateTimeFormatInfo.InvariantInfo));
             return Ok(dateTimes);
         }
+
+        [ActionName("Shock")]
+        [HttpGet]
+        public IActionResult GetShock([FromRoute] String deviceId,
+                                      [FromQuery] TimestampFilter<DeviceEnvironment> filter)
+        {
+            Device device = _deviceRepository.FindById(deviceId);
+            IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
+            IQueryable<DeviceEnvironment> filteredEnvironments = filter.Apply(environments).OrderBy(a => a.Timestamp);
+            int totalShock = filteredEnvironments.Where(env => env.EventType == "3").Count();
+            double maxShock = filteredEnvironments.Select(env => env.Smax).Max();
+            var shocks = new Dictionary<String, double>
+            {
+                { "timestamp", filteredEnvironments.Last().Timestamp.Millisecond },
+                { "smax", maxShock },
+                { "totalshock72", filteredEnvironments.Last().TotalShock },
+                { "totalshock", totalShock}
+            };
+            return Ok(shocks);
 
         [ActionName("MapContainer")]
         [HttpGet]
