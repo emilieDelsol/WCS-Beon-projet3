@@ -1,0 +1,38 @@
+﻿<script>
+    app.component('shock', {
+        data: function () {
+            return {
+                timestamp: 0,
+                smax: 0,
+                totalshock72: 0,
+                totalshock: 0
+            }
+        },
+        mounted: function () {
+            this.updateLastPeriodShock({ hours: 24 })
+            //this.updateLastPeriodShock({ hours: 72 })
+        },
+        methods: {
+            updateLastPeriodShock: function ({ hours, minutes = 0, seconds = 0 }) {
+                let period = hours * 3600000 + minutes * 60000 + seconds * 1000
+                Axios.get(`/Device/Shock/${this.device_id}?period=${period}`)
+                    .then((response) => {
+                        this.smax = response.data[0].smax
+                        this.timestamp = response.data[0].timestamp
+                        this.totalshock72 = response.data[0].totalshock72
+                        this.totalshock = response.data[0].totalshock
+                    })
+            }
+            },
+            props: { device_id: String },
+            template: `
+                <div class="card-header pb-0" style="color: #201063; ">
+                    <h5 class="card-title" style="font-weight: bold;"><img src="/Icons/warningBlueBeon.svg" alt="" /> Shock </h5>
+                </div>
+                <div class="card-body ">
+                    <p class="card-text">Max shock : {{smax}} {{timestamp}}</p>
+                    <p class="card-text">Total shock over last 72h: {{totalshock72}}</p>
+                    <p class="card-text">Total shock over last 24h : {{totalshock}}</p>
+             </div>`
+        })
+</script>

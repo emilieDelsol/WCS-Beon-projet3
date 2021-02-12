@@ -13,7 +13,7 @@ namespace BeOn.Filters
         {
             get
             {
-                return _periodTimeSpan.TotalMilliseconds;
+                return _periodTimeSpan.TotalHours;
             }
             set
             {
