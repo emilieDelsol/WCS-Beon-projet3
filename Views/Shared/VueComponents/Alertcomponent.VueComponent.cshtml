@@ -1,0 +1,139 @@
+﻿<script>
+    app.component('alertcomponent', {
+        data: function () {
+            return {
+                alerts: undefined,
+            }
+        },
+        mounted: function () {
+            let hours = 72;
+            let minutes = 0;
+            let seconds = 0;
+            let period = hours * 3600000 + minutes * 360000 + seconds * 1000
+            Axios.get(`/Device/Alert/${this.device_id}/?period=${period}`)
+                .then((response) => {
+                    this.alerts = response.data
+
+                    console.log(response)
+
+                })
+        },
+        props: { device_id: String },
+        template: `
+             <div>
+                <div class="h-100 p-0 mr-2 text-center">
+                <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" >
+                    <span class="position-relative  d-lg-flex" style="top:50%;">
+                         <img src="/Icons/left-arrow.svg" alt="" id="arrowLeft" class="d-none d-lg-flex" />
+                         <img src="/Icons/notificationBell.svg" alt="" />
+                        <img src="/Icons/down-arrow.svg" alt="" id="arrowDown" class="d-flex d-lg-none" />
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="row" style="">
+                    <div class="col text-center">
+                        <div class="collapse" id="alertCollapse">
+                            <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                                <div class="card-body">
+
+                                    <ul id="alerts-1" class="list-group">
+                                      <li v-for="item in alerts" :key="item.latitude" class="list-group-item">
+                                       latitude: {{item.latitude}}
+                                        longitude: {{item.longitude}}
+                                       eventType: {{item.eventType}}
+                                      </li>
+                                    </ul>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+`
+    })
+</script>
+
+
+
+
+
+
+@*<aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
+        <div>
+            <div class="h-100 p-0 mr-2 text-center">
+                <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow(alertExist)">
+                    <span class="position-relative d-none d-lg-flex" style="top:50%;">
+                        <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
+                        @{ if (alert)
+                            { <img src="~/Icons/notificationBell.svg" alt="" />}
+                            else
+                            {<img src="~/Icons/notification.svg" alt="" />} }
+                    </span>
+                    <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
+                        <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" /><img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
+                        @{ if (alert)
+                            { <img src="~/Icons/notificationBell.svg" alt="" />}
+                            else
+                            {<img src="~/Icons/notification.svg" alt="" />} }
+                    </span>
+                </a>
+            </div>
+        </div>
+        @{ if (alert)
+            {
+                <div class="row" style="">
+                    <div class="col text-center">
+                        <div class="collapse" id="alertCollapse">
+                            <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
+                                <div class="card-body">
+                                    @{ foreach (var env in env72alert)
+                                        {
+
+                                            if (env.EventType == "1")
+                                            {
+                                                <div>
+                                                    <p class="alertcolorred" style="width:max-content">
+                                                        <button class="btn border-0 alertcolorred mw-100"
+                                                                onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert', '@env.TimestampEventToString', '@env.Tmax', ' °')">
+                                                            <img src="/Icons/heatBlueBeon.svg" alt="" />
+                                                            Temperature Alert  <br />  @env.TimestampEvent"
+                                                        </button>
+                                                    </p>
+                                                </div> }
+                                            else if (env.EventType == "2")
+                                            {
+                                                <div>
+                                                    <p class="alertcolorgreen" style="width:max-content">
+                                                        <button class="btn border-0 alertcolorgreen mw-100"
+                                                                onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Temperature Alert Terminated', '@env.TimestampEventToString', '-', ' °')">
+                                                            <img src="/Icons/heatBlueBeon.svg" alt="" />
+                                                            Temperature Alert Terminated   <br />  @env.TimestampEvent
+                                                        </button>
+                                                    </p>
+                                                </div> }
+                                            else if (env.EventType == "3")
+                                            {
+                                                <div>
+                                                    <p class="alertcolorblue " style="width:max-content">
+                                                        <button class="btn border-0 alertcolorblue mw-100"
+                                                                onclick="updateMapCarte(@env.ComputedLatitudeFormatted, @env.ComputedLongitudeFormatted, '@env.DeviceId', 'Shock Alert', '@env.TimestampEventToString', '@env.Smax', ' g')">
+                                                            <img src="~/Icons/warningBlueBeon.svg" alt="">
+                                                            Shock Alert    <br />   @env.TimestampEvent
+                                                        </button>
+                                                    </p>
+                                                </div> }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </aside>*@
