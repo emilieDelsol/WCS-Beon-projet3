@@ -15,7 +15,7 @@ namespace BeOn.Models
         [Column("name")]
         public String Name { get; set; }
 
-        public ICollection<Authorization> Authorizations { get; set; }
+        public virtual ICollection<Authorization> Authorizations { get; set; }
 
         [NotMapped]
         public IEnumerable<IPermission> Permissions 

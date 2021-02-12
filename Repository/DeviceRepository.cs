@@ -1,5 +1,6 @@
 ﻿using BeOn.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BeOn.Repository
@@ -13,7 +14,12 @@ namespace BeOn.Repository
             _context = context;
         }
 
-        public IQueryable<Device> All => _context.Devices;
+        public virtual IQueryable<Device> All => _context.Devices;
+        public virtual IQueryable<Device> AllDevices()
+        {
+            IQueryable<Device> devices = _context.Devices;
+            return devices;
+        }
 
         public Device Find(Device device)
         {
@@ -24,5 +30,10 @@ namespace BeOn.Repository
         {
             return _context.Devices.Single(device => device.DeviceId == deviceId);
         }
-    }
+
+		public static implicit operator List<object>(DeviceRepository v)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

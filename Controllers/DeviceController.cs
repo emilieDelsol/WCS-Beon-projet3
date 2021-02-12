@@ -45,12 +45,12 @@ namespace BeOn.Controllers
         {
             Device device = _deviceRepository.FindById(deviceId);
             IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
-            var temperatures = filter.Apply(environments).Select((environment) => new Dictionary<String, Int32>
+            var temperatures = filter.Apply(environments).Select((environment) => new Dictionary<String, String>
             {
-                { "timestamp", environment.Timestamp.Millisecond },
-                { "min", environment.MinimumTemperature },
-                { "max", environment.MaximumTemperature },
-                { "mean", (environment.MinimumTemperature + environment.MaximumTemperature) / 2 }
+                { "timestamp", environment.Timestamp.ToString() },
+                { "min", environment.MinimumTemperature.ToString() },
+                { "max", environment.MaximumTemperature.ToString() },
+                { "mean", ((environment.MinimumTemperature + environment.MaximumTemperature) / 2).ToString() }
             });
             return Ok(temperatures);
         }
@@ -61,12 +61,12 @@ namespace BeOn.Controllers
 		{
             Device device = _deviceRepository.FindById(deviceId);
             IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
-            var temperatures = filter.Apply(environments).Select((environment)=>new Dictionary<String,Int32>
+            var temperatures = filter.Apply(environments).Select((environment)=>new Dictionary<String,String>
             {
-                    { "timestamp", environment.Timestamp.Millisecond },
-                { "min", environment.MinimumTemperature },
-                { "max", environment.MaximumTemperature },
-                { "mean", (environment.MinimumTemperature + environment.MaximumTemperature) / 2 }
+                    { "timestamp", environment.Timestamp.ToString() },
+                { "min", environment.MinimumTemperature.ToString() },
+                { "max", environment.MaximumTemperature.ToString() },
+                { "mean", ((environment.MinimumTemperature + environment.MaximumTemperature) / 2).ToString() }
             });
             return Ok(temperatures);
 
@@ -115,8 +115,9 @@ namespace BeOn.Controllers
                     { "latitude", Math.Round(environment.ComputedLatitude,6) },
                     { "longitude", Math.Round(environment.ComputedLongitude,6) },
                 });
-            return Ok(coordinates);
+			return Ok(coordinates);
         }
+
 
         [ActionName("Alert")]
         [HttpGet]
@@ -126,12 +127,13 @@ namespace BeOn.Controllers
             Device device = _deviceRepository.FindById(deviceId);
             IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
 
-			IQueryable<Dictionary<string, double>> alerts = filter.Apply(environments).Select((environment) => new Dictionary<String, Double>
+			IQueryable<Dictionary<string, string>> alerts = filter.Apply(environments).Where(e => (e.EventType == "1" || e.EventType == "3")).Select((environment) => new Dictionary<String, String> 
             {
-                { "timestamp", environment.Timestamp.Millisecond },
-                { "latitude", Math.Round(environment.ComputedLatitude,6) },
-                { "longitude", Math.Round(environment.ComputedLongitude,6) },
-                { "eventType", Convert.ToInt32(environment.EventType) }
+                 { "timestamp", environment.Timestamp.ToString() },
+                { "latitude", Math.Round(environment.ComputedLatitude,6).ToString() },
+                { "longitude", Math.Round(environment.ComputedLongitude,6).ToString() },
+                { "eventType", Convert.ToInt32(environment.EventType).ToString() },
+                { "maxShock", environment.Smax.ToString() }
             });
 
             return Ok(alerts);

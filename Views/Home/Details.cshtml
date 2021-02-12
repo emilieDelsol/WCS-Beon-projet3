@@ -41,29 +41,23 @@
                 <battery :device_id="deviceId" />
             </div>
             <div class="card m-3">
-                <shock :device_id="deviceId" />
-            </div>
-        </article>
 
-        <article class=" p-3 p-lg-0 m-auto d-flex flex-column flex-lg-row ">
-            <div class="card m-auto m-lg-3 col-12 col-lg-5 p-0 " style="height:auto">
-                <div class="card-header pb-0" style=" color: #201063;">
-                    <h5 class="card-title " style="font-weight: bold;"><a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><img src="~/Icons/mapBlueBeon.svg" alt="" /> Location</a></h5>
-                </div>
-                <div class="card m-3">
+
                     <div id="myMap" style="height:400px">
                         <mapcontainer :device_id="deviceId" />
                     </div>
-                </div>
+
             </div>
             <div class="col ml-lg-3 mr-lg-3 p-0">
                 <temperature-chart :device_id="deviceId" />
             </div>
+
         </article>
     </div>
 
-    <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
-        <alertcomponent :device_id="deviceId" />
+
+    <aside class="d-flex flex-column flex-lg-row-reverse  ">
+            <alertcomponent :device_id="deviceId" />
     </aside>
 
 
@@ -83,14 +77,12 @@
 }
 
 @section VueComponents {
+    <partial name="VueComponents/Alertcomponent.VueComponent" />
     <partial name="VueComponents/Battery.VueComponent" />
     <partial name="VueComponents/Temperature.VueComponent" />
     <partial name="VueComponents/LastContact.VueComponent" />
     <partial name="VueComponents/TemperatureChart.VueComponent" />
-<<<<<<< Views/Home/Details.cshtml
     <partial name="VueComponents/Shock.VueComponent" />
-=======
     <partial name="VueComponents/Mapcontainer.VueComponent" />
-    <partial name="VueComponents/Alertcomponent.VueComponent" />
->>>>>>> Views/Home/Details.cshtml
+
 } 

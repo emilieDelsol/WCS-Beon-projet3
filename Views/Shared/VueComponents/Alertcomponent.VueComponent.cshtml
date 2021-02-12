@@ -18,9 +18,11 @@
 
                 })
         },
+      
         props: { device_id: String },
         template: `
-             <div>
+
+            <div>
                 <div class="h-100 p-0 mr-2 text-center">
                 <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" >
                     <span class="position-relative  d-lg-flex" style="top:50%;">
@@ -31,30 +33,37 @@
                 </a>
             </div>
         </div>
-        <div class="row" style="">
-                    <div class="col text-center">
-                        <div class="collapse" id="alertCollapse">
-                            <div class="card card-body" style="height: 80vh;  overflow-y: scroll;">
-                                <div class="card-body">
+        <div class="row">
+                <div class="col text-center">
+                    <div class="collapse" id="alertCollapse">
+                        <div class="card card-body " style="height: 80vh;  overflow-y: scroll;">
+                            <div class="card-body">
 
-                                    <ul id="alerts-1" class="list-group">
-                                      <li v-for="item in alerts" :key="item.latitude" class="list-group-item">
-                                       latitude: {{item.latitude}}
-                                        longitude: {{item.longitude}}
-                                       eventType: {{item.eventType}}
-                                      </li>
-                                    </ul>
-                                </div>
+                                    <div v-for="item in alerts" :key="item.latitude"  >
+                                        <p v-if="item.eventType == '3'" class="alertcolorblue ">
+                                            <button class="btn border-0 alertcolorblue " style="width:max-content">
+                                                <img src="/Icons/warningBlueBeon.svg" alt="">
+                                                Shock alert  <br/>
+                                                {{item.timestamp}}
+                                            </button>
+                                        </p>
+                                        <p v-if="item.eventType == '1'" class="alertcolorblue ">
+                                            <button class="btn border-0 alertcolorblue mx-100" onclick="updateMap(item.latitude, item.longitude, device_id, 'shock Alert', item.timestamp, item.maxShock )">
+                                                <img src="/Icons/heatBlueBeon.svg" alt="" />
+                                                Temperature Alert  <br />
+                                                {{item.timestamp}}
+                                            </button>
+                                        </p>
+                                    </div>
                                
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 `
     })
 </script>
-
-
 
 
 
