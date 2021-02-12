@@ -6,7 +6,7 @@
             }
         },
         mounted: function () {
-            Axios.get(`/Device/Contact/${this.device_id}?last=true`)
+            Axios.get(`/Device/Contact/${this.device_id}`)
                 .then((response) => {
                     this.timestampEvent = response.data[0]
                 })

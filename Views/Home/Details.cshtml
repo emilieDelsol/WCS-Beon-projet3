@@ -1,4 +1,4 @@
-﻿@model Device
+@model Device
 
 @{
     ViewData["Title"] = "Dashboard";
@@ -30,19 +30,6 @@
 <section class="d-flex flex-column-reverse flex-lg-row">
     <div class="container-fluid p-0 ">
         <article class="card-deck p-0  m-0 d-flex flex-column flex-lg-row justify-content-between">
-            <div class="card m-3">
-                <div>
-                    <div class="card-header pb-0" style=" color: #201063;">
-                        <h5 class="card-title" style="font-weight: bold;"><img src="~/Icons/warningBlueBeon.svg" alt="" /> Number of shocks</h5>
-                    </div>
-                    <div class="card-body ">
-                        <p class="card-text ">- total shocks:  </p>
-                        <p class="card-text ">- from last 72h:  </p>
-                        <p class="card-text ">- since last contact:  </p>
-                        <p class="card-text">- Max shock: g</p>
-                    </div>
-                </div>
-            </div>
 
             <div class="card m-3">
                 <last-contact :device_id="deviceId" />
@@ -63,36 +50,22 @@
                 <div class="card-header pb-0" style=" color: #201063;">
                     <h5 class="card-title " style="font-weight: bold;"><a asp-controller="Beon" asp-action="Location1Device" asp-route-IdDevice="@Model.DeviceId" style="color: #201063;"><img src="~/Icons/mapBlueBeon.svg" alt="" /> Location</a></h5>
                 </div>
-                <div class="card-body">
-                    <div id="map"></div>
+                <div class="card m-3">
+                    <div id="myMap" style="height:400px">
+                        <mapcontainer :device_id="deviceId" />
+                    </div>
                 </div>
             </div>
-            <div class="col mb-lg-3 mr-lg-3 p-0" style="height:auto">
-            <div class="card mt-3 mb-3 col-12 p-0 ">
+            <div class="col ml-lg-3 mr-lg-3 p-0">
                 <temperature-chart :device_id="deviceId" />
             </div>
-                </div>
         </article>
     </div>
 
     <aside class="d-flex flex-column flex-lg-row-reverse m-3 m-lg-0 mt-lg-3 mb-lg-3 p-0  ">
-        <div>
-            <div class="h-100 p-0 mr-2 text-center">
-                <a class="btn btn-light border h-100  " data-bs-toggle="collapse" href="#alertCollapse" role="button" aria-expanded="false" aria-controls="alertCollapse" onclick="ChangeArrow()">
-                    <span class="position-relative d-none d-lg-flex" style="top:50%;">
-                        <img src="~/Icons/left-arrow.svg" alt="" id="arrowLeft" /><img src="~/Icons/right-arrow.svg" alt="" class="d-none" id="arrowRight" />&nbsp
-                        <img src="~/Icons/notificationBell.svg" alt="" />
-                        <img src="~/Icons/notification.svg" alt="" />
-                    </span>
-                    <span class="position-relative d-flex flex-column-reverse d-lg-none " style="top:50%;">
-                        <img src="~/Icons/down-arrow.svg" alt="" id="arrowDown" /><img src="~/Icons/up-arrow.svg" alt="" class="d-none" id="arrowUp" />&nbsp
-                        <img src="~/Icons/notificationBell.svg" alt="" />
-                        <img src="~/Icons/notification.svg" alt="" />
-                    </span>
-                </a>
-            </div>
-        </div>
+        <alertcomponent :device_id="deviceId" />
     </aside>
+
 
 </section>
 
@@ -114,5 +87,10 @@
     <partial name="VueComponents/Temperature.VueComponent" />
     <partial name="VueComponents/LastContact.VueComponent" />
     <partial name="VueComponents/TemperatureChart.VueComponent" />
+<<<<<<< Views/Home/Details.cshtml
     <partial name="VueComponents/Shock.VueComponent" />
+=======
+    <partial name="VueComponents/Mapcontainer.VueComponent" />
+    <partial name="VueComponents/Alertcomponent.VueComponent" />
+>>>>>>> Views/Home/Details.cshtml
 } 

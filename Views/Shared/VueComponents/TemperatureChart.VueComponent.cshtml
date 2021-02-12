@@ -74,25 +74,34 @@
       updateLastPeriodTemperatures: function ({ hours, minutes = 0, seconds = 0 }) {
         let period = hours * 3600000 + minutes * 60000 + seconds * 1000
         Axios.get(`/Device/Temperatures/${this.device_id}/?period=${period}`)
-          .then(response => {
-            this.temperatures = response.data
-            this.chart.Update(this.temperatures)
-          })
-      }
+                   .then(response => {
+                        this.temperatures = response.data
+                        this.chart.Update(this.temperatures)
+                    })
+        },
+        updateTemperaturesBetween: function () {
+            Axios.get(`/Device/TemperaturesBetween/${this.device_id}/?BeginDate=${this.begin.date}T${ this.begin.time}&EndDate=${this.end.date}T${ this.end.time}`)
+                       .then(response => {
+                            this.temperatures = response.data
+                            this.chart.Update(this.temperatures)
+                        })
+        }
     },
     props: {
       'device_id': String
     },
     template:
-      `<div class="card-header pb-0" style=" color: #201063;">
-        <h5 class="card-title" style="font-weight: bold; "><a style="color: #201063;"><img src="~/Icons/heatBlueBeon.svg" alt="" />Temperature</h5>
-      </div>
-      <div class="card-body">
-        <div class="d-flex flex-column flex-lg-row justify-content-between ">
+      `
+<div class="card  mt-3 mb-3 col-12 p-0 " >
+    <div class="card-header pb-0" style=" color: #201063;">
+        <h5 class="card-title" style="font-weight: bold; "><img src="~/Icons/heatBlueBeon.svg" alt="" />Temperature</h5>
+    </div>
+    <div class="card-body">
+        <div class="d-flex flex-column justify-content-between ">
           <div class="text-center m-1">
-            <button v-on:click="updateLastPeriodTemperatures({ hours: 24 })" type="button" class="btn btn-success">24h</button>
-            <button v-on:click="updateLastPeriodTemperatures({ hours: 72 })" type="button" class="btn btn-dark">72h</button>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
+            <button v-on:click="updateLastPeriodTemperatures({ hours: 24 })" type="button" class="btn btn-success m-1">24h</button>
+            <button v-on:click="updateLastPeriodTemperatures({ hours: 72 })" type="button" class="btn btn-dark m-1">72h</button>
+            <button class="btn btn-primary m-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSortByDate" aria-expanded="false" aria-controls="collapseSortByDate">
               Between date
             </button>
           </div>
@@ -104,7 +113,7 @@
                   <p>Begin date:</p>
                   <label class="beginDate">
                     <input type="date" v-model="begin.date" />
-                    <input type="time" v-model="begin.Time" />
+                    <input type="time" v-model="begin.time" />
                   </label>
                 </div>
                 <div class="border m-1 p-1">
@@ -115,13 +124,14 @@
                   </label>
                 </div>
               </div>
-              <button type="button" id="bouton">Send</button>
+              <button v-on:click="updateTemperaturesBetween" type="button" id="bouton">Send</button>
             </div>
           </div>
         </div>
         <div class="" style="height:auto">
-          <canvas id="temperatureChart" class=" col-12" style="height:300px; "></canvas>
+          <canvas id="temperatureChart" class=" col-12" style="height:400px; "></canvas>
         </div>
-      </div>`
+      </div>
+    </div>`
   })
 </script> 

@@ -1,4 +1,4 @@
-﻿using BeOn.Filters;
+using BeOn.Filters;
 using BeOn.Models;
 using BeOn.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -54,6 +54,24 @@ namespace BeOn.Controllers
             });
             return Ok(temperatures);
         }
+        [ActionName("TemperaturesBetween")]
+        [HttpGet]
+         public IActionResult GetTemperatureBetween([FromRoute] String deviceId,
+                                                [FromQuery] DateTimeFilter<DeviceEnvironment>filter)
+		{
+            Device device = _deviceRepository.FindById(deviceId);
+            IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
+            var temperatures = filter.Apply(environments).Select((environment)=>new Dictionary<String,Int32>
+            {
+                    { "timestamp", environment.Timestamp.Millisecond },
+                { "min", environment.MinimumTemperature },
+                { "max", environment.MaximumTemperature },
+                { "mean", (environment.MinimumTemperature + environment.MaximumTemperature) / 2 }
+            });
+            return Ok(temperatures);
+
+        }
+
         [ActionName("Contact")]
         [HttpGet]
         public IActionResult GetContacts([FromRoute] String deviceId,
@@ -84,6 +102,39 @@ namespace BeOn.Controllers
                 { "totalshock", totalShock}
             };
             return Ok(shocks);
+
+        [ActionName("MapContainer")]
+        [HttpGet]
+        public IActionResult GetCoordinates([FromRoute] String deviceId,
+                                               [FromQuery] TimestampFilter<DeviceEnvironment> filter)
+        {
+            Device device = _deviceRepository.FindById(deviceId);
+            IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
+            var coordinates = filter.Apply(environments).Select((environment) => new Dictionary<String, Double>
+                {
+                    { "latitude", Math.Round(environment.ComputedLatitude,6) },
+                    { "longitude", Math.Round(environment.ComputedLongitude,6) },
+                });
+            return Ok(coordinates);
+        }
+
+        [ActionName("Alert")]
+        [HttpGet]
+        public IActionResult GetAlerts([FromRoute] String deviceId,
+                                            [FromQuery] TimestampFilter<DeviceEnvironment> filter)
+        {
+            Device device = _deviceRepository.FindById(deviceId);
+            IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
+
+			IQueryable<Dictionary<string, double>> alerts = filter.Apply(environments).Select((environment) => new Dictionary<String, Double>
+            {
+                { "timestamp", environment.Timestamp.Millisecond },
+                { "latitude", Math.Round(environment.ComputedLatitude,6) },
+                { "longitude", Math.Round(environment.ComputedLongitude,6) },
+                { "eventType", Convert.ToInt32(environment.EventType) }
+            });
+
+            return Ok(alerts);
         }
     }
 }
