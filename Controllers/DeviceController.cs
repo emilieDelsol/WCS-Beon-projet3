@@ -102,7 +102,7 @@ namespace BeOn.Controllers
                 { "totalshock", totalShock}
             };
             return Ok(shocks);
-
+        }
         [ActionName("MapContainer")]
         [HttpGet]
         public IActionResult GetCoordinates([FromRoute] String deviceId,
