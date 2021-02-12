@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +28,18 @@ namespace BeOn
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BeOnContext>(b => b.UseLazyLoadingProxies().UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat
+                     .Suffix).AddDataAnnotationsLocalization();
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+       {
+            new CultureInfo("fr")         
+        };
+                options.DefaultRequestCulture = new RequestCulture(culture: "fr", uiCulture: "fr");
+            
+            });
+
 
             services.AddControllersWithViews();
         }
@@ -51,6 +66,12 @@ namespace BeOn
             }
 
             app.UseStaticFiles();
+            var supportedCultures = new[] { "fr" };
+            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            app.UseRequestLocalization(localizationOptions);
 
             app.UseRouting();
 

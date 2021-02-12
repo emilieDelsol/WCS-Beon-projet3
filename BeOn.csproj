@@ -1,9 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+	  <InvariantGlobalization>true</InvariantGlobalization>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="BeOnosTest\**" />
+    <Compile Remove="BeOnos\**" />
+    <Content Remove="BeOnosTest\**" />
+    <Content Remove="BeOnos\**" />
+    <EmbeddedResource Remove="BeOnosTest\**" />
+    <EmbeddedResource Remove="BeOnos\**" />
+    <None Remove="BeOnosTest\**" />
+    <None Remove="BeOnos\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
