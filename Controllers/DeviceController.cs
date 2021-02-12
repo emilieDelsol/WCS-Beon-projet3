@@ -45,12 +45,12 @@ namespace BeOn.Controllers
         {
             Device device = _deviceRepository.FindById(deviceId);
             IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
-            var temperatures = filter.Apply(environments).Select((environment) => new Dictionary<String, Int32>
+            var temperatures = filter.Apply(environments).Select((environment) => new Dictionary<String, String>
             {
-                { "timestamp", environment.Timestamp.Millisecond },
-                { "min", environment.MinimumTemperature },
-                { "max", environment.MaximumTemperature },
-                { "mean", (environment.MinimumTemperature + environment.MaximumTemperature) / 2 }
+                { "timestamp", environment.Timestamp.ToString() },
+                { "min", environment.MinimumTemperature.ToString() },
+                { "max", environment.MaximumTemperature.ToString() },
+                { "mean", ((environment.MinimumTemperature + environment.MaximumTemperature) / 2).ToString() }
             });
             return Ok(temperatures);
         }
@@ -61,12 +61,12 @@ namespace BeOn.Controllers
 		{
             Device device = _deviceRepository.FindById(deviceId);
             IQueryable<DeviceEnvironment> environments = _environmentRepository.FindAllByDevice(device);
-            var temperatures = filter.Apply(environments).Select((environment)=>new Dictionary<String,Int32>
+            var temperatures = filter.Apply(environments).Select((environment)=>new Dictionary<String,String>
             {
-                    { "timestamp", environment.Timestamp.Millisecond },
-                { "min", environment.MinimumTemperature },
-                { "max", environment.MaximumTemperature },
-                { "mean", (environment.MinimumTemperature + environment.MaximumTemperature) / 2 }
+                    { "timestamp", environment.Timestamp.ToString() },
+                { "min", environment.MinimumTemperature.ToString() },
+                { "max", environment.MaximumTemperature.ToString() },
+                { "mean", ((environment.MinimumTemperature + environment.MaximumTemperature) / 2).ToString() }
             });
             return Ok(temperatures);
 
