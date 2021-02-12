@@ -1,4 +1,4 @@
-﻿@model IQueryable<Device>
+﻿@model List<Device>
 @{
     ViewData["Title"] = "listDevices";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,9 +16,17 @@
             <ul class="list-group">
                 @foreach (Device device in Model)
                 {
-                    <li class="list-group-item">
-                        <a asp-action="Details" asp-controller="Home" asp-route-deviceId="@device.DeviceId">@device.DeviceId</a>
-                    </li>
+                    @if (@device.EnvironmentPayloads.Count() != 0)
+                    {
+
+                        <li class="list-group-item">
+                            <a asp-action="Details" asp-controller="Home" asp-route-deviceId="@device.DeviceId">@device.DeviceId</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="list-group-item">  @device.DeviceId <i class="text-muted">No data available</i></li>
+                    }
                 }
             </ul>
             </div>

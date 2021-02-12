@@ -21,7 +21,7 @@ namespace BeOn.Controllers
 		}
 		public IActionResult List()
 		{
-			return View(_deviceRepository.All);
+			return View(_deviceRepository.All.ToList());
 		}
 		public IActionResult Map()
 		{
